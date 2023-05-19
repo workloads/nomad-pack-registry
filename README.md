@@ -28,13 +28,13 @@ Running `make` without commands will print out the following help information:
 ```text
 NOMAD PACKS MAINTENANCE
 
-help       Displays a list of Make Targets          Usage: `make` or `make help`
-render     Renders a Nomad Pack                     Usage: `make render pack=my-pack`
-run        Runs a Nomad Pack                        Usage: `make run pack=my-pack`
-rerun      Destroys and Runs a Nomad Pack           Usage: `make rerun pack=my-pack`
-stop       Stops a (running) Nomad Pack             Usage: `make stop pack=my-pack`
-docs       Generates Documentation for all Packs    Usage: `make docs`
-selfcheck  Lints Makefile                           Usage: `make selfcheck`
+help       Displays a list of Make Targets              Usage: `make` or `make help`
+render     Renders a Nomad Pack                         Usage: `make render pack=my-pack`
+run        Runs a Nomad Pack                            Usage: `make run pack=my-pack`
+rerun      Destroys and Runs a Nomad Pack               Usage: `make rerun pack=my-pack`
+stop       Stops a (running) Nomad Pack                 Usage: `make stop pack=my-pack`
+docs       Generates Documentation for all Packs        Usage: `make docs`
+selfcheck  Lints Makefile                               Usage: `make selfcheck`
 ```
 
 ## Author Information

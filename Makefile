@@ -17,7 +17,7 @@ SHELL       := sh
 PACKS_DIR = "./packs"
 PACKS     = $(shell ls $(PACKS_DIR))
 
-# Renders a Nomad Pack
+# render a Nomad Pack
 define render_pack
 	nomad-pack \
 		render \
@@ -25,7 +25,7 @@ define render_pack
 	;
 endef
 
-# Runs a Nomad Pack
+# run a Nomad Pack
 define run_pack
 	nomad-pack \
 		run \
@@ -33,7 +33,7 @@ define run_pack
 	;
 endef
 
-# Stops a (running) Nomad Pack
+# stop a running Nomad Pack
 define stop_pack
 	nomad-pack \
 		stop \
@@ -41,7 +41,7 @@ define stop_pack
 	;
 endef
 
-# Destroys a Nomad Pack
+# destroy a Nomad Pack
 define destroy_pack
 	nomad-pack \
 		destroy \
@@ -49,7 +49,7 @@ define destroy_pack
 	;
 endef
 
-# Generates Documentation for all Packs
+# generate documentation for all Nomad Packs
 define render_documentation
 	cp $(PACKS_DIR)/$(strip $(1))/variables.hcl $(PACKS_DIR)/$(strip $(1))/variables.tf \
   && \
@@ -62,7 +62,7 @@ define render_documentation
 endef
 
 .SILENT .PHONY: help
-help: # Displays a list of Make Targets          Usage: `make` or `make help`
+help: # Displays a list of Make Targets                   Usage: `make` or `make help`
 	$(info )
 	$(info $(shell tput bold)NOMAD PACKS MAINTENANCE$(shell tput sgr0))
 	$(info )
@@ -82,15 +82,15 @@ help: # Displays a list of Make Targets          Usage: `make` or `make help`
 		-t
 
 .SILENT .PHONY: render
-render: # Renders a Nomad Pack                     Usage: `make render pack=my-pack`
+render: # render a Nomad Pack                               Usage: `make render pack=my_pack`
 	$(call render_pack, $(pack))
 
 .SILENT .PHONY: run
-run: # Runs a Nomad Pack                        Usage: `make run pack=my-pack`
+run: # run a Nomad Pack                                  Usage: `make run pack=my_pack`
 	$(call run_pack, $(pack))
 
 .SILENT .PHONY: rerun
-rerun: # Destroys and Runs a Nomad Pack           Usage: `make rerun pack=my-pack`
+rerun: # destroy and run a Nomad Pack                      Usage: `make rerun pack=my_pack`
 	$(call stop_pack, $(pack))
 
 	$(call destroy_pack, $(pack))
@@ -98,16 +98,16 @@ rerun: # Destroys and Runs a Nomad Pack           Usage: `make rerun pack=my-pac
 	$(call run_pack, $(pack))
 
 .SILENT .PHONY: stop
-stop: # Stops a (running) Nomad Pack             Usage: `make stop pack=my-pack`
+stop: # stop a running Nomad Pack                         Usage: `make stop pack=my_pack`
 	$(call stop_pack, $(pack))
 
 .SILENT .PHONY: docs
-docs: # Generates Documentation for all Packs    Usage: `make docs`
+docs: # generate documentation for all Nomad Packs        Usage: `make docs`
 	# see https://www.gnu.org/software/make/manual/html_node/Foreach-Function.html
 	$(foreach PACK,$(PACKS),$(call render_documentation,$(strip $(PACK))))
 
 .SILENT .PHONY: selfcheck
-selfcheck: # Lints Makefile                           Usage: `make selfcheck`
+selfcheck: # lint Makefile                                     Usage: `make selfcheck`
 	echo checkmake \
 		--config="./checkmake.ini" \
 		"$(firstword $(MAKEFILE_LIST))"
