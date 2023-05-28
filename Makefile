@@ -11,40 +11,49 @@ include ../tooling/make/functions/shared.mk
 
 # render a Nomad Pack
 define render_pack
+	$(if $(pack),,$(call missing_argument,render,pack=my_pack))
+
+	$(call print_reference,$(pack))
+
 	nomad-pack \
 		render \
-			"$(PACKS_DIR)/$(strip $(1))" \
+			"$(PACKS_DIR)/$(strip $(pack))" \
 	;
 endef
 
 # run a Nomad Pack
 define run_pack
+	$(if $(pack),,$(call missing_argument,run,pack=my_pack))
+
 	nomad-pack \
 		run \
-			"$(PACKS_DIR)/$(strip $(1))" \
+			"$(PACKS_DIR)/$(strip $(pack))" \
 	;
 endef
 
 # stop a running Nomad Pack
 define stop_pack
+	$(if $(pack),,$(call missing_argument,stop,pack=my_pack))
+
 	nomad-pack \
 		stop \
-			"$(PACKS_DIR)/$(strip $(1))" \
+			"$(PACKS_DIR)/$(strip $(pack))" \
 	;
 endef
 
 # destroy a Nomad Pack
 define destroy_pack
+	$(if $(pack),,$(call missing_argument,render,pack=my_pack))
+
 	nomad-pack \
 		destroy \
-			"$(PACKS_DIR)/$(strip $(1))" \
+			"$(PACKS_DIR)/$(strip $(pack))" \
 	;
 endef
 
 # generate documentation for all Nomad Packs
 define render_documentation
 	$(call print_reference,$(1))
-	echo
 
 	# copy `variables.hcl` to `variables.tf` so that `terraform-docs` can read it:
 	cp $(PACKS_DIR)/$(strip $(1))/variables.hcl $(PACKS_DIR)/$(strip $(1))/variables.tf \
@@ -55,6 +64,8 @@ define render_documentation
 	&& \
 	rm "$(PACKS_DIR)/$(strip $(1))/variables.tf" \
 	;
+
+	echo
 endef
 
 include ../tooling/make/targets/shared.mk
