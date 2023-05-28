@@ -43,6 +43,10 @@ endef
 
 # generate documentation for all Nomad Packs
 define render_documentation
+	$(call print_reference,$(1))
+	echo
+
+	# copy `variables.hcl` to `variables.tf` so that `terraform-docs` can read it:
 	cp $(PACKS_DIR)/$(strip $(1))/variables.hcl $(PACKS_DIR)/$(strip $(1))/variables.tf \
   && \
 	terraform-docs \
