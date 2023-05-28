@@ -9,6 +9,7 @@
   * [Table of Contents](#table-of-contents)
   * [Requirements](#requirements)
   * [Usage](#usage)
+  * [Notes](#notes)
   * [Author Information](#author-information)
   * [License](#license)
 <!-- TOC -->
@@ -35,6 +36,14 @@ rerun      Destroys and Runs a Nomad Pack               Usage: `make rerun pack=
 stop       Stops a (running) Nomad Pack                 Usage: `make stop pack=my-pack`
 docs       Generates Documentation for all Packs        Usage: `make docs`
 selfcheck  Lints Makefile                               Usage: `make selfcheck`
+```
+
+## Notes
+
+* Colorized CLI output may be disabled by setting the `NO_COLOR` environment variable to any non-empty value.
+
+```shell
+export NO_COLOR=1 && make
 ```
 
 ## Author Information
