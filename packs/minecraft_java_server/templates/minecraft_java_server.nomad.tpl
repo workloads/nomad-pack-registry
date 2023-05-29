@@ -25,9 +25,10 @@ job [[ template "job_name" .minecraft_java_server.job_name ]] {
     [[ if .minecraft_java_server.register_consul_service ]]
     # see https://developer.hashicorp.com/nomad/docs/job-specification/service
     service {
-      name = "[[ .minecraft_java_server.consul_service_name ]]"
-      tags =  [[ .minecraft_java_server.consul_service_tags | toJson ]]
-      port = "main"
+      name     = "[[ .minecraft_java_server.consul_service_name ]]"
+      tags     =  [[ .minecraft_java_server.consul_service_tags | toJson ]]
+      port     = "main"
+      provider = "nomad"
 
       [[ template "service_checks" .minecraft_java_server.config_ports ]]
     }
@@ -45,7 +46,7 @@ job [[ template "job_name" .minecraft_java_server.job_name ]] {
 
     task [[ template "job_name" .minecraft_java_server.job_name ]] {
       # see https://developer.hashicorp.com/nomad/docs/drivers/docker
-      driver = [[ .minbecraft_java_server.driver ]]
+      driver = "[[ .minecraft_java_server.driver ]]"
 
       config {
         image = "[[ .minecraft_java_server.image.registry ]]/[[ .minecraft_java_server.image.org ]]/[[ .minecraft_java_server.image.slug ]]:[[ .minecraft_java_server.image.tag ]]@[[ .minecraft_java_server.image.digest ]]"
@@ -53,7 +54,6 @@ job [[ template "job_name" .minecraft_java_server.job_name ]] {
         # see https://docs.minecraft_java_server.io/advanced/cli#configuration-flags-available-at-the-command-line
         # and https://developer.hashicorp.com/nomad/docs/drivers/docker#args
         args = [
-
           "--data", [[ .minecraft_java_server.config_mounts.data.destination | quote ]],
 
           #- template "arg_logo" .minecraft_java_server.config -]]
