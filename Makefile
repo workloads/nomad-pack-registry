@@ -1,13 +1,19 @@
 # Makefile for Nomad Pack Maintenance
 
 # configuration
-PACKS_DIR = "./packs"
+PACKS_DIR = ./packs
 PACKS     = $(shell ls $(PACKS_DIR))
 TITLE     = 🟢 NOMAD PACKS
 
 include ../tooling/make/configs/shared.mk
 
 include ../tooling/make/functions/shared.mk
+
+# conditionally load Pack-specific configuration if the
+# target is `test` and the `pack` argument is not empty
+ifeq ($(and $(pack),$(MAKECMDGOALS)),test)
+    include $(PACKS_DIR)/$(strip $(pack))/tests/test.mk
+endif
 
 # render a Nomad Pack
 define render_pack
@@ -38,6 +44,21 @@ define stop_pack
 	nomad-pack \
 		stop \
 			"$(PACKS_DIR)/$(strip $(pack))" \
+	;
+endef
+
+# create environment to test a Nomad Pack
+define create_test_environment
+	$(if $(pack),,$(call missing_argument,test,pack=my_pack))
+
+	# create test directories if they do not exist
+	$(foreach TEST_DIRECTORY,$(TEST_DIRECTORIES),$(call safely_create_directory,$(TEST_DIRECTORY)))
+
+	# start Nomad in development mode, using Pack-specific configuration
+	nomad \
+		agent \
+			-config="$(PACKS_DIR)/$(strip $(pack))/tests/config.hcl" \
+			-dev \
 	;
 endef
 
@@ -89,6 +110,10 @@ rerun: # destroy and run a Nomad Pack [Usage: `make rerun pack=my_pack`]
 .SILENT .PHONY: stop
 stop: # stop a running Nomad Pack [Usage: `make stop pack=my_pack`]
 	$(call stop_pack, $(pack))
+
+.SILENT .PHONY: test
+test: # create environment to test a Nomad Pack [Usage: `make test pack=my_pack`]
+	$(call create_test_environment, $(pack))
 
 .SILENT .PHONY: docs
 docs: # generate documentation for all Nomad Packs [Usage: `make docs`]
