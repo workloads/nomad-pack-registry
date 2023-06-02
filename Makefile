@@ -1,9 +1,11 @@
 # Makefile for Nomad Pack Maintenance
 
 # configuration
-PACKS_DIR = ./packs
-PACKS     = $(shell ls $(PACKS_DIR))
-TITLE     = 🟢 NOMAD PACKS
+BINARY_GLOW = $(call check_for_binary,glow)
+GLOW_WIDTH  = 160
+PACKS_DIR   = ./packs
+PACKS       = $(shell ls $(PACKS_DIR))
+TITLE       = 🟢 NOMAD PACKS
 
 include ../tooling/make/configs/shared.mk
 
@@ -31,10 +33,17 @@ endef
 define run_pack
 	$(if $(pack),,$(call missing_argument,run,pack=my_pack))
 
-	nomad-pack \
-		run \
-			"$(PACKS_DIR)/$(strip $(pack))" \
-	;
+	$(if $(strip $(BINARY_GLOW)), \
+		nomad-pack \
+			run \
+				"$(PACKS_DIR)/$(strip $(pack))" \
+		| \
+		glow \
+			--width $(GLOW_WIDTH), \
+		nomad-pack \
+			run \
+				"$(PACKS_DIR)/$(strip $(pack))" \
+	)
 endef
 
 # stop a running Nomad Pack

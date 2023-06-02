@@ -42,7 +42,7 @@ job [[ template "job_name" .minecraft_java_server.job_name ]] {
       mode     = "fail"
     }
 
-    [[- template "group_volumes" .minecraft_java_server.config_mounts ]]
+    [[ template "group_volumes" .minecraft_java_server.config_mounts ]]
 
     task [[ template "job_name" .minecraft_java_server.job_name ]] {
       # see https://developer.hashicorp.com/nomad/docs/drivers/docker

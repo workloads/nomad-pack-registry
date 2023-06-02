@@ -97,7 +97,7 @@ variable "config" {
     hardcore = false
 
     # Server Icon
-    icon = "https://mystickermania.com/cdn/stickers/minecraft/minecraft-bee-512x512.png"
+    icon = "https://assets.workloads.io/minecraft/server-icons/tnt.png"
 
     # Level Type (e.g.: Normal, Flat)
     # see https://minecraft.fandom.com/wiki/Server.properties#level-type
