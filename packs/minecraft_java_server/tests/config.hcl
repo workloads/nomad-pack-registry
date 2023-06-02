@@ -10,6 +10,12 @@ datacenter = "testing"
 # see https://developer.hashicorp.com/nomad/docs/configuration#region
 region = "global"
 
+# see https://developer.hashicorp.com/nomad/docs/configuration/acl
+acl {
+  # testing this Pack does not require ACLs to be enabled
+  enabled = false
+}
+
 # see https://developer.hashicorp.com/nomad/docs/configuration/client
 client {
   enabled = true
