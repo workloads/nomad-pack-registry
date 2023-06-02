@@ -127,7 +127,7 @@ variable "config" {
 
     # Message of the Day
     # see https://minecraft.fandom.com/wiki/Formatting_codes
-    motd = "§2Minecraft§r Java Server"
+    motd = "This server is running on §2§lHashiCorp Nomad§r"
 
     # toggle to enable Account Authentication (with Minecraft.net / Microsoft Account)
     online_mode = false
