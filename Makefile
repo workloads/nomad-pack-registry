@@ -81,23 +81,6 @@ define destroy_pack
 	;
 endef
 
-# generate documentation for all Nomad Packs
-define render_documentation
-	$(call print_reference,$(1))
-
-	# copy `variables.hcl` to `variables.tf` so that `terraform-docs` can read it:
-	cp $(PACKS_DIR)/$(strip $(1))/variables.hcl $(PACKS_DIR)/$(strip $(1))/variables.tf \
-  && \
-	terraform-docs \
-		"$(PACKS_DIR)/$(strip $(1))" \
-		--config=".nomad-pack-docs.yml" \
-	&& \
-	rm "$(PACKS_DIR)/$(strip $(1))/variables.tf" \
-	;
-
-	echo
-endef
-
 include ../tooling/make/targets/shared.mk
 
 .SILENT .PHONY: render
@@ -127,4 +110,4 @@ test: # create environment to test a Nomad Pack [Usage: `make test pack=my_pack`
 .SILENT .PHONY: docs
 docs: # generate documentation for all Nomad Packs [Usage: `make docs`]
 	# see https://www.gnu.org/software/make/manual/html_node/Foreach-Function.html
-	$(foreach PACK,$(PACKS),$(call render_documentation,$(strip $(PACK))))
+	$(foreach PACK,$(PACKS),$(call render_documentation,$(PACKS_DIR)/$(strip $(PACK)),variables.hcl,$(DOCS_CONFIG)))

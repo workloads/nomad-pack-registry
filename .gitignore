@@ -1,0 +1,2 @@
+# ignored temporary Terraform files
+packs/*/*.temporary.tf
