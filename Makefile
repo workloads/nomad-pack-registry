@@ -1,19 +1,27 @@
 # Makefile for Nomad Pack Maintenance
 
 # configuration
-BINARY_GLOW = $(call check_for_binary,glow)
-GLOW_WIDTH  = 160
-PACKS_DIR   = ./packs
-PACKS       = $(shell ls $(PACKS_DIR))
-TITLE       = 🟢 NOMAD PACKS
+BINARY_GLOW       = $(call check_for_binary,glow)
+DOCS_CONFIG       = .nomad-pack-docs.yml
+GLOW_WIDTH        = 160
+PACKS_DIR         = ./packs
+NEWMAN_REPORTERS ?= "cli"
+PACKS             = $(shell ls $(PACKS_DIR))
+reporter         ?= $(NEWMAN_REPORTERS)
+TITLE            = 🟢 NOMAD PACKS
+
+# override default reporter if `REPORTER` is set
+ifneq ($(reporter),)
+	NEWMAN_REPORTERS := $(reporter)
+endif
 
 include ../tooling/make/configs/shared.mk
 
 include ../tooling/make/functions/shared.mk
 
 # conditionally load Pack-specific configuration if the
-# target is `test` and the `pack` argument is not empty
-ifeq ($(and $(pack),$(MAKECMDGOALS)),test)
+# target is `env` and the `pack` argument is not empty
+ifeq ($(and $(pack),$(MAKECMDGOALS)),env)
     include $(PACKS_DIR)/$(strip $(pack))/tests/test.mk
 endif
 
@@ -56,7 +64,16 @@ define stop_pack
 	;
 endef
 
-# create environment to test a Nomad Pack
+# test a running Nomad Pack using Newman
+define test_pack
+	newman \
+		run "$(PACKS_DIR)/$(strip $(pack))/tests/newman.json" \
+		--reporters "$(NEWMAN_REPORTERS)" \
+	&& \
+	echo
+endef
+
+# create Nomad environment for testing
 define create_test_environment
 	$(if $(pack),,$(call missing_argument,test,pack=my_pack))
 
@@ -104,8 +121,8 @@ stop: # stop a running Nomad Pack [Usage: `make stop pack=my_pack`]
 	$(call stop_pack, $(pack))
 
 .SILENT .PHONY: test
-test: # create environment to test a Nomad Pack [Usage: `make test pack=my_pack`]
-	$(call create_test_environment, $(pack))
+test: # test a running Nomad Pack [Usage: `make test pack=my_pack`]
+	$(call test_pack, $(pack))
 
 .SILENT .PHONY: docs
 docs: # generate documentation for all Nomad Packs [Usage: `make docs`]
