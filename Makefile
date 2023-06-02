@@ -141,4 +141,4 @@ test: # test a running Nomad Pack [Usage: `make test pack=my_pack`]
 .SILENT .PHONY: docs
 docs: # generate documentation for all Nomad Packs [Usage: `make docs`]
 	# see https://www.gnu.org/software/make/manual/html_node/Foreach-Function.html
-	$(foreach PACK,$(PACKS),$(call render_documentation,$(PACKS_DIR)/$(strip $(PACK)),variables.hcl,$(DOCS_CONFIG)))
+	$(foreach PACK,$(PACKS),$(call render_documentation,$(PACKS_DIR)/$(strip $(PACK)),variables.hcl,$(DOCS_CONFIG),$(NOMADVARS_SAMPLE_FILE)))

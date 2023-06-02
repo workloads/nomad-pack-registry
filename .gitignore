@@ -1,2 +1,3 @@
 # ignored temporary Terraform files
-packs/*/*.temporary.tf
+packs/**/*.temporary.tf
+packs/**/overrides.hcl
