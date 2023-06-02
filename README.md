@@ -28,13 +28,16 @@ This repository provides a workflow that is wrapped through a [Makefile](./Makef
 Running `make` without commands will print out the following help information:
 
 ```text
-NOMAD PACKS MAINTENANCE
 
-render          render a Nomad Pack                           `make render pack="my_pack"`
-run             run a Nomad Pack                              `make run pack="my_pack"`
-rerun           destroy and run a Nomad Pack                  `make rerun pack="my_pack"`
-stop            stop a running Nomad Pack                     `make stop pack="my_pack"`
-test            create environment to test a Nomad Pack       `make test pack="my_pack"`
+🟢 NOMAD PACKS
+
+Target          Description                                   Usage
+env             create Nomad environment for testing          `make env pack=my_pack`
+render          render a Nomad Pack                           `make render pack=my_pack`
+run             run a Nomad Pack                              `make run pack=my_pack`
+rerun           destroy and run a Nomad Pack                  `make rerun pack=my_pack`
+stop            stop a running Nomad Pack                     `make stop pack=my_pack`
+test            test a running Nomad Pack                     `make test pack=my_pack`
 docs            generate documentation for all Nomad Packs    `make docs`
 help            display a list of Make Targets                `make help`
 _listincludes   list all included Makefiles and *.mk files    `make _listincludes`

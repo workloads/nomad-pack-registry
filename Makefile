@@ -80,6 +80,8 @@ define create_test_environment
 	# create test directories if they do not exist
 	$(foreach TEST_DIRECTORY,$(TEST_DIRECTORIES),$(call safely_create_directory,$(TEST_DIRECTORY)))
 
+	echo
+
 	# start Nomad in development mode, using Pack-specific configuration
 	nomad \
 		agent \
@@ -99,6 +101,10 @@ define destroy_pack
 endef
 
 include ../tooling/make/targets/shared.mk
+
+.SILENT .PHONY: env
+env: # create Nomad environment for testing [Usage: `make env pack=my_pack`]
+	$(call create_test_environment,$(pack))
 
 .SILENT .PHONY: render
 render: # render a Nomad Pack [Usage: `make render pack=my_pack`]
