@@ -1,14 +1,16 @@
 # Makefile for Nomad Pack Maintenance
 
 # configuration
-BINARY_GLOW       = $(call check_for_binary,glow)
-DOCS_CONFIG       = .nomad-pack-docs.yml
-GLOW_WIDTH        = 160
-PACKS_DIR         = ./packs
-NEWMAN_REPORTERS ?= "cli"
-PACKS             = $(shell ls $(PACKS_DIR))
-reporter         ?= $(NEWMAN_REPORTERS)
-TITLE            = 🟢 NOMAD PACKS
+ARGS                  :=
+BINARY_GLOW            = $(call check_for_binary,glow)
+DOCS_CONFIG            = .nomad-pack-docs.yml
+GLOW_WIDTH             = 160
+PACKS_DIR              = ./packs
+NEWMAN_REPORTERS      ?= "cli"
+NOMADVARS_SAMPLE_FILE	 = overrides.sample.hcl
+PACKS                  = $(shell ls $(PACKS_DIR))
+reporter              ?= $(NEWMAN_REPORTERS)
+TITLE                  = 🟢 NOMAD PACKS
 
 # override default reporter if `REPORTER` is set
 ifneq ($(reporter),)
@@ -34,6 +36,7 @@ define render_pack
 	nomad-pack \
 		render \
 			"$(PACKS_DIR)/$(strip $(pack))" \
+			$(ARGS) \
 	;
 endef
 
@@ -45,12 +48,14 @@ define run_pack
 		nomad-pack \
 			run \
 				"$(PACKS_DIR)/$(strip $(pack))" \
+				$(ARGS) \
 		| \
 		glow \
 			--width $(GLOW_WIDTH), \
 		nomad-pack \
 			run \
 				"$(PACKS_DIR)/$(strip $(pack))" \
+				$(ARGS) \
 	)
 endef
 
@@ -61,6 +66,7 @@ define stop_pack
 	nomad-pack \
 		stop \
 			"$(PACKS_DIR)/$(strip $(pack))" \
+			$(ARGS) \
 	;
 endef
 
@@ -87,6 +93,7 @@ define create_test_environment
 		agent \
 			-config="$(PACKS_DIR)/$(strip $(pack))/tests/config.hcl" \
 			-dev \
+			$(ARGS) \
 	;
 endef
 
@@ -97,6 +104,7 @@ define destroy_pack
 	nomad-pack \
 		destroy \
 			"$(PACKS_DIR)/$(strip $(pack))" \
+			$(ARGS) \
 	;
 endef
 
