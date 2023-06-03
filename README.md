@@ -9,6 +9,7 @@
   * [Table of Contents](#table-of-contents)
   * [Requirements](#requirements)
   * [Usage](#usage)
+    * [Testing](#testing)
   * [Notes](#notes)
   * [Author Information](#author-information)
   * [License](#license)
@@ -16,10 +17,11 @@
 
 ## Requirements
 
-* HashiCorp Nomad `1.5.5` or [newer](https://developer.hashicorp.com/nomad/downloads).
-* HashiCorp Nomad Pack `0.0.1` or [newer](https://releases.hashicorp.com/nomad-pack/).
-* `terraform-docs` `0.16.0` or [newer](https://terraform-docs.io/user-guide/installation/).
-* a check-out of [@workloads/tooling](https://github.com/workloads/tooling)
+- HashiCorp Nomad `1.5.5` or [newer](https://developer.hashicorp.com/nomad/downloads)
+- HashiCorp Nomad Pack `0.0.1` or [newer](https://releases.hashicorp.com/nomad-pack/)
+- a check-out of [@workloads/tooling](https://github.com/workloads/tooling)
+- `terraform-docs` `0.16.0` or [newer](https://terraform-docs.io/user-guide/installation/)
+- `newman` `5.3.2` or [newer](https://learning.postman.com/docs/collections/using-newman-cli/installing-running-newman/)
 
 ## Usage
 
@@ -43,6 +45,15 @@ help            display a list of Make Targets                `make help`
 _listincludes   list all included Makefiles and *.mk files    `make _listincludes`
 _selfcheck      lint Makefile                                 `make _selfcheck`
 ```
+
+### Testing
+
+The Nomad Packs in this Registry provide a test harness that may be used to verify the functionality of the Pack.
+
+The harness is exposed through the `make env` and `make test` targets:
+
+- `make env` starts a Nomad environment, using the configuration stored inside the Pack's `./tests/config.hcl` file.
+- `make test` runs a [Postman Collection](https://learning.postman.com/docs/collections/collections-overview/), using the requests stored inside the Pack's `./tests/newman.json` file.
 
 ## Notes
 
