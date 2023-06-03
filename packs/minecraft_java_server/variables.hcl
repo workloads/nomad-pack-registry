@@ -144,8 +144,8 @@ variable "config" {
     # toggle to enable removal of old mods
     remove_old_mods = true
 
-    # in-game level seed
-    seed = ""
+    # in-game level seed, see https://www.reddit.com/r/minecraftseeds/ for inspiration
+    seed = "-3420545464665791887"
 
     # in-game name of server
     server_name = "Minecraft Java Server"
@@ -269,10 +269,10 @@ variable "image" {
     image = "minecraft-server"
 
     # Tag of the Image
-    tag = "java17"
+    tag = "2023.4.0-java17-alpine"
 
     # Digest of the Tag of the Image
-    digest = "sha256:c6c6afd0e3fa4f06074a449c2dc8248a55a7c639bdda5754d5eaa6963447c909"
+    digest = "sha256:acdb125f972ba820ec311251b23ef6a338d1e51c0e564747c72841983c1e2f62"
   }
 }
 
