@@ -183,69 +183,6 @@ variable "config" {
   }
 }
 
-variable "config_mounts" {
-  type = map(object({
-    name        = string
-    type        = string
-    destination = string
-    read_only   = bool
-  }))
-
-  description = "Mounts Configuration for the Application."
-
-  default = {
-    data = {
-      name        = "minecraft_data",
-      type        = "host"
-      destination = "/data"
-      read_only   = false
-    },
-
-    extras = {
-      name        = "minecraft_extras",
-      type        = "host"
-      destination = "/extras"
-      read_only   = false
-    },
-
-    worlddata = {
-      name        = "minecraft_worlddata",
-      type        = "host"
-      destination = "/worlds"
-      read_only   = false
-    },
-  }
-}
-
-variable "config_ports" {
-  type = map(object({
-    name = string,
-    path = string,
-    port = number,
-    type = string,
-  }))
-
-  description = "Port Configuration for the Application."
-
-  default = {
-    # port for Minecraft server
-    main = {
-      name = "minecraft_java_server_main",
-      path = null
-      port = 25565,
-      type = "tcp",
-    },
-
-    # port for RCON Interface
-    rcon = {
-      name = "minecraft_java_server_rcon",
-      path = null,
-      port = 25575,
-      type = "tcp",
-    },
-  }
-}
-
 variable "consul_service_name" {
   type        = string
   description = "Consul Service Name for the Application."
@@ -323,7 +260,7 @@ variable "image" {
   # see https://hub.docker.com/r/itzg/minecraft-server/tags
   default = {
     # Container Registry URL where the Image is hosted
-    registry = "hub.docker.com"
+    registry = "docker.io"
 
     # Namespace of the Image
     namespace = "itzg"
@@ -350,6 +287,35 @@ variable "namespace" {
   type        = string
   description = "Namespace in which the Job should be placed."
   default     = "default"
+}
+
+variable "ports" {
+  type = map(object({
+    name = string,
+    path = string,
+    port = number,
+    type = string,
+  }))
+
+  description = "Port Configuration for the Application."
+
+  default = {
+    # port for Minecraft server
+    main = {
+      name = "minecraft_java_server_main",
+      path = null
+      port = 25565,
+      type = "tcp",
+    },
+
+    # port for RCON Interface
+    rcon = {
+      name = "minecraft_java_server_rcon",
+      path = null,
+      port = 25575,
+      type = "tcp",
+    },
+  }
 }
 
 # see https://developer.hashicorp.com/nomad/docs/job-specification/job#priority
@@ -399,4 +365,17 @@ variable "verbose_output" {
   type        = bool
   description = "Toggle to enable verbose output."
   default     = true
+}
+
+variable "volumes" {
+  type = map(object({
+    name        = string
+    type        = string
+    destination = string
+    read_only   = bool
+  }))
+
+  description = "Mounts Configuration for the Application."
+
+  default = {}
 }

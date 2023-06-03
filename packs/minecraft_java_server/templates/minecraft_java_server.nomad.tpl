@@ -30,7 +30,7 @@ job [[ template "job_name" .minecraft_java_server.job_name ]] {
       port     = "main"
       provider = "nomad"
 
-      [[ template "service_checks" .minecraft_java_server.config_ports ]]
+      [[ template "service_checks" .minecraft_java_server.ports ]]
     }
     [[ end -]]
 
@@ -42,7 +42,7 @@ job [[ template "job_name" .minecraft_java_server.job_name ]] {
       mode     = "fail"
     }
 
-    [[ template "group_volumes" .minecraft_java_server.config_mounts ]]
+    [[ template "group_volumes" .minecraft_java_server.volumes ]]
 
     task [[ template "job_name" .minecraft_java_server.job_name ]] {
       # see https://developer.hashicorp.com/nomad/docs/drivers/docker
@@ -50,7 +50,7 @@ job [[ template "job_name" .minecraft_java_server.job_name ]] {
       driver = "[[ .minecraft_java_server.driver ]]"
 
       config {
-        image = "[[ .minecraft_java_server.image.registry ]]/[[ .minecraft_java_server.image.org ]]/[[ .minecraft_java_server.image.slug ]]:[[ .minecraft_java_server.image.tag ]]@[[ .minecraft_java_server.image.digest ]]"
+        image = "[[ .minecraft_java_server.image.registry ]]/[[ .minecraft_java_server.image.namespace ]]/[[ .minecraft_java_server.image.image ]]:[[ .minecraft_java_server.image.tag ]]@[[ .minecraft_java_server.image.digest ]]"
 
         # see https://docs.minecraft_java_server.io/advanced/cli#configuration-flags-available-at-the-command-line
         # and https://developer.hashicorp.com/nomad/docs/drivers/docker#args

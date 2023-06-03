@@ -47,7 +47,7 @@
       [[ end ]]
 [[ end ]]
 
-[[/* iterate over `var.config_mounts` to create Volume Mounts */]]
+[[/* iterate over `var.volumes` to create Volume Mounts */]]
 [[ define "group_volumes" ]]
 [[- range $index, $mount := . ]]
     volume [[ $mount.name | quote ]] {
@@ -58,15 +58,7 @@
 [[ end ]]
 [[- end ]]
 
-[[/* TODO */]]
-[[/* Define HTTPs port to bind to */]]
-[[ define "arg_bind_https" ]]
-[[- if . ]]
-          "--bind-https", "[[ .config.bind_addr ]]:[[ .config_ports.https.port ]]",
-[[- end ]]
-[[- end ]]
-
-[[/* uterate over list items of `var.config_mounts` if provided in `variables.hcl` */]]
+[[/* iterate over list items of `var.volumes` */]]
 [[ define "task_volume_mounts" ]]
 [[- range $index, $mount := . ]]
       volume_mount {
@@ -77,7 +69,7 @@
 [[ end ]]
 [[- end -]]
 
-[[/* iterate over map items of `var.config_ports` if provided in `variables.hcl` */]]
+[[/* iterate over map items of `var.ports` */]]
 [[ define "task_ports" ]]
         # see https://developer.hashicorp.com/nomad/docs/drivers/docker#ports
         ports = [
@@ -89,7 +81,7 @@
 
 [[/* pretty-print Image information */]]
 [[ define "output_image_information" ]]
-[[- if eq .registry "hub.docker.com" -]]
+[[- if eq .registry "docker.io" -]]
     URL:       https://hub.docker.com/layers/[[ .namespace ]]/[[ .image ]]/[[ .tag ]]/images/[[ .digest | replace ":" "-" ]]
 [[- else -]]
     URL:       https://[[ .registry ]]/[[ .namespace ]]/[[ .image ]]:[[ .tag ]]

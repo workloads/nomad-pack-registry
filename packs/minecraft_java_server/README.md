@@ -51,8 +51,6 @@ nomad-pack run minecraft_java_server
 | Name | Description | Type |
 |------|-------------|------|
 | config | Application configuration. | <pre>object({<br>    allow_flight                 = bool<br>    allow_nether                 = bool<br>    announce_player_achievements = bool<br>    console                      = bool<br>    data                         = string<br>    difficulty                   = string<br>    disable_healthcheck          = bool<br>    enable_command_block         = bool<br>    enable_query                 = bool<br>    enable_rcon                  = bool<br>    enable_rolling_logs          = bool<br>    eula                         = bool<br>    generate_structures          = bool<br>    gui                          = bool<br>    hardcore                     = bool<br>    icon                         = string<br>    level_type                   = string<br>    max_build_height             = number<br>    max_players                  = number<br>    max_tick_time                = number<br>    max_world_size               = number<br>    memory                       = string<br>    mode                         = string<br>    mods_file                    = string<br>    motd                         = string<br>    online_mode                  = bool<br>    override_icon                = bool<br>    pvp                          = bool<br>    rcon_password                = string<br>    remove_old_mods              = bool<br>    seed                         = string<br>    server_name                  = string<br>    snooper_enabled              = bool<br>    spawn_animals                = bool<br>    spawn_monsters               = bool<br>    spawn_npcs                   = bool<br>    spawn_protection             = number<br>    tz                           = string<br>    use_aikar_flags              = bool<br>    version                      = string<br>    view_distance                = number<br>    world                        = string<br>  })</pre> |
-| config_mounts | Mounts Configuration for the Application. | <pre>map(object({<br>    name        = string<br>    type        = string<br>    destination = string<br>    read_only   = bool<br>  }))</pre> |
-| config_ports | Port Configuration for the Application. | <pre>map(object({<br>    name = string,<br>    path = string,<br>    port = number,<br>    type = string,<br>  }))</pre> |
 | consul_service_name | Consul Service Name for the Application. | `string` |
 | consul_service_tags | Consul Service Tags for the Application. | `list(string)` |
 | count | Number of desired Job Deployments. | `number` |
@@ -62,11 +60,13 @@ nomad-pack run minecraft_java_server
 | image | Content Address to use for the Container Image. | <pre>object({<br>    registry  = string<br>    namespace = string<br>    image     = string<br>    tag       = string<br>    digest    = string<br>  })</pre> |
 | job_name | Name of the Job. | `string` |
 | namespace | Namespace in which the Job should be placed. | `string` |
+| ports | Port Configuration for the Application. | <pre>map(object({<br>    name = string,<br>    path = string,<br>    port = number,<br>    type = string,<br>  }))</pre> |
 | priority | Priority of the Job. | `number` |
 | region | Regions that are eligible for Job Deployment. | `string` |
 | register_consul_service | Toggle to enable Consul Service Registration for the Job. | `bool` |
 | resources | Resources to assign to the Application. | <pre>object({<br>    cpu    = number<br>    memory = number<br>  })</pre> |
 | verbose_output | Toggle to enable verbose output. | `bool` |
+| volumes | Mounts Configuration for the Application. | <pre>map(object({<br>    name        = string<br>    type        = string<br>    destination = string<br>    read_only   = bool<br>  }))</pre> |
 <!-- END_PACK_DOCS -->
 
 ### Outputs
