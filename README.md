@@ -9,7 +9,9 @@
   * [Table of Contents](#table-of-contents)
   * [Requirements](#requirements)
   * [Usage](#usage)
-    * [Testing](#testing)
+  * [Adding the Nomad Pack Registry](#adding-the-nomad-pack-registry)
+  * [Running a Nomad Pack](#running-a-nomad-pack)
+    * [Testing a Nomad Pack](#testing-a-nomad-pack)
   * [Notes](#notes)
   * [Author Information](#author-information)
   * [License](#license)
@@ -42,11 +44,32 @@ stop            stop a running Nomad Pack                     `make stop pack=my
 test            test a running Nomad Pack                     `make test pack=my_pack`
 docs            generate documentation for all Nomad Packs    `make docs`
 help            display a list of Make Targets                `make help`
+registry        add Nomad Pack Registry to local environment  `make registry`
 _listincludes   list all included Makefiles and *.mk files    `make _listincludes`
 _selfcheck      lint Makefile                                 `make _selfcheck`
 ```
 
-### Testing
+## Adding the Nomad Pack Registry
+
+This Nomad Pack Registry may be added to an environment like so:
+
+```shell
+make registry
+````
+
+For more information see [developer.hashicorp.com](https://developer.hashicorp.com/nomad/tutorials/nomad-pack/nomad-pack-intro#adding-non-default-pack-registries).
+
+## Running a Nomad Pack
+
+Nomad Packs are stored in the [`./packs`](./packs) directory and feature detailed documentation and accompanying files.
+
+A Nomad Pack may be run like so:
+
+```shell
+make run pack=my_pack
+````
+
+### Testing a Nomad Pack
 
 The Nomad Packs in this Registry provide a test harness that may be used to verify the functionality of the Pack.
 
