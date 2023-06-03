@@ -1,6 +1,6 @@
 [[/*
   Helpers for the main *.nomad.tpl template,
-  see https://github.com/hashicorp/nomad-pack/blob/main/docs/writing-packs.md#helper-templates
+  see https://developer.hashicorp.com/nomad/tutorials/nomad-pack/nomad-pack-writing-packs
 */]]
 
 [[/* Default to `pack_name` from `metadata.hcl` if job name wasn't provided in `variables.hcl` */]]

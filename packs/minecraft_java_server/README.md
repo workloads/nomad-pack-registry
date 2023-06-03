@@ -38,7 +38,7 @@ A Pack available via the [@workloads Nomad Pack Registry](https://github.com/wor
 nomad-pack registry add workloads github.com/workloads/nomad-pack-registry
 
 # run the Pack
-nomad-pack run minecraft_java_server
+nomad-pack run minecraft_java_server --registry=workloads
 ```
 
 > **Note**

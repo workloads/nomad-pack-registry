@@ -122,8 +122,8 @@ variable "config" {
     # see https://github.com/itzg/docker-minecraft-server/blob/master/README.md#game-mode
     mode = "creative"
 
-    # Path to text file with Mod URLs
-    mods_file = "/extras/mods.txt"
+    # Path to text file with Mod URLs (e.g.: `/extras/mods.txt`)
+    mods_file = ""
 
     # Message of the Day
     # see https://minecraft.fandom.com/wiki/Formatting_codes
