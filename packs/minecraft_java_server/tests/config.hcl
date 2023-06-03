@@ -36,6 +36,12 @@ client {
     path      = "/tmp/minecraft_worlds"
     read_only = true
   }
+
+  # see https://developer.hashicorp.com/nomad/docs/configuration/client#options-parameters
+  options = {
+    # see https://developer.hashicorp.com/nomad/docs/configuration/client#driver-allowlist
+    "driver.allowlist" = "docker,podman"
+  }
 }
 
 # see https://developer.hashicorp.com/nomad/docs/drivers/docker
