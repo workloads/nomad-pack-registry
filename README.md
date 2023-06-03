@@ -86,6 +86,12 @@ The harness is exposed through the `make env` and `make test` targets:
 export NO_COLOR=1 && make
 ```
 
+* For `nomad-pack` arguments that are not supported by the [Makefile](./Makefile), the `ARGS` variable may be used like so:
+
+```shell
+ make render pack=minecraft_java_server ARGS="--render-output-template"
+```
+
 ## Author Information
 
 This repository is maintained by the contributors listed on [GitHub](https://github.com/workloads/nomad-pack-registry/graphs/contributors).
