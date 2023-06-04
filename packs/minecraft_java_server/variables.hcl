@@ -62,7 +62,7 @@ variable "config" {
     # toggle to enable in-game console
     console = true
 
-    # Directory where Application data will be stored
+    # directory where Application data will be stored
     data = "/data"
 
     # in-game difficulty level
@@ -123,7 +123,7 @@ variable "config" {
     # see https://github.com/itzg/docker-minecraft-server/blob/master/README.md#game-mode
     mode = "creative"
 
-    # Path to text file with Mod URLs (e.g.: `/extras/mods.txt`)
+    # path to text file with Mod URLs (e.g.: `/extras/mods.txt`)
     mods_file = ""
 
     # Message of the Day
@@ -142,25 +142,25 @@ variable "config" {
     # RCON Interface password
     rcon_password = "AW96B6"
 
-    # toggle to enable removal of old mods
+    # toggle to enable removal of old Mods
     remove_old_mods = true
 
-    # in-game level seed, see https://www.reddit.com/r/minecraftseeds/ for inspiration
+    # in-game Level Seed, see https://www.reddit.com/r/minecraftseeds/ for inspiration
     seed = "-3420545464665791887"
 
-    # in-game name of server
+    # in-game name of Server
     server_name = "Minecraft Java Server"
 
     # toggle to enable sending updates to `snoop.minecraft.net`
     snooper_enabled = false
 
-    # toggle to enable animals to spawn
+    # toggle to enable Animals to spawn
     spawn_animals = true
 
-    # toggle to enable monsters to spawn
+    # toggle to enable Monsters to spawn
     spawn_monsters = false
 
-    # toggle to enable non-player characters to spawn
+    # toggle to enable Non-Player Characters to spawn
     spawn_npcs = true
 
     # sets area that non-ops cannot alter (in blocks)
@@ -169,14 +169,14 @@ variable "config" {
     # timezone
     tz = "Europe/Amsterdam"
 
-    # server type (e.g.: `vanilla`, `fabric` etc.)
+    # Server Type (e.g.: `vanilla`, `fabric` etc.)
     type = "vanilla"
 
     # toggle to enable optimized JVM flags for GC tuning
     # see https://github.com/itzg/docker-minecraft-server#enable-aikars-flags
-    use_aikar_flags = false
+    use_aikar_flags = true
 
-    # Minecraft version to run
+    # Minecraft Version to run
     version = "1.19.4"
 
     # set the amount of World Data to send to clients to define viewing distance (in blocks)
