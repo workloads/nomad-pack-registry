@@ -19,14 +19,17 @@
 [[- end -]]
 [[- end -]]
 
-[[/* iterate over `var.config_ports` to map Network Ports */]]
+[[/* iterate over `var.ports` to map Network Ports */]]
 [[ define "network_ports" ]]
 [[- range $name, $config := . ]]
+      [[/* only enable mapping of `rcon` port if `config.enable_rcon` is true */]]
+      [[ if or (ne $name "rcon") (and (eq $name "rcon") (eq $config.enable_rcon true)) ]]
       # see https://developer.hashicorp.com/nomad/docs/job-specification/network#port-parameters
       port [[ $name | quote ]] {
         static = [[ $config.port ]]
         to     = [[ $config.port ]]
       }
+      [[ end ]]
 [[ end ]]
 [[- end ]]
 
@@ -73,8 +76,12 @@
 [[ define "task_ports" ]]
         # see https://developer.hashicorp.com/nomad/docs/drivers/docker#ports
         ports = [
-          [[- range $name, $config := . ]]
+          [[ $enable_rcon := .config.enable_rcon ]]
+          [[- range $name, $port := .ports ]]
+          [[/* only enable mapping of `rcon` port if `$enable_rcon` is true */]]
+          [[- if or (ne $name "rcon") (and (eq $name "rcon") (eq $enable_rcon true)) ]]
           [[ $name | quote ]],
+          [[- end ]]
           [[- end ]]
         ]
 [[- end ]]
