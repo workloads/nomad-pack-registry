@@ -309,6 +309,13 @@ variable "namespace" {
   default     = "default"
 }
 
+# see https://developer.hashicorp.com/nomad/docs/job-specification/network#network-modes
+variable "network_mode" {
+  type        = string
+  description = "Network Mode for the Job."
+  default     = "host"
+}
+
 variable "ports" {
   type = map(object({
     name = string,

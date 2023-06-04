@@ -18,7 +18,7 @@ job [[ template "job_name" .minecraft_java_server.job_name ]] {
     # see https://developer.hashicorp.com/nomad/docs/job-specification/network
     network {
       # see https://developer.hashicorp.com/nomad/docs/job-specification/network#network-modes
-      mode = "bridge"
+      mode = [[ .minecraft_java_server.network_mode | quote ]]
       [[ template "network_ports" .minecraft_java_server ]]
     }
 
