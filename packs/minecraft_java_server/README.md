@@ -65,6 +65,7 @@ nomad-pack run minecraft_java_server --registry=workloads
 | region | Regions that are eligible for Job Deployment. | `string` |
 | register_consul_service | Toggle to enable Consul Service Registration for the Job. | `bool` |
 | resources | Resources to assign to the Application. | <pre>object({<br>    cpu    = number<br>    memory = number<br>  })</pre> |
+| service_provider | Service Provider to use for the Application. | `string` |
 | verbose_output | Toggle to enable verbose output. | `bool` |
 | volumes | Mounts Configuration for the Application. | <pre>map(object({<br>    name        = string<br>    type        = string<br>    destination = string<br>    read_only   = bool<br>  }))</pre> |
 <!-- END_PACK_DOCS -->

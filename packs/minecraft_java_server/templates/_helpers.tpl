@@ -24,7 +24,7 @@
 [[ $enable_rcon := .config.enable_rcon ]]
 [[- range $name, $config := .ports ]]
       [[- /* only enable mapping of `rcon` port if `config.enable_rcon` is true */]]
-      [[- if or (ne $name "rcon") (and (eq $name "rcon") (eq $enable_rcon true)) -]]
+      [[- if or (ne $name "rcon") (and (eq $name "rcon") (eq $enable_rcon true)) ]]
       # see https://developer.hashicorp.com/nomad/docs/job-specification/network#port-parameters
       port [[ $name | quote ]] {
         static = [[ $config.port ]]
@@ -34,11 +34,32 @@
 [[- end ]]
 [[- end ]]
 
-[[/* iterate over `var.ports` to create Liveness Checks */]]
+[[/* iterate over configuration to create Service */]]
+[[ define "service" ]]
+    # see https://developer.hashicorp.com/nomad/docs/job-specification/service
+    service {
+      [[- if (eq .service_provider "consul") ]]
+      name     = "[[ .consul_service_name | replace "_" "-" | trunc 63 ]]"
+      tags     =  [[ .consul_service_tags | toJson ]]
+      [[- else ]]
+      name     = "[[ .job_name | replace "_" "-" | trunc 63 ]]"
+      [[- end ]]
+
+      port     = "main"
+      provider = "[[ .service_provider ]]"
+
+      [[ template "service_checks" . ]]
+  }
+[[- end ]]
+
+[[/* iterate over configuration to create Liveness Checks */]]
 [[ define "service_checks" ]]
-      [[- range $name, $check := . ]]
+      [[- /* only enable liveness probe for `rcon` port if `$enable_rcon` is true */]]
+      [[- $enable_rcon := .config.enable_rcon -]]
+      [[- range $name, $check := .ports ]]
+      [[- if or (ne $name "rcon") (and (eq $name "rcon") (eq $enable_rcon true)) ]]
       check {
-        name     = "liveness-probe-[[ $name ]]"
+        name     = [[ $name | quote ]]
         type     = [[ $check.type | quote ]]
 
         [[- if eq $check.type "http" ]]
@@ -49,6 +70,7 @@
         timeout  = "2s"
       }
       [[ end ]]
+      [[- end ]]
 [[ end ]]
 
 [[/* iterate over `var.volumes` to create Volume Mounts */]]

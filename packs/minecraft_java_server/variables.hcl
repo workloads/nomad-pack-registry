@@ -190,7 +190,9 @@ variable "config" {
 variable "consul_service_name" {
   type        = string
   description = "Consul Service Name for the Application."
-  default     = "minecraft_java_server"
+
+  # value may only contain alphanumeric characters and dashes and will be truncated to 63 characters
+  default = "minecraft-java-server"
 }
 
 variable "consul_service_tags" {
@@ -243,7 +245,7 @@ variable "ephemeral_disk" {
     migrate = true
 
     # size of the ephemeral disk in MB
-    size = 512
+    size = 1024
 
     # make best-effort attempt to place an updated allocation on the same node.
     sticky = true
@@ -283,7 +285,9 @@ variable "image" {
 variable "job_name" {
   type        = string
   description = "Name of the Job."
-  default     = "minecraft_java_server"
+
+  # value will be truncated to 63 characters when necessary
+  default = "minecraft_java_server"
 }
 
 # see https://developer.hashicorp.com/nomad/docs/job-specification/job#namespace
@@ -327,7 +331,7 @@ variable "ports" {
 variable "priority" {
   type        = number
   description = "Priority of the Job."
-  default     = 50
+  default     = 99
 }
 
 # see https://developer.hashicorp.com/nomad/docs/concepts/architecture#regions
@@ -364,6 +368,12 @@ variable "resources" {
     # see https://apexminecrafthosting.com/how-much-ram-do-i-need-for-my-server/
     memory = 4096
   }
+}
+
+variable "service_provider" {
+  type        = string
+  description = "Service Provider to use for the Application."
+  default     = "nomad"
 }
 
 variable "verbose_output" {

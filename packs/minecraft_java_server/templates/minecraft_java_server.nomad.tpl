@@ -22,17 +22,7 @@ job [[ template "job_name" .minecraft_java_server.job_name ]] {
       [[ template "network_ports" .minecraft_java_server ]]
     }
 
-    [[ if .minecraft_java_server.register_consul_service ]]
-    # see https://developer.hashicorp.com/nomad/docs/job-specification/service
-    service {
-      name     = "[[ .minecraft_java_server.consul_service_name ]]"
-      tags     =  [[ .minecraft_java_server.consul_service_tags | toJson ]]
-      port     = "main"
-      provider = "consul"
-
-      [[ template "service_checks" .minecraft_java_server.ports ]]
-    }
-    [[ end -]]
+    [[- template "service" .minecraft_java_server ]]
 
     # see https://developer.hashicorp.com/nomad/docs/job-specification/restart
     restart {
