@@ -150,7 +150,7 @@
               "",
               "// set Collection Variable `job_name` for downstream use",
               "pm.collectionVariables.set('job_name', res.ID);",
-              "console.log('[nomad-jobs:main] Collection Variable `job_name` = `' + pm.collectionVariables.get('job_name') + '`');",
+              "console.log('[' + request.name + ':main] Collection Variable `job_name` = `' + pm.collectionVariables.get('job_name') + '`');",
               "",
               "postman.setNextRequest('nomad-job');",
               ""
@@ -246,7 +246,6 @@
               "  pm.expect(res.Stable).to.eql(true);",
               "});",
               "",
-              "",
               "postman.setNextRequest('nomad-allocation');",
               ""
             ],
@@ -290,7 +289,10 @@
           "listen": "prerequest",
           "script": {
             "exec": [
-              "console.log('[nomad-allocation:pre] Collection Variable `job_name` = `' + pm.collectionVariables.get('job_name') + '`');"
+              "console.log('[' + request.name + ':pre] Collection Variable `job_name` = `' + pm.collectionVariables.get('job_name') + '`');",
+              "",
+              "// clear previously-set `service_name` variable",
+              "pm.collectionVariables.unset('service_name');"
             ],
             "type": "text/javascript"
           }
@@ -327,7 +329,8 @@
               "// set Collection Variable `job_name` for downstream use",
               "// replace all underscores with dashes, as per logic inside Pack template",
               "pm.collectionVariables.set('service_name', res.JobID.split('_').join('-'));",
-              "console.log('[nomad-allocation:main] Collection Variable `service_name` = `' + pm.collectionVariables.get('service_name') + '`');",
+              "",
+              "console.log('[' + request.name + ':main] Collection Variable `service_name` = `' + pm.collectionVariables.get('service_name') + '`');",
               "",
               "postman.setNextRequest('nomad-service');",
               ""
@@ -374,8 +377,7 @@
           "listen": "prerequest",
           "script": {
             "exec": [
-              "console.log('[nomad-service:pre] Collection Variable `service_name` = `' + pm.collectionVariables.get('service_name') + '`');",
-              ""
+              "console.log('[' + request.name + ':pre] Collection Variable `service_name` = `' + pm.collectionVariables.get('service_name') + '`');"
             ],
             "type": "text/javascript"
           }
