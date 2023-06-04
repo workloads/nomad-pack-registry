@@ -28,7 +28,7 @@ job [[ template "job_name" .minecraft_java_server.job_name ]] {
       name     = "[[ .minecraft_java_server.consul_service_name ]]"
       tags     =  [[ .minecraft_java_server.consul_service_tags | toJson ]]
       port     = "main"
-      provider = "nomad"
+      provider = "consul"
 
       [[ template "service_checks" .minecraft_java_server.ports ]]
     }
@@ -45,8 +45,6 @@ job [[ template "job_name" .minecraft_java_server.job_name ]] {
     [[ template "group_volumes" .minecraft_java_server.volumes ]]
 
     task [[ template "job_name" .minecraft_java_server.job_name ]] {
-      # see https://developer.hashicorp.com/nomad/docs/drivers/docker
-      # and https://developer.hashicorp.com/nomad/plugins/drivers/podman
       driver = "[[ .minecraft_java_server.driver ]]"
 
       config {
@@ -94,6 +92,7 @@ job [[ template "job_name" .minecraft_java_server.job_name ]] {
         SPAWN_NPCS                   = [[ .minecraft_java_server.config.spawn_npcs | toString | upper | quote ]]
         SPAWN_PROTECTION             = [[ .minecraft_java_server.config.spawn_protection | quote ]]
         TZ                           = [[ .minecraft_java_server.config.tz | quote ]]
+        TYPE                         = [[ .minecraft_java_server.config.type | quote ]]
         USE_AIKAR_FLAGS              = [[ .minecraft_java_server.config.use_aikar_flags | toString | upper | quote ]]
         VERSION                      = [[ .minecraft_java_server.config.version | quote ]]
         VIEW_DISTANCE                = [[ .minecraft_java_server.config.view_distance ]]

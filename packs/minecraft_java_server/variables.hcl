@@ -38,6 +38,7 @@ variable "config" {
     spawn_npcs                   = bool
     spawn_protection             = number
     tz                           = string
+    type                         = string
     use_aikar_flags              = bool
     version                      = string
     view_distance                = number
@@ -116,7 +117,7 @@ variable "config" {
     max_world_size = 10000
 
     # initial memory to assign
-    memory = "4G"
+    memory = "3G" # 75% of `resources.memory`
 
     # Game Mode to start with
     # see https://github.com/itzg/docker-minecraft-server/blob/master/README.md#game-mode
@@ -127,7 +128,7 @@ variable "config" {
 
     # Message of the Day
     # see https://minecraft.fandom.com/wiki/Formatting_codes
-    motd = "This server is running on §2§lHashiCorp Nomad§r"
+    motd = "This server is running on §2§lHashiCorp Nomad§r!"
 
     # toggle to enable Account Authentication (with Minecraft.net / Microsoft Account)
     online_mode = false
@@ -168,9 +169,12 @@ variable "config" {
     # timezone
     tz = "Europe/Amsterdam"
 
+    # server type (e.g.: `vanilla`, `fabric` etc.)
+    type = "vanilla"
+
     # toggle to enable optimized JVM flags for GC tuning
     # see https://github.com/itzg/docker-minecraft-server#enable-aikars-flags
-    use_aikar_flags = true
+    use_aikar_flags = false
 
     # Minecraft version to run
     version = "1.19.4"
@@ -350,7 +354,7 @@ variable "resources" {
 
   default = {
     # value in MHz
-    cpu = 1000
+    cpu = 2000
 
     # value in MB
     # 2048 = ~10 players, 4096 = ~25 players
