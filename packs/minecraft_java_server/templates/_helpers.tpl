@@ -21,16 +21,17 @@
 
 [[/* iterate over `var.ports` to map Network Ports */]]
 [[ define "network_ports" ]]
-[[- range $name, $config := . ]]
-      [[/* only enable mapping of `rcon` port if `config.enable_rcon` is true */]]
-      [[ if or (ne $name "rcon") (and (eq $name "rcon") (eq $config.enable_rcon true)) ]]
+[[ $enable_rcon := .config.enable_rcon ]]
+[[- range $name, $config := .ports ]]
+      [[- /* only enable mapping of `rcon` port if `config.enable_rcon` is true */]]
+      [[- if or (ne $name "rcon") (and (eq $name "rcon") (eq $enable_rcon true)) -]]
       # see https://developer.hashicorp.com/nomad/docs/job-specification/network#port-parameters
       port [[ $name | quote ]] {
         static = [[ $config.port ]]
         to     = [[ $config.port ]]
       }
       [[ end ]]
-[[ end ]]
+[[- end ]]
 [[- end ]]
 
 [[/* iterate over `var.ports` to create Liveness Checks */]]
@@ -73,12 +74,12 @@
 [[- end -]]
 
 [[/* iterate over map items of `var.ports` */]]
-[[ define "task_ports" ]]
+[[ define "task_ports" -]]
         # see https://developer.hashicorp.com/nomad/docs/drivers/docker#ports
         ports = [
-          [[ $enable_rcon := .config.enable_rcon ]]
+          [[- /* only enable mapping of `rcon` port if `$enable_rcon` is true */]]
+          [[- $enable_rcon := .config.enable_rcon -]]
           [[- range $name, $port := .ports ]]
-          [[/* only enable mapping of `rcon` port if `$enable_rcon` is true */]]
           [[- if or (ne $name "rcon") (and (eq $name "rcon") (eq $enable_rcon true)) ]]
           [[ $name | quote ]],
           [[- end ]]

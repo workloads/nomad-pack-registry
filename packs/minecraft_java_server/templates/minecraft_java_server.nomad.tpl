@@ -19,7 +19,7 @@ job [[ template "job_name" .minecraft_java_server.job_name ]] {
     network {
       # see https://developer.hashicorp.com/nomad/docs/job-specification/network#network-modes
       mode = "host"
-      [[ template "network_ports" .minecraft_java_server.ports ]]
+      [[ template "network_ports" .minecraft_java_server ]]
     }
 
     [[ if .minecraft_java_server.register_consul_service ]]

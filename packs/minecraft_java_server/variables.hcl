@@ -313,6 +313,7 @@ variable "ports" {
     },
 
     # port for RCON Interface
+    # ⚠️ `rcon` is a magic name that is used to trigger certain logic inside `_helpers.tpl`
     rcon = {
       name = "minecraft_java_server_rcon",
       path = null,
