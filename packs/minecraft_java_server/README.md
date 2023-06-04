@@ -59,6 +59,7 @@ nomad-pack run minecraft_java_server --registry=workloads
 | ephemeral_disk | Ephemeral Disk configuration for the Application. | <pre>object({<br>    migrate = bool<br>    size    = number<br>    sticky  = bool<br>  })</pre> |
 | image | Content Address to use for the Container Image. | <pre>object({<br>    registry  = string<br>    namespace = string<br>    image     = string<br>    tag       = string<br>    digest    = string<br>  })</pre> |
 | job_name | Name of the Job. | `string` |
+| job_tags | List of Tags for the Job. | `list(string)` |
 | namespace | Namespace in which the Job should be placed. | `string` |
 | ports | Port Configuration for the Application. | <pre>map(object({<br>    name = string,<br>    path = string,<br>    port = number,<br>    type = string,<br>  }))</pre> |
 | priority | Priority of the Job. | `number` |

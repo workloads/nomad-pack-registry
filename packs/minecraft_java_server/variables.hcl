@@ -198,7 +198,10 @@ variable "consul_service_name" {
 variable "consul_service_tags" {
   type        = list(string)
   description = "Consul Service Tags for the Application."
-  default     = []
+
+  default = [
+    "minecraft",
+  ]
 }
 
 variable "count" {
@@ -288,6 +291,15 @@ variable "job_name" {
 
   # value will be truncated to 63 characters when necessary
   default = "minecraft_java_server"
+}
+
+variable "job_tags" {
+  type        = list(string)
+  description = "List of Tags for the Job."
+
+  default = [
+    "minecraft",
+  ]
 }
 
 # see https://developer.hashicorp.com/nomad/docs/job-specification/job#namespace

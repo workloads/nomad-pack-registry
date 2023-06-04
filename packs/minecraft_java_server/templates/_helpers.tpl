@@ -39,14 +39,15 @@
     # see https://developer.hashicorp.com/nomad/docs/job-specification/service
     service {
       [[- if (eq .service_provider "consul") ]]
-      name     = "[[ .consul_service_name | replace "_" "-" | trunc 63 ]]"
+      name     = [[ .consul_service_name | replace "_" "-" | trunc 63 | quote ]]
       tags     =  [[ .consul_service_tags | toJson ]]
       [[- else ]]
-      name     = "[[ .job_name | replace "_" "-" | trunc 63 ]]"
+      name     = [[ .job_name | replace "_" "-" | trunc 63 | quote ]]
+      tags     =  [[ .job_tags | toJson ]]
       [[- end ]]
 
-      port     = "main"
-      provider = "[[ .service_provider ]]"
+      port     = [[ .ports | keys | first | quote ]]
+      provider = [[ .service_provider | quote ]]
 
       [[ template "service_checks" . ]]
   }

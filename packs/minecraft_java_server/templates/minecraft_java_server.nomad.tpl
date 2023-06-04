@@ -35,7 +35,7 @@ job [[ template "job_name" .minecraft_java_server.job_name ]] {
     [[ template "group_volumes" .minecraft_java_server.volumes ]]
 
     task [[ template "job_name" .minecraft_java_server.job_name ]] {
-      driver = "[[ .minecraft_java_server.driver ]]"
+      driver = [[ .minecraft_java_server.driver | quote ]]
 
       config {
         image = "[[ .minecraft_java_server.image.registry ]]/[[ .minecraft_java_server.image.namespace ]]/[[ .minecraft_java_server.image.image ]]:[[ .minecraft_java_server.image.tag ]]@[[ .minecraft_java_server.image.digest ]]"
