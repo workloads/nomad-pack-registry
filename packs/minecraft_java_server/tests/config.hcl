@@ -46,9 +46,19 @@ client {
 
 # see https://developer.hashicorp.com/nomad/docs/drivers/docker
 plugin "docker" {
-  allow_privileged = true
+  # see https://developer.hashicorp.com/nomad/docs/drivers/docker#allow_privileged
+  allow_privileged = false
 
+  # see https://developer.hashicorp.com/nomad/docs/drivers/docker#plugin-options
   config {
+    # see https://developer.hashicorp.com/nomad/docs/drivers/docker#extra_labels
+    extra_labels = [
+      "job_name",
+      "job_id",
+      "task_name"
+    ]
+
+    # see https://developer.hashicorp.com/nomad/docs/drivers/docker#gc
     gc {
       image       = true
       image_delay = "3m"
@@ -62,6 +72,7 @@ plugin "docker" {
       }
     }
 
+    # see https://developer.hashicorp.com/nomad/docs/drivers/docker#volumes-1
     volumes {
       enabled = true
     }
