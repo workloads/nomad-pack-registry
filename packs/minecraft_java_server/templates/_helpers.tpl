@@ -36,44 +36,57 @@
 
 [[/* iterate over configuration to create Service */]]
 [[ define "service" ]]
+    [[- $consul_service_name := .consul_service_name -]]
+    [[- $consul_service_tags := .consul_service_tags -]]
+    [[- $job_name := .job_name -]]
+    [[- $job_tags := .job_tags -]]
+    [[- $service_provider := .service_provider -]]
+    [[- $ports := .ports -]]
+
+    [[- /* only enable service `rcon` port if `$enable_rcon` is true */]]
+    [[- $enable_rcon := .config.enable_rcon -]]
+    [[ range $name, $port := .ports ]]
+    [[- if or (ne $name "rcon") (and (eq $name "rcon") (eq $enable_rcon true)) ]]
     # see https://developer.hashicorp.com/nomad/docs/job-specification/service
     service {
       [[- if (eq .service_provider "consul") ]]
-      name     = [[ .consul_service_name | replace "_" "-" | trunc 63 | quote ]]
-      tags     =  [[ .consul_service_tags | toJson ]]
+      [[- $service_name := printf "%s-%s" $consul_service_name $port.name ]]
+      name     = [[ $service_name | replace "_" "-" | trunc 63 | quote ]]
+      tags     = [[ $consul_service_tags | toJson ]]
       [[- else ]]
-      name     = [[ .job_name | replace "_" "-" | trunc 63 | quote ]]
-      tags     =  [[ .job_tags | toJson ]]
+      name     = [[ $port.name | replace "_" "-" | trunc 63 | quote ]]
+      tags     = [[ $job_tags | toJson ]]
       [[- end ]]
 
-      port     = [[ .ports | keys | first | quote ]]
-      provider = [[ .service_provider | quote ]]
+      port     = [[ $port.port ]]
+      provider = [[ $service_provider | quote ]]
 
-      [[ template "service_checks" . ]]
-  }
+      check {
+        name = [[ $name | quote ]]
+        type = [[ $port.type | quote ]]
+
+        [[- if eq $port.type "http" ]]
+        path = [[ $port.path | quote ]]
+        [[- end ]]
+
+        interval = "30s"
+        timeout  = "15s"
+      }
+    }
+    [[- end ]]
+    [[ end ]]
 [[- end ]]
 
-[[/* iterate over configuration to create Liveness Checks */]]
-[[ define "service_checks" ]]
-      [[- /* only enable liveness probe for `rcon` port if `$enable_rcon` is true */]]
-      [[- $enable_rcon := .config.enable_rcon -]]
-      [[- range $name, $check := .ports ]]
-      [[- if or (ne $name "rcon") (and (eq $name "rcon") (eq $enable_rcon true)) ]]
-      check {
-        name     = [[ $name | quote ]]
-        type     = [[ $check.type | quote ]]
-
-        [[- if eq $check.type "http" ]]
-        path = [[ $check.path | quote ]]
-        [[ end ]]
-
-        interval = "10s"
-        timeout  = "2s"
-      }
-      [[ end ]]
-      [[- end ]]
+[[/* iterate over `var.volumes` to create Volumes */]]
+[[ define "volumes" ]]
+[[- range $index, $mount := . ]]
+    volume [[ $mount.name | quote ]] {
+      type      = [[ $mount.type | quote ]]
+      read_only = [[ $mount.read_only ]]
+    }
 [[ end ]]
 
+[[- end ]]
 [[/* iterate over `var.volumes` to create Volume Mounts */]]
 [[ define "group_volumes" ]]
 [[- range $index, $mount := . ]]
