@@ -19,7 +19,7 @@ job [[ template "job_name" .minecraft_java_server.job_name ]] {
     network {
       # see https://developer.hashicorp.com/nomad/docs/job-specification/network#network-modes
       mode = "host"
-      [[ template "network_ports" .minecraft_java_server.config_ports ]]
+      [[ template "network_ports" .minecraft_java_server.ports ]]
     }
 
     [[ if .minecraft_java_server.register_consul_service ]]
@@ -50,7 +50,7 @@ job [[ template "job_name" .minecraft_java_server.job_name ]] {
       config {
         image = "[[ .minecraft_java_server.image.registry ]]/[[ .minecraft_java_server.image.namespace ]]/[[ .minecraft_java_server.image.image ]]:[[ .minecraft_java_server.image.tag ]]@[[ .minecraft_java_server.image.digest ]]"
 
-        [[ template "task_ports" .minecraft_java_server.config_ports ]]
+        [[ template "task_ports" .minecraft_java_server ]]
       }
 
       env {
@@ -99,7 +99,7 @@ job [[ template "job_name" .minecraft_java_server.job_name ]] {
         WORLD                        = [[ .minecraft_java_server.config.world | quote ]]
       }
 
-      [[ template "task_volume_mounts" .minecraft_java_server.config_mounts ]]
+      [[ template "task_volume_mounts" .minecraft_java_server.volumes ]]
 
       # see https://developer.hashicorp.com/nomad/docs/job-specification/resources
       resources {

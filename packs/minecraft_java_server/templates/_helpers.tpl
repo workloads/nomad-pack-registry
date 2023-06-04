@@ -30,7 +30,7 @@
 [[ end ]]
 [[- end ]]
 
-[[/* iterate over `var.config_ports` to create Liveness Checks */]]
+[[/* iterate over `var.ports` to create Liveness Checks */]]
 [[ define "service_checks" ]]
       [[- range $name, $check := . ]]
       check {
