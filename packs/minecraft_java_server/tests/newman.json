@@ -1,8 +1,11 @@
 {
   "info": {
+    "_postman_id": "1a8990f6-743f-41d7-af5d-d74381a3b8cc",
     "name": "minecraft_java_server",
     "description": "# Nomad Pack: Minecraft (Java Edition)\n\n> [Postman Collection](https://learning.postman.com/docs/collections/collections-overview/) containing API tests to run against the Nomad API. \n  \n\n## Notes\n\n- This Collection is designed for testing the `minecraft_java_server` Pack available at [@workloads/nomad-pack-registry](https://github.com/workloads/nomad-pack-registry/tree/main/packs/minecraft_java_server).\n\n- This Collection expects Nomad to be available via `http://localhost:4646`.",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "20135",
+    "_collection_link": "https://wrklds.postman.co/workspace/Team-Workspace~6bd90753-17de-4e29-86da-52ea739451c8/collection/20135-1a8990f6-743f-41d7-af5d-d74381a3b8cc?action=share&creator=20135&source=collection_link"
   },
   "item": [
     {
