@@ -1,5 +1,5 @@
 [[/*
-  Helpers for the `minecraft_java_server.nomad.tpl` template,
+  Helpers for the `minecraft_java_edition.nomad.tpl` template,
   see https://developer.hashicorp.com/nomad/tutorials/nomad-pack/nomad-pack-writing-packs
 */]]
 

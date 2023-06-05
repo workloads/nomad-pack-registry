@@ -1,6 +1,6 @@
 # Nomad Pack: Minecraft (Java Edition)
 
-![Nomad Pack: Minecraft (Java Edition)](https://assets.workloads.io/nomad-pack-registry/minecraft_java_server.png)
+![Nomad Pack: Minecraft (Java Edition)](https://assets.workloads.io/nomad-pack-registry/minecraft_java_edition.png)
 
 ## Table of Contents
 
@@ -23,12 +23,12 @@
 
 ## Usage
 
-The `minecraft_java_server` Pack can be run with a local fileset (commonly used when developing the Pack), or via the [@workloads Nomad Pack Registry](https://github.com/workloads/nomad-pack-registry).
+The `minecraft_java_edition` Pack can be run with a local fileset (commonly used when developing the Pack), or via the [@workloads Nomad Pack Registry](https://github.com/workloads/nomad-pack-registry).
 
 A Pack available _locally_ may be run like so:
 
 ```shell
-nomad-pack run ./packs/minecraft_java_server
+nomad-pack run ./packs/minecraft_java_edition
 ```
 
 A Pack available via the [@workloads Nomad Pack Registry](https://github.com/workloads/nomad-pack-registry) may be run like so:
@@ -38,7 +38,7 @@ A Pack available via the [@workloads Nomad Pack Registry](https://github.com/wor
 nomad-pack registry add workloads github.com/workloads/nomad-pack-registry
 
 # run the Pack
-nomad-pack run minecraft_java_server --registry=workloads
+nomad-pack run minecraft_java_edition --registry=workloads
 ```
 
 > **Note**

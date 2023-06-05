@@ -1,4 +1,4 @@
-# minimally viable configuration for a Nomad Server that can run `minecraft_java_server`
+# minimally viable configuration for a Nomad Server that can run `minecraft_java_edition`
 # requires `docker` to be installed and running on the host machine
 
 # see https://developer.hashicorp.com/nomad/docs/configuration#data_dir
@@ -97,7 +97,7 @@ ui {
 
   # see https://developer.hashicorp.com/nomad/docs/configuration/ui#label-parameters
   label {
-    text             = "⚠️ Testing Environment for the `minecraft_java_server` Nomad Pack."
+    text             = "⚠️ Testing Environment for the `minecraft_java_edition` Nomad Pack."
     background_color = "#00000"
     text_color       = "#ffffff"
   }

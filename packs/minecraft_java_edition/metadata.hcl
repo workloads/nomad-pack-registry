@@ -6,8 +6,8 @@ app {
 }
 
 pack {
-  name        = "minecraft_java_server"
+  name        = "minecraft_java_edition"
   description = "A Nomad Pack for Minecraft (Java Edition)"
-  url         = "https://github.com/workloads/nomad-pack-registry/tree/main/packs/minecraft_java_server"
-  version     = "0.5.0"
+  url         = "https://github.com/workloads/nomad-pack-registry/tree/main/packs/minecraft_java_edition"
+  version     = "1.0.0"
 }

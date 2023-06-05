@@ -290,7 +290,7 @@ variable "job_name" {
   description = "Name of the Job."
 
   # value will be truncated to 63 characters when necessary
-  default = "minecraft_java_server"
+  default = "minecraft_java_edition"
 }
 
 variable "job_tags" {
@@ -329,7 +329,7 @@ variable "ports" {
   default = {
     # port for Minecraft server
     main = {
-      name = "minecraft_java_server_main",
+      name = "minecraft_java_edition_main",
       path = null
       port = 25565,
       type = "tcp",
@@ -338,7 +338,7 @@ variable "ports" {
     # port for RCON Interface
     # ⚠️ `rcon` is a magic name that is used to trigger certain logic inside `_helpers.tpl`
     rcon = {
-      name = "minecraft_java_server_rcon",
+      name = "minecraft_java_edition_rcon",
       path = null,
       port = 25575,
       type = "tcp",
