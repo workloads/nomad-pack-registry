@@ -192,7 +192,7 @@ variable "consul_service_name" {
   description = "Consul Service Name for the Application."
 
   # value may only contain alphanumeric characters and dashes and will be truncated to 63 characters
-  default = "minecraft-java-server"
+  default = "minecraft-java-edition"
 }
 
 variable "consul_service_tags" {
