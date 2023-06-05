@@ -51,6 +51,7 @@
               "      },",
               "    },",
               "",
+              "  Datacenter: pm.collectionVariables.get('datacenter'),",
               "  DevMode: true,",
               "  File: 'packs/' + pm.collectionVariables.get('pack') + '/tests/config.hcl',",
               "",
@@ -60,16 +61,18 @@
               "    },",
               "  ],",
               "",
+              "  Region: pm.collectionVariables.get('region'),",
+              "",
               "  UI: {",
               "    Enabled: true,",
               "  },",
               "};",
               "",
               "pm.test('root configuration', function () {",
-              "  pm.expect(res.Datacenter).to.eql(pm.collectionVariables.get('datacenter'));",
+              "  pm.expect(res.Datacenter).to.eql(config.Datacenter);",
               "  pm.expect(res.DevMode).to.eql(config.DevMode);",
               "  pm.expect(res.Files).to.contain(config.File);",
-              "  pm.expect(res.Region).to.eql(pm.collectionVariables.get('region'));",
+              "  pm.expect(res.Region).to.eql(config.Region);",
               "});",
               "",
               "pm.test('`acl` configuration', function () {",
@@ -139,12 +142,13 @@
               "// define test data, taking care to map it as closely to Nomad Job configuration syntax as possible",
               "const config = {",
               "  ID: pm.collectionVariables.get('pack'),",
+              "  Namespace: pm.collectionVariables.get('namespace'),",
               "  Status: 'running',",
               "};",
               "",
               "pm.test('root configuration', function () {",
               "  pm.expect(res.ID).to.eql(config.ID);",
-              "  pm.expect(res.Namespace).to.eql(pm.collectionVariables.get('namespace'));",
+              "  pm.expect(res.Namespace).to.eql(config.Namespace);",
               "  pm.expect(res.Status).to.eql(config.Status);",
               "});",
               "",
@@ -169,19 +173,36 @@
         }
       ],
       "protocolProfileBehavior": {
+        "disableBodyPruning": true,
         "disableCookies": false
       },
       "request": {
         "method": "GET",
         "header": [],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            {
+              "key": "filter",
+              "value": "Name contains {{pack}}",
+              "type": "text"
+            }
+          ]
+        },
         "url": {
-          "raw": "{{server}}/v1/jobs",
+          "raw": "{{server}}/v1/jobs?prefix={{pack}}",
           "host": [
             "{{server}}"
           ],
           "path": [
             "v1",
             "jobs"
+          ],
+          "query": [
+            {
+              "key": "prefix",
+              "value": "{{pack}}"
+            }
           ]
         }
       },
@@ -204,7 +225,10 @@
               "    SizeMB: 1024",
               "  },",
               "",
+              "  ID: pm.collectionVariables.get('job_name'),",
+              "  Namespace: pm.collectionVariables.get('namespace'),",
               "  Priority: 99,",
+              "  Region: pm.collectionVariables.get('region'),",
               "  ",
               "  ReservedPorts: [",
               "    {",
@@ -225,10 +249,10 @@
               "};",
               "",
               "pm.test('root response', function () {",
-              "  pm.expect(res.ID).to.eql(pm.collectionVariables.get('job_name'));",
-              "  pm.expect(res.Namespace).to.eql(pm.collectionVariables.get('namespace'));",
+              "  pm.expect(res.ID).to.eql(config.ID);",
+              "  pm.expect(res.Namespace).to.eql(config.Namespace);",
               "  pm.expect(res.Priority).to.eql(config.Priority);",
-              "  pm.expect(res.Region).to.eql(pm.collectionVariables.get('region'));",
+              "  pm.expect(res.Region).to.eql(config.Region);",
               "  pm.expect(res.Status).to.eql(config.Status);",
               "});",
               "",
@@ -305,15 +329,17 @@
               "",
               "// define test data, taking care to map it as closely to Nomad Job configuration syntax as possible",
               "const config = {",
+              "  ClientStatus: 'running',",
+              "  ",
               "  // use environment variable as set in the `nomad-job` request",
               "  JobID: pm.collectionVariables.get('job_name'),",
-              "  ClientStatus: 'running',",
+              "  Namespace: pm.collectionVariables.get('namespace')",
               "};",
               "",
               "pm.test('root response', function () {",
               "  pm.expect(res.ClientStatus).to.eql(config.ClientStatus);",
               "  pm.expect(res.JobID).to.eql(config.JobID);",
-              "  pm.expect(res.Namespace).to.eql(pm.collectionVariables.get('namespace'));",
+              "  pm.expect(res.Namespace).to.eql(config.Namespace);",
               "});",
               "",
               "pm.test('`TaskStates` response', function () {",
@@ -329,37 +355,27 @@
               "pm.collectionVariables.set('service_name', res.JobID.split('_').join('-'));",
               "pm.log('main', 'Collection Variable `service_name` = `' + pm.collectionVariables.get('service_name') + '`');",
               "",
-              "postman.setNextRequest('nomad-service');"
+              "postman.setNextRequest('nomad-service-main');"
             ],
             "type": "text/javascript"
           }
         }
       ],
       "protocolProfileBehavior": {
-        "disableBodyPruning": true,
         "disableCookies": false
       },
       "request": {
         "method": "GET",
         "header": [],
-        "body": {
-          "mode": "urlencoded",
-          "urlencoded": [
-            {
-              "key": "filter",
-              "value": "JobID contains '{{job_name}}'",
-              "description": "Filter on JobID, see https://developer.hashicorp.com/nomad/api-docs#filtering",
-              "type": "text"
-            }
-          ]
-        },
         "url": {
-          "raw": "{{server}}/v1/allocations",
+          "raw": "{{server}}/v1/job/{{job_name}}/allocations",
           "host": [
             "{{server}}"
           ],
           "path": [
             "v1",
+            "job",
+            "{{job_name}}",
             "allocations"
           ]
         }
@@ -384,6 +400,9 @@
             "exec": [
               "// define test data, taking care to map it as closely to Nomad Job configuration syntax as possible",
               "const config = {",
+              "  Datacenter: pm.collectionVariables.get('datacenter'),",
+              "  JobID: pm.collectionVariables.get('job_name'),",
+              "  Namespace: pm.collectionVariables.get('namespace'),",
               "  Port: 25565,",
               "",
               "  // use environment variable as set in the `nomad-allocation` request",
@@ -396,17 +415,18 @@
               "",
               "// map Postman Response Object to variable after parsing it as JSON",
               "var res = pm.response.json();",
+              "res = res[0];",
               "",
               "pm.test('root response', function () {",
-              "  pm.expect(res.Datacenter).to.eql(pm.collectionVariables.get('datacenter'));",
-              "  pm.expect(res.JobID).to.eql(pm.collectionVariables.get('job_name'));",
-              "  pm.expect(res.Namespace).to.eql(pm.collectionVariables.get('namespace'));  ",
+              "  pm.expect(res.Datacenter).to.eql(config.Datacenter);",
+              "  pm.expect(res.JobID).to.eql(config.JobID);",
+              "  pm.expect(res.Namespace).to.eql(config.Namespace);  ",
               "  pm.expect(res.Port).to.eql(config.Port);",
               "  pm.expect(res.ServiceName).to.eql(config.ServiceName);",
               "  pm.expect(res.Tags).to.eql(config.Tags);",
               "});",
               "",
-              "postman.setNextRequest(null);"
+              "postman.setNextRequest('nomad-service-rcon');"
             ],
             "type": "text/javascript"
           }
@@ -462,6 +482,9 @@
             "exec": [
               "// define test data, taking care to map it as closely to Nomad Job configuration syntax as possible",
               "const config = {",
+              "  Datacenter: pm.collectionVariables.get('datacenter'),",
+              "  JobID: pm.collectionVariables.get('job_name'),",
+              "  Namespace: pm.collectionVariables.get('namespace'),",
               "  Port: 25575,",
               "",
               "  // use environment variable as set in the `nomad-allocation` request",
@@ -477,9 +500,9 @@
               "res = res[0];",
               "",
               "pm.test('root response', function () {",
-              "  pm.expect(res.Datacenter).to.eql(pm.collectionVariables.get('datacenter'));",
-              "  pm.expect(res.JobID).to.eql(pm.collectionVariables.get('job_name'));",
-              "  pm.expect(res.Namespace).to.eql(pm.collectionVariables.get('namespace'));  ",
+              "  pm.expect(res.Datacenter).to.eql(config.Datacenter);",
+              "  pm.expect(res.JobID).to.eql(config.JobID);",
+              "  pm.expect(res.Namespace).to.eql(config.Namespace);  ",
               "  pm.expect(res.Port).to.eql(config.Port);",
               "  pm.expect(res.ServiceName).to.eql(config.ServiceName);",
               "  pm.expect(res.Tags).to.eql(config.Tags);",
