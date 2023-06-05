@@ -59,13 +59,13 @@ variable "config" {
     # toggle to announce player achievements
     announce_player_achievements = false
 
-    # toggle to enable in-game console
+    # toggle to enable console
     console = true
 
     # directory where Application data will be stored
     data = "/data"
 
-    # in-game difficulty level
+    # difficulty level
     difficulty = "peaceful"
 
     # toggle to disable container health check
@@ -145,10 +145,10 @@ variable "config" {
     # toggle to enable removal of old Mods
     remove_old_mods = true
 
-    # in-game Level Seed, see https://www.reddit.com/r/minecraftseeds/ for inspiration
+    # Level Seed, see https://www.reddit.com/r/minecraftseeds/ for inspiration
     seed = "-3420545464665791887"
 
-    # in-game name of Server
+    # name of Server
     server_name = "Minecraft Java Server"
 
     # toggle to enable sending updates to `snoop.minecraft.net`
@@ -219,13 +219,6 @@ variable "datacenters" {
   default = [
     "*"
   ]
-
-  # TODO: enable when `nomad-pack` supports `validation` stanzas
-  #  # see https://developer.hashicorp.com/nomad/docs/job-specification/hcl2/variables#input-variable-custom-validation-rules
-  #  validation {
-  #    condition     = length(var.datacenters) > 1
-  #    error_message = "The `datacenters` list must contain at least 1 item."
-  #  }
 }
 
 variable "driver" {
