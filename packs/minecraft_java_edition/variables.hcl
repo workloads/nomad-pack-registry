@@ -201,6 +201,7 @@ variable "consul_service_tags" {
 
   default = [
     "minecraft",
+    "minecraft-java-edition",
   ]
 }
 
@@ -299,6 +300,7 @@ variable "job_tags" {
 
   default = [
     "minecraft",
+    "minecraft-java-edition"
   ]
 }
 
