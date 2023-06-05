@@ -19,10 +19,10 @@ job [[ template "job_name" .minecraft_java_edition.job_name ]] {
     network {
       # see https://developer.hashicorp.com/nomad/docs/job-specification/network#network-modes
       mode = [[ .minecraft_java_edition.network_mode | quote ]]
-      [[ template "network_ports" .minecraft_java ]]
+      [[ template "network_ports" .minecraft_java_edition ]]
     }
 
-    [[- template "service" .minecraft_java ]]
+    [[- template "service" .minecraft_java_edition ]]
 
     # see https://developer.hashicorp.com/nomad/docs/job-specification/restart
     restart {
@@ -40,7 +40,7 @@ job [[ template "job_name" .minecraft_java_edition.job_name ]] {
       config {
         image = "[[ .minecraft_java_edition.image.registry ]]/[[ .minecraft_java_edition.image.namespace ]]/[[ .minecraft_java_edition.image.image ]]:[[ .minecraft_java_edition.image.tag ]]@[[ .minecraft_java_edition.image.digest ]]"
 
-        [[ template "task_ports" .minecraft_java ]]
+        [[ template "task_ports" .minecraft_java_edition ]]
       }
 
       env {
