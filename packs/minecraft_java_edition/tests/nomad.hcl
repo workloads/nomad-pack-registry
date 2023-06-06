@@ -32,9 +32,9 @@ client {
     read_only = false
   }
 
-  host_volume "minecraft_worlddata" {
+  host_volume "minecraft_worlds" {
     path      = "/tmp/minecraft_worlds"
-    read_only = true
+    read_only = false
   }
 
   # see https://developer.hashicorp.com/nomad/docs/configuration/client#options-parameters

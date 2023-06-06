@@ -75,7 +75,7 @@ The Nomad Packs in this Registry provide a test harness that may be used to veri
 
 The harness is exposed through the `make env` and `make test` targets:
 
-- `make env` starts a Nomad environment, using the configuration stored inside the Pack's `./tests/config.hcl` file.
+- `make env` starts a Nomad environment, using the configuration stored inside the Pack's `./tests/nomad.hcl` file.
 - `make test` runs a [Postman Collection](https://learning.postman.com/docs/collections/collections-overview/), using the requests stored inside the Pack's `./tests/newman.json` file.
 
 ## Notes

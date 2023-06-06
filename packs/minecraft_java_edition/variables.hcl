@@ -149,7 +149,7 @@ variable "config" {
     seed = "-3420545464665791887"
 
     # name of Server
-    server_name = "Minecraft Java Server"
+    server_name = "Minecraft Java Edition Server"
 
     # toggle to enable sending updates to `snoop.minecraft.net`
     snooper_enabled = false
@@ -406,5 +406,26 @@ variable "volumes" {
 
   description = "Mounts Configuration for the Application."
 
-  default = {}
+  default = {
+    minecraft_data = {
+      name        = "minecraft_data",
+      type        = "host"
+      destination = "/data"
+      read_only   = false
+    },
+
+    minecraft_extras = {
+      name        = "minecraft_extras",
+      type        = "host"
+      destination = "/extras"
+      read_only   = false
+    },
+
+    minecraft_worlds = {
+      name        = "minecraft_worlds",
+      type        = "host"
+      destination = "/worlds"
+      read_only   = false
+    },
+  }
 }

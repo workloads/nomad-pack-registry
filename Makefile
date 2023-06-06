@@ -91,7 +91,7 @@ define create_test_environment
 	# start Nomad in development mode, using Pack-specific configuration
 	nomad \
 		agent \
-			-config="$(PACKS_DIR)/$(strip $(pack))/tests/config.hcl" \
+			-config="$(PACKS_DIR)/$(strip $(pack))/tests/nomad.hcl" \
 			-dev \
 			$(ARGS) \
 	;
