@@ -18,6 +18,7 @@ variable "config" {
     icon                         = string
     level_type                   = string
     max_build_height             = number
+    max_memory                   = string
     max_players                  = number
     max_tick_time                = number
     max_world_size               = number
@@ -106,6 +107,9 @@ variable "config" {
 
     # maximum allowed building height (in blocks)
     max_build_height = 256
+
+    # maximum allowed memory
+    max_memory = "4G" # 100% of `resources.memory`
 
     # maximum allowed player count
     max_players = 20
@@ -373,7 +377,7 @@ variable "resources" {
 
   default = {
     # value in MHz
-    cpu = 2000
+    cpu = 4000
 
     # value in MB
     # 2048 = ~10 players, 4096 = ~25 players
