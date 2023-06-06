@@ -1,613 +1,615 @@
 {
-  "info": {
-    "_postman_id": "1a8990f6-743f-41d7-af5d-d74381a3b8cc",
-    "name": "minecraft_java_edition",
-    "description": "# Nomad Pack: Minecraft (Java Edition)\n\n> [Postman Collection](https://learning.postman.com/docs/collections/collections-overview/) containing API tests to run against the Nomad API. \n  \n\n## Notes\n\n- This Collection is designed for testing the `minecraft_java_server` Pack available at [@workloads/nomad-pack-registry](https://github.com/workloads/nomad-pack-registry/tree/main/packs/minecraft_java_server).\n\n- This Collection expects Nomad to be available via `http://localhost:4646`.",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "_exporter_id": "20135",
-    "_collection_link": "https://wrklds.postman.co/workspace/Team-Workspace~6bd90753-17de-4e29-86da-52ea739451c8/collection/20135-1a8990f6-743f-41d7-af5d-d74381a3b8cc?action=share&creator=20135&source=collection_link"
-  },
-  "item": [
-    {
-      "name": "nomad-selfcheck",
-      "event": [
-        {
-          "listen": "test",
-          "script": {
-            "exec": [
-              "// map Postman Response Object to variable after parsing it as JSON",
-              "var res = pm.response.json();",
-              "res = res.config;",
-              "",
-              "// define test data, taking care to map it as closely to Nomad configuration syntax as possible",
-              "const config = {",
-              "  ACL: {",
-              "    Enabled: false,",
-              "  },",
-              "",
-              "  Client: {",
-              "    Enabled: true,",
-              "    NomadServiceDiscovery: true,",
-              "",
-              "    HostVolumes: [",
-              "        {",
-              "          Name: 'minecraft_data',",
-              "          Path: '/tmp/minecraft_data',",
-              "          ReadOnly: false,",
-              "        },",
-              "        {",
-              "          Name: 'minecraft_extras',",
-              "          Path: '/tmp/minecraft_extras',",
-              "          ReadOnly: false,",
-              "        },",
-              "        {",
-              "          Name: 'minecraft_worlddata',",
-              "          Path: '/tmp/minecraft_worlds',",
-              "          ReadOnly: true,",
-              "        },",
-              "      ],",
-              "",
-              "      Options: {",
-              "        driver: {",
-              "          allowlist: 'docker,podman',",
-              "        },",
-              "      },",
-              "    },",
-              "",
-              "  Datacenter: pm.collectionVariables.get('datacenter'),",
-              "  DevMode: true,",
-              "  File: 'packs/' + pm.collectionVariables.get('pack') + '/tests/config.hcl',",
-              "",
-              "  Plugins: [",
-              "    {",
-              "      Name: 'docker',",
-              "    },",
-              "  ],",
-              "",
-              "  Region: pm.collectionVariables.get('region'),",
-              "",
-              "  UI: {",
-              "    Enabled: true,",
-              "  },",
-              "};",
-              "",
-              "pm.test('root configuration', function () {",
-              "  pm.expect(res.Datacenter).to.eql(config.Datacenter);",
-              "  pm.expect(res.DevMode).to.eql(config.DevMode);",
-              "  pm.expect(res.Files).to.contain(config.File);",
-              "  pm.expect(res.Region).to.eql(config.Region);",
-              "});",
-              "",
-              "pm.test('`acl` configuration', function () {",
-              "  pm.expect(res.ACL.Enabled).to.eql(config.ACL.Enabled);",
-              "});",
-              "",
-              "pm.test('`client` configuration', function () {",
-              "  pm.expect(res.Client.Enabled).to.eql(config.Client.Enabled);",
-              "  pm.expect(res.Client.HostVolumes.length).to.eql(config.Client.HostVolumes.length);",
-              "  pm.expect(res.Client.HostVolumes).to.eql(config.Client.HostVolumes);",
-              "  pm.expect(res.Client.NomadServiceDiscovery).to.eql(config.Client.NomadServiceDiscovery);",
-              "  pm.expect(res.Client.Options['driver.allowlist']).to.eql(config.Client.Options.driver.allowlist);",
-              "});",
-              "",
-              "pm.test('`plugins` configuration', function () {",
-              "  pm.expect(res.Plugins[0].Name).to.eql(config.Plugins[0].Name);",
-              "});",
-              "",
-              "pm.test('`ui` configuration', function () {",
-              "  pm.expect(res.UI.Enabled).to.eql(config.UI.Enabled);",
-              "  pm.expect(res.UI.Label).to.be.an('object').and.not.be.empty;",
-              "});",
-              "",
-              "postman.setNextRequest('nomad-jobs');"
-            ],
-            "type": "text/javascript"
-          }
-        },
-        {
-          "listen": "prerequest",
-          "script": {
-            "exec": [
-              ""
-            ],
-            "type": "text/javascript"
-          }
-        }
-      ],
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "{{server}}/v1/agent/self",
-          "host": [
-            "{{server}}"
-          ],
-          "path": [
-            "v1",
-            "agent",
-            "self"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "nomad-jobs",
-      "event": [
-        {
-          "listen": "test",
-          "script": {
-            "exec": [
-              "// map Postman Response Object to variable after parsing it as JSON",
-              "var res = pm.response.json();",
-              "res = res[0];",
-              "",
-              "// define test data, taking care to map it as closely to Nomad Job configuration syntax as possible",
-              "const config = {",
-              "  ID: pm.collectionVariables.get('pack'),",
-              "  Namespace: pm.collectionVariables.get('namespace'),",
-              "  Status: 'running',",
-              "};",
-              "",
-              "pm.test('root configuration', function () {",
-              "  pm.expect(res.ID).to.eql(config.ID);",
-              "  pm.expect(res.Namespace).to.eql(config.Namespace);",
-              "  pm.expect(res.Status).to.eql(config.Status);",
-              "});",
-              "",
-              "// set Collection Variable `job_name` for downstream use",
-              "pm.collectionVariables.set('job_name', res.ID);",
-              "pm.log('main', 'Collection Variable `job_name` = `' + pm.collectionVariables.get('job_name') + '`');",
-              "",
-              "postman.setNextRequest('nomad-job');"
-            ],
-            "type": "text/javascript"
-          }
-        },
-        {
-          "listen": "prerequest",
-          "script": {
-            "exec": [
-              "// clear previously-set `job_name` variable",
-              "pm.collectionVariables.unset('job_name');"
-            ],
-            "type": "text/javascript"
-          }
-        }
-      ],
-      "protocolProfileBehavior": {
-        "disableBodyPruning": true,
-        "disableCookies": false
-      },
-      "request": {
-        "method": "GET",
-        "header": [],
-        "body": {
-          "mode": "urlencoded",
-          "urlencoded": [
-            {
-              "key": "filter",
-              "value": "Name contains {{pack}}",
-              "type": "text"
-            }
-          ]
-        },
-        "url": {
-          "raw": "{{server}}/v1/jobs?prefix={{pack}}",
-          "host": [
-            "{{server}}"
-          ],
-          "path": [
-            "v1",
-            "jobs"
-          ],
-          "query": [
-            {
-              "key": "prefix",
-              "value": "{{pack}}"
-            }
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "nomad-job",
-      "event": [
-        {
-          "listen": "test",
-          "script": {
-            "exec": [
-              "// map Postman Response Object to variable after parsing it as JSON",
-              "const res = pm.response.json();",
-              "",
-              "// define test data, taking care to map it as closely to Nomad Job configuration syntax as possible",
-              "const config = {",
-              "  EphemeralDisk: {",
-              "    Sticky: true,",
-              "    SizeMB: 1024",
-              "  },",
-              "",
-              "  ID: pm.collectionVariables.get('job_name'),",
-              "  Namespace: pm.collectionVariables.get('namespace'),",
-              "  Priority: 99,",
-              "  Region: pm.collectionVariables.get('region'),",
-              "  ",
-              "  ReservedPorts: [",
-              "    {",
-              "      Label: 'main',",
-              "      Value: 25565,",
-              "      To: 25565,",
-              "      HostNetwork: 'default'",
-              "    }, ",
-              "    {",
-              "      Label: 'rcon',",
-              "      Value: 25575,",
-              "      To: 25575,",
-              "      HostNetwork: 'default'",
-              "    }",
-              "  ],",
-              "",
-              "  Status: 'running'",
-              "};",
-              "",
-              "pm.test('root response', function () {",
-              "  pm.expect(res.ID).to.eql(config.ID);",
-              "  pm.expect(res.Namespace).to.eql(config.Namespace);",
-              "  pm.expect(res.Priority).to.eql(config.Priority);",
-              "  pm.expect(res.Region).to.eql(config.Region);",
-              "  pm.expect(res.Status).to.eql(config.Status);",
-              "});",
-              "",
-              "pm.test('`TaskGroups.EphemeralDisk` response', function () {",
-              "  pm.expect(res.TaskGroups[0].EphemeralDisk.Sticky).to.eql(config.EphemeralDisk.Sticky);",
-              "  pm.expect(res.TaskGroups[0].EphemeralDisk.SizeMB).to.eql(config.EphemeralDisk.SizeMB);",
-              "});",
-              "",
-              "pm.test('`TaskGroups.Networks` response', function () {",
-              "  pm.expect(res.TaskGroups[0].Networks[0].ReservedPorts).to.eql(config.ReservedPorts);",
-              "});",
-              "",
-              "pm.test('status is stable', function () {",
-              "  pm.expect(res.Stable).to.eql(true);",
-              "});",
-              "",
-              "postman.setNextRequest('nomad-allocation');"
-            ],
-            "type": "text/javascript"
-          }
-        },
-        {
-          "listen": "prerequest",
-          "script": {
-            "exec": [
-              ""
-            ],
-            "type": "text/javascript"
-          }
-        }
-      ],
-      "protocolProfileBehavior": {
-        "disableCookies": false
-      },
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "{{server}}/v1/job/{{job_name}}",
-          "host": [
-            "{{server}}"
-          ],
-          "path": [
-            "v1",
-            "job",
-            "{{job_name}}"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "nomad-allocation",
-      "event": [
-        {
-          "listen": "prerequest",
-          "script": {
-            "exec": [
-              "pm.log('pre', 'Collection Variable `job_name` = `' + pm.collectionVariables.get('job_name') + '`');",
-              "",
-              "// clear previously-set `service_name` variable",
-              "pm.collectionVariables.unset('service_name');"
-            ],
-            "type": "text/javascript"
-          }
-        },
-        {
-          "listen": "test",
-          "script": {
-            "exec": [
-              "// map Postman Response Object to variable after parsing it as JSON",
-              "var res = pm.response.json();",
-              "res = res[0];",
-              "",
-              "// define test data, taking care to map it as closely to Nomad Job configuration syntax as possible",
-              "const config = {",
-              "  ClientStatus: 'running',",
-              "  ",
-              "  // use environment variable as set in the `nomad-job` request",
-              "  JobID: pm.collectionVariables.get('job_name'),",
-              "  Namespace: pm.collectionVariables.get('namespace')",
-              "};",
-              "",
-              "pm.test('root response', function () {",
-              "  pm.expect(res.ClientStatus).to.eql(config.ClientStatus);",
-              "  pm.expect(res.JobID).to.eql(config.JobID);",
-              "  pm.expect(res.Namespace).to.eql(config.Namespace);",
-              "});",
-              "",
-              "pm.test('`TaskStates` response', function () {",
-              "  pm.expect(res.TaskStates[config.JobID].Failed).to.eql(false);",
-              "});",
-              "",
-              "pm.test('`DeploymentStatus` response', function () {",
-              "  pm.expect(res.DeploymentStatus.Healthy).to.eql(true);",
-              "});",
-              "",
-              "// set Collection Variable `job_name` for downstream use",
-              "// replace all underscores with dashes, as per logic inside Pack template",
-              "pm.collectionVariables.set('service_name', res.JobID.split('_').join('-'));",
-              "pm.log('main', 'Collection Variable `service_name` = `' + pm.collectionVariables.get('service_name') + '`');",
-              "",
-              "postman.setNextRequest('nomad-service-main');"
-            ],
-            "type": "text/javascript"
-          }
-        }
-      ],
-      "protocolProfileBehavior": {
-        "disableCookies": false
-      },
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "{{server}}/v1/job/{{job_name}}/allocations",
-          "host": [
-            "{{server}}"
-          ],
-          "path": [
-            "v1",
-            "job",
-            "{{job_name}}",
-            "allocations"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "nomad-service-main",
-      "event": [
-        {
-          "listen": "prerequest",
-          "script": {
-            "exec": [
-              "pm.log('pre', 'Collection Variable `service_name` = `' + pm.collectionVariables.get('service_name') + '`');"
-            ],
-            "type": "text/javascript"
-          }
-        },
-        {
-          "listen": "test",
-          "script": {
-            "exec": [
-              "// define test data, taking care to map it as closely to Nomad Job configuration syntax as possible",
-              "const config = {",
-              "  Datacenter: pm.collectionVariables.get('datacenter'),",
-              "  JobID: pm.collectionVariables.get('job_name'),",
-              "  Namespace: pm.collectionVariables.get('namespace'),",
-              "  Port: 25565,",
-              "",
-              "  // use environment variable as set in the `nomad-allocation` request",
-              "  ServiceName: pm.collectionVariables.get('service_name') + '-main',",
-              "",
-              "  Tags: [",
-              "    'minecraft'",
-              "  ]",
-              "};",
-              "",
-              "// map Postman Response Object to variable after parsing it as JSON",
-              "var res = pm.response.json();",
-              "res = res[0];",
-              "",
-              "pm.test('root response', function () {",
-              "  pm.expect(res.Datacenter).to.eql(config.Datacenter);",
-              "  pm.expect(res.JobID).to.eql(config.JobID);",
-              "  pm.expect(res.Namespace).to.eql(config.Namespace);  ",
-              "  pm.expect(res.Port).to.eql(config.Port);",
-              "  pm.expect(res.ServiceName).to.eql(config.ServiceName);",
-              "  pm.expect(res.Tags).to.eql(config.Tags);",
-              "});",
-              "",
-              "postman.setNextRequest('nomad-service-rcon');"
-            ],
-            "type": "text/javascript"
-          }
-        }
-      ],
-      "protocolProfileBehavior": {
-        "disableBodyPruning": true,
-        "disableCookies": false
-      },
-      "request": {
-        "method": "GET",
-        "header": [],
-        "body": {
-          "mode": "urlencoded",
-          "urlencoded": [
-            {
-              "key": "filter",
-              "value": "JobID contains '{{job_name}}'",
-              "description": "Filter on JobID, see https://developer.hashicorp.com/nomad/api-docs#filtering",
-              "type": "text"
-            }
-          ]
-        },
-        "url": {
-          "raw": "{{server}}/v1/service/{{service_name}}-main",
-          "host": [
-            "{{server}}"
-          ],
-          "path": [
-            "v1",
-            "service",
-            "{{service_name}}-main"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "nomad-service-rcon",
-      "event": [
-        {
-          "listen": "prerequest",
-          "script": {
-            "exec": [
-              "pm.log('pre', 'Collection Variable `service_name` = `' + pm.collectionVariables.get('service_name') + '`');"
-            ],
-            "type": "text/javascript"
-          }
-        },
-        {
-          "listen": "test",
-          "script": {
-            "exec": [
-              "// define test data, taking care to map it as closely to Nomad Job configuration syntax as possible",
-              "const config = {",
-              "  Datacenter: pm.collectionVariables.get('datacenter'),",
-              "  JobID: pm.collectionVariables.get('job_name'),",
-              "  Namespace: pm.collectionVariables.get('namespace'),",
-              "  Port: 25575,",
-              "",
-              "  // use environment variable as set in the `nomad-allocation` request",
-              "  ServiceName: pm.collectionVariables.get('service_name') + '-rcon',",
-              "",
-              "  Tags: [",
-              "    'minecraft'",
-              "  ]",
-              "};",
-              "",
-              "// map Postman Response Object to variable after parsing it as JSON",
-              "var res = pm.response.json();",
-              "res = res[0];",
-              "",
-              "pm.test('root response', function () {",
-              "  pm.expect(res.Datacenter).to.eql(config.Datacenter);",
-              "  pm.expect(res.JobID).to.eql(config.JobID);",
-              "  pm.expect(res.Namespace).to.eql(config.Namespace);  ",
-              "  pm.expect(res.Port).to.eql(config.Port);",
-              "  pm.expect(res.ServiceName).to.eql(config.ServiceName);",
-              "  pm.expect(res.Tags).to.eql(config.Tags);",
-              "});",
-              "",
-              "postman.setNextRequest(null);"
-            ],
-            "type": "text/javascript"
-          }
-        }
-      ],
-      "protocolProfileBehavior": {
-        "disableBodyPruning": true,
-        "disableCookies": false
-      },
-      "request": {
-        "method": "GET",
-        "header": [],
-        "body": {
-          "mode": "urlencoded",
-          "urlencoded": [
-            {
-              "key": "filter",
-              "value": "JobID contains '{{job_name}}'",
-              "description": "Filter on JobID, see https://developer.hashicorp.com/nomad/api-docs#filtering",
-              "type": "text"
-            }
-          ]
-        },
-        "url": {
-          "raw": "{{server}}/v1/service/{{service_name}}-rcon",
-          "host": [
-            "{{server}}"
-          ],
-          "path": [
-            "v1",
-            "service",
-            "{{service_name}}-rcon"
-          ]
-        }
-      },
-      "response": []
-    }
-  ],
-  "event": [
-    {
-      "listen": "prerequest",
-      "script": {
-        "type": "text/javascript",
-        "exec": [
-          "Object.prototype.log = (stage, message) => {",
-          "  // add collection and request names as prefix:",
-          "  var prefix = '[' + pm.collectionVariables.get('pack') + ':' + pm.info.requestName + `:${stage}] `;",
-          "",
-          "  console.info(prefix + `${message}`);",
-          "};"
-        ]
-      }
-    },
-    {
-      "listen": "test",
-      "script": {
-        "type": "text/javascript",
-        "exec": [
-          ""
-        ]
-      }
-    }
-  ],
-  "variable": [
-    {
-      "key": "datacenter",
-      "value": "testing",
-      "type": "string"
-    },
-    {
-      "key": "job_name",
-      "value": ""
-    },
-    {
-      "key": "namespace",
-      "value": "default",
-      "type": "string"
-    },
-    {
-      "key": "pack",
-      "value": "minecraft_java_server",
-      "type": "string"
-    },
-    {
-      "key": "region",
-      "value": "global",
-      "type": "string"
-    },
-    {
-      "key": "server",
-      "value": "http://localhost:4646",
-      "type": "string"
-    },
-    {
-      "key": "service_name",
-      "value": ""
-    }
-  ]
+	"info": {
+		"_postman_id": "1a8990f6-743f-41d7-af5d-d74381a3b8cc",
+		"name": "minecraft_java_edition",
+		"description": "# Nomad Pack: Minecraft (Java Edition)\n\n> [Postman Collection](https://learning.postman.com/docs/collections/collections-overview/) containing API tests to run against the Nomad API. \n  \n\n## Notes\n\n- This Collection is designed for testing the `minecraft_java` Pack available at [@workloads/nomad-pack-registry](https://github.com/workloads/nomad-pack-registry/tree/main/packs/minecraft_java).\n\n- This Collection expects Nomad to be available via `http://localhost:4646`.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20135",
+		"_collection_link": "https://wrklds.postman.co/workspace/Team-Workspace~6bd90753-17de-4e29-86da-52ea739451c8/collection/20135-1a8990f6-743f-41d7-af5d-d74381a3b8cc?action=share&creator=20135&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "nomad-selfcheck",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// map Postman Response Object to variable after parsing it as JSON",
+							"var res = pm.response.json();",
+							"res = res.config;",
+							"",
+							"// define test data, taking care to map it as closely to Nomad configuration syntax as possible",
+							"const config = {",
+							"  ACL: {",
+							"    Enabled: false,",
+							"  },",
+							"",
+							"  Client: {",
+							"    Enabled: true,",
+							"    NomadServiceDiscovery: true,",
+							"",
+							"    HostVolumes: [",
+							"        {",
+							"          Name: 'minecraft_data',",
+							"          Path: '/tmp/minecraft_data',",
+							"          ReadOnly: false,",
+							"        },",
+							"        {",
+							"          Name: 'minecraft_extras',",
+							"          Path: '/tmp/minecraft_extras',",
+							"          ReadOnly: false,",
+							"        },",
+							"        {",
+							"          Name: 'minecraft_worlds',",
+							"          Path: '/tmp/minecraft_worlds',",
+							"          ReadOnly: false,",
+							"        },",
+							"      ],",
+							"",
+							"      Options: {",
+							"        driver: {",
+							"          allowlist: 'docker,podman',",
+							"        },",
+							"      },",
+							"    },",
+							"",
+							"  Datacenter: pm.collectionVariables.get('datacenter'),",
+							"  DevMode: true,",
+							"  File: 'packs/' + pm.collectionVariables.get('pack') + '/tests/nomad.hcl',",
+							"",
+							"  Plugins: [",
+							"    {",
+							"      Name: 'docker',",
+							"    },",
+							"  ],",
+							"",
+							"  Region: pm.collectionVariables.get('region'),",
+							"",
+							"  UI: {",
+							"    Enabled: true,",
+							"  },",
+							"};",
+							"",
+							"pm.test('root configuration', function () {",
+							"  pm.expect(res.Datacenter).to.eql(config.Datacenter);",
+							"  pm.expect(res.DevMode).to.eql(config.DevMode);",
+							"  pm.expect(res.Files).to.contain(config.File);",
+							"  pm.expect(res.Region).to.eql(config.Region);",
+							"});",
+							"",
+							"pm.test('`acl` configuration', function () {",
+							"  pm.expect(res.ACL.Enabled).to.eql(config.ACL.Enabled);",
+							"});",
+							"",
+							"pm.test('`client` configuration', function () {",
+							"  pm.expect(res.Client.Enabled).to.eql(config.Client.Enabled);",
+							"  pm.expect(res.Client.HostVolumes.length).to.eql(config.Client.HostVolumes.length);",
+							"  pm.expect(res.Client.HostVolumes).to.eql(config.Client.HostVolumes);",
+							"  pm.expect(res.Client.NomadServiceDiscovery).to.eql(config.Client.NomadServiceDiscovery);",
+							"  pm.expect(res.Client.Options['driver.allowlist']).to.eql(config.Client.Options.driver.allowlist);",
+							"});",
+							"",
+							"pm.test('`plugins` configuration', function () {",
+							"  pm.expect(res.Plugins[0].Name).to.eql(config.Plugins[0].Name);",
+							"});",
+							"",
+							"pm.test('`ui` configuration', function () {",
+							"  pm.expect(res.UI.Enabled).to.eql(config.UI.Enabled);",
+							"  pm.expect(res.UI.Label).to.be.an('object').and.not.be.empty;",
+							"});",
+							"",
+							"postman.setNextRequest('nomad-jobs');"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{server}}/v1/agent/self",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"v1",
+						"agent",
+						"self"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "nomad-jobs",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// map Postman Response Object to variable after parsing it as JSON",
+							"var res = pm.response.json();",
+							"res = res[0];",
+							"",
+							"// define test data, taking care to map it as closely to Nomad Job configuration syntax as possible",
+							"const config = {",
+							"  ID: pm.collectionVariables.get('pack'),",
+							"  Namespace: pm.collectionVariables.get('namespace'),",
+							"  Status: 'running',",
+							"};",
+							"",
+							"pm.test('root configuration', function () {",
+							"  pm.expect(res.ID).to.eql(config.ID);",
+							"  pm.expect(res.Namespace).to.eql(config.Namespace);",
+							"  pm.expect(res.Status).to.eql(config.Status);",
+							"});",
+							"",
+							"// set Collection Variable `job_name` for downstream use",
+							"pm.collectionVariables.set('job_name', res.ID);",
+							"pm.log('main', 'Collection Variable `job_name` = `' + pm.collectionVariables.get('job_name') + '`');",
+							"",
+							"postman.setNextRequest('nomad-job');"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// clear previously-set `job_name` variable",
+							"pm.collectionVariables.unset('job_name');"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true,
+				"disableCookies": false
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "filter",
+							"value": "Name contains {{pack}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{server}}/v1/jobs?prefix={{pack}}",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"v1",
+						"jobs"
+					],
+					"query": [
+						{
+							"key": "prefix",
+							"value": "{{pack}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "nomad-job",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// map Postman Response Object to variable after parsing it as JSON",
+							"const res = pm.response.json();",
+							"",
+							"// define test data, taking care to map it as closely to Nomad Job configuration syntax as possible",
+							"const config = {",
+							"  EphemeralDisk: {",
+							"    Sticky: true,",
+							"    SizeMB: 1024",
+							"  },",
+							"",
+							"  ID: pm.collectionVariables.get('job_name'),",
+							"  Namespace: pm.collectionVariables.get('namespace'),",
+							"  Priority: 99,",
+							"  Region: pm.collectionVariables.get('region'),",
+							"  ",
+							"  ReservedPorts: [",
+							"    {",
+							"      Label: 'main',",
+							"      Value: 25565,",
+							"      To: 25565,",
+							"      HostNetwork: 'default'",
+							"    }, ",
+							"    {",
+							"      Label: 'rcon',",
+							"      Value: 25575,",
+							"      To: 25575,",
+							"      HostNetwork: 'default'",
+							"    }",
+							"  ],",
+							"",
+							"  Status: 'running'",
+							"};",
+							"",
+							"pm.test('root response', function () {",
+							"  pm.expect(res.ID).to.eql(config.ID);",
+							"  pm.expect(res.Namespace).to.eql(config.Namespace);",
+							"  pm.expect(res.Priority).to.eql(config.Priority);",
+							"  pm.expect(res.Region).to.eql(config.Region);",
+							"  pm.expect(res.Status).to.eql(config.Status);",
+							"});",
+							"",
+							"pm.test('`TaskGroups.EphemeralDisk` response', function () {",
+							"  pm.expect(res.TaskGroups[0].EphemeralDisk.Sticky).to.eql(config.EphemeralDisk.Sticky);",
+							"  pm.expect(res.TaskGroups[0].EphemeralDisk.SizeMB).to.eql(config.EphemeralDisk.SizeMB);",
+							"});",
+							"",
+							"pm.test('`TaskGroups.Networks` response', function () {",
+							"  pm.expect(res.TaskGroups[0].Networks[0].ReservedPorts).to.eql(config.ReservedPorts);",
+							"});",
+							"",
+							"pm.test('status is stable', function () {",
+							"  pm.expect(res.Stable).to.eql(true);",
+							"});",
+							"",
+							"postman.setNextRequest('nomad-allocation');"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableCookies": false
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{server}}/v1/job/{{job_name}}",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"v1",
+						"job",
+						"{{job_name}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "nomad-allocation",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.log('pre', 'Collection Variable `job_name` = `' + pm.collectionVariables.get('job_name') + '`');",
+							"",
+							"// clear previously-set `service_name` variable",
+							"pm.collectionVariables.unset('service_name');"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// map Postman Response Object to variable after parsing it as JSON",
+							"var res = pm.response.json();",
+							"res = res[0];",
+							"",
+							"// define test data, taking care to map it as closely to Nomad Job configuration syntax as possible",
+							"const config = {",
+							"  ClientStatus: 'running',",
+							"  ",
+							"  // use environment variable as set in the `nomad-job` request",
+							"  JobID: pm.collectionVariables.get('job_name'),",
+							"  Namespace: pm.collectionVariables.get('namespace')",
+							"};",
+							"",
+							"pm.test('root response', function () {",
+							"  pm.expect(res.ClientStatus).to.eql(config.ClientStatus);",
+							"  pm.expect(res.JobID).to.eql(config.JobID);",
+							"  pm.expect(res.Namespace).to.eql(config.Namespace);",
+							"});",
+							"",
+							"pm.test('`TaskStates` response', function () {",
+							"  pm.expect(res.TaskStates[config.JobID].Failed).to.eql(false);",
+							"});",
+							"",
+							"pm.test('`DeploymentStatus` response', function () {",
+							"  pm.expect(res.DeploymentStatus.Healthy).to.eql(true);",
+							"});",
+							"",
+							"// set Collection Variable `job_name` for downstream use",
+							"// replace all underscores with dashes, as per logic inside Pack template",
+							"pm.collectionVariables.set('service_name', res.JobID.split('_').join('-'));",
+							"pm.log('main', 'Collection Variable `service_name` = `' + pm.collectionVariables.get('service_name') + '`');",
+							"",
+							"postman.setNextRequest('nomad-service-main');"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableCookies": false
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{server}}/v1/job/{{job_name}}/allocations",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"v1",
+						"job",
+						"{{job_name}}",
+						"allocations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "nomad-service-main",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.log('pre', 'Collection Variable `service_name` = `' + pm.collectionVariables.get('service_name') + '`');"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// define test data, taking care to map it as closely to Nomad Job configuration syntax as possible",
+							"const config = {",
+							"  Datacenter: pm.collectionVariables.get('datacenter'),",
+							"  JobID: pm.collectionVariables.get('job_name'),",
+							"  Namespace: pm.collectionVariables.get('namespace'),",
+							"  Port: 25565,",
+							"",
+							"  // use environment variable as set in the `nomad-allocation` request",
+							"  ServiceName: pm.collectionVariables.get('service_name') + '-main',",
+							"",
+							"  Tags: [",
+							"    'minecraft',",
+							"    'minecraft-java-edition',",
+							"  ]",
+							"};",
+							"",
+							"// map Postman Response Object to variable after parsing it as JSON",
+							"var res = pm.response.json();",
+							"res = res[0];",
+							"",
+							"pm.test('root response', function () {",
+							"  pm.expect(res.Datacenter).to.eql(config.Datacenter);",
+							"  pm.expect(res.JobID).to.eql(config.JobID);",
+							"  pm.expect(res.Namespace).to.eql(config.Namespace);  ",
+							"  pm.expect(res.Port).to.eql(config.Port);",
+							"  pm.expect(res.ServiceName).to.eql(config.ServiceName);",
+							"  pm.expect(res.Tags).to.eql(config.Tags);",
+							"});",
+							"",
+							"postman.setNextRequest('nomad-service-rcon');"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true,
+				"disableCookies": false
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "filter",
+							"value": "JobID contains '{{job_name}}'",
+							"description": "Filter on JobID, see https://developer.hashicorp.com/nomad/api-docs#filtering",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{server}}/v1/service/{{service_name}}-main",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"v1",
+						"service",
+						"{{service_name}}-main"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "nomad-service-rcon",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.log('pre', 'Collection Variable `service_name` = `' + pm.collectionVariables.get('service_name') + '`');"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// define test data, taking care to map it as closely to Nomad Job configuration syntax as possible",
+							"const config = {",
+							"  Datacenter: pm.collectionVariables.get('datacenter'),",
+							"  JobID: pm.collectionVariables.get('job_name'),",
+							"  Namespace: pm.collectionVariables.get('namespace'),",
+							"  Port: 25575,",
+							"",
+							"  // use environment variable as set in the `nomad-allocation` request",
+							"  ServiceName: pm.collectionVariables.get('service_name') + '-rcon',",
+							"",
+							"  Tags: [",
+							"    'minecraft',",
+							"    'minecraft-java-edition',",
+							"  ]",
+							"};",
+							"",
+							"// map Postman Response Object to variable after parsing it as JSON",
+							"var res = pm.response.json();",
+							"res = res[0];",
+							"",
+							"pm.test('root response', function () {",
+							"  pm.expect(res.Datacenter).to.eql(config.Datacenter);",
+							"  pm.expect(res.JobID).to.eql(config.JobID);",
+							"  pm.expect(res.Namespace).to.eql(config.Namespace);  ",
+							"  pm.expect(res.Port).to.eql(config.Port);",
+							"  pm.expect(res.ServiceName).to.eql(config.ServiceName);",
+							"  pm.expect(res.Tags).to.eql(config.Tags);",
+							"});",
+							"",
+							"postman.setNextRequest(null);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true,
+				"disableCookies": false
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "filter",
+							"value": "JobID contains '{{job_name}}'",
+							"description": "Filter on JobID, see https://developer.hashicorp.com/nomad/api-docs#filtering",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{server}}/v1/service/{{service_name}}-rcon",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"v1",
+						"service",
+						"{{service_name}}-rcon"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"Object.prototype.log = (stage, message) => {",
+					"  // add collection and request names as prefix:",
+					"  var prefix = '[' + pm.collectionVariables.get('pack') + ':' + pm.info.requestName + `:${stage}] `;",
+					"",
+					"  console.info(prefix + `${message}`);",
+					"};"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "datacenter",
+			"value": "testing",
+			"type": "string"
+		},
+		{
+			"key": "job_name",
+			"value": ""
+		},
+		{
+			"key": "namespace",
+			"value": "default",
+			"type": "string"
+		},
+		{
+			"key": "pack",
+			"value": "minecraft_java_edition",
+			"type": "string"
+		},
+		{
+			"key": "region",
+			"value": "global",
+			"type": "string"
+		},
+		{
+			"key": "server",
+			"value": "http://localhost:4646",
+			"type": "string"
+		},
+		{
+			"key": "service_name",
+			"value": ""
+		}
+	]
 }
