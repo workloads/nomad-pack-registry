@@ -38,12 +38,13 @@ job "[[ .my.job_name ]]" {
     }
 
     [[- $job_tags := .my.job_tags -]]
+    [[- $service_name := .my.service_name_prefix -]]
     [[- $service_provider := .my.service_provider -]]
     [[/* iterate over `$ports` to map Services */]]
     [[ range $name, $port := $ports ]]
     # see https://developer.hashicorp.com/nomad/docs/job-specification/service
     service {
-      name     = "[[ $name | replace "_" "-" | trunc 63 ]]"
+      name     = "[[ $service_name | replace "_" "-" | trunc 63 ]]-[[ $name ]]"
       tags     = [[ $job_tags | toJson ]]
       port     = [[ $port.port ]]
       provider = "[[ $service_provider ]]"

@@ -437,23 +437,11 @@
 				}
 			],
 			"protocolProfileBehavior": {
-				"disableBodyPruning": true,
 				"disableCookies": false
 			},
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {
-					"mode": "urlencoded",
-					"urlencoded": [
-						{
-							"key": "filter",
-							"value": "JobID contains '{{job_name}}'",
-							"description": "Filter on JobID, see https://developer.hashicorp.com/nomad/api-docs#filtering",
-							"type": "text"
-						}
-					]
-				},
 				"url": {
 					"raw": "{{server}}/v1/service/{{service_name}}-main",
 					"host": [
@@ -520,23 +508,11 @@
 				}
 			],
 			"protocolProfileBehavior": {
-				"disableBodyPruning": true,
 				"disableCookies": false
 			},
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {
-					"mode": "urlencoded",
-					"urlencoded": [
-						{
-							"key": "filter",
-							"value": "JobID contains '{{job_name}}'",
-							"description": "Filter on JobID, see https://developer.hashicorp.com/nomad/api-docs#filtering",
-							"type": "text"
-						}
-					]
-				},
 				"url": {
 					"raw": "{{server}}/v1/service/{{service_name}}-rcon",
 					"host": [

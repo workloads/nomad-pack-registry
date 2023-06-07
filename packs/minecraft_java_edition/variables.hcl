@@ -455,6 +455,12 @@ variable "resources" {
   }
 }
 
+variable "service_name_prefix" {
+  type        = string
+  description = "Name for the Service."
+  default     = "minecraft_java_edition"
+}
+
 variable "service_provider" {
   type        = string
   description = "Provider for the Service."

@@ -109,6 +109,7 @@ nomad-pack run minecraft_java_edition --registry=workloads
 | region | Region for the Job. | `string` |
 | resources | Resource Limits for the Application. | <pre>object({<br>    cpu        = number<br>    cores      = number<br>    memory     = number<br>    memory_max = number<br>  })</pre> |
 | restart_logic | Restart Logic for the Application. | <pre>object({<br>    attempts = number<br>    interval = string<br>    delay    = string<br>    mode     = string<br>  })</pre> |
+| service_name_prefix | Name for the Service. | `string` |
 | service_provider | Provider for the Service. | `string` |
 | task_name | Name for the Task. | `string` |
 | verbose_output | Toggle to enable verbose output. | `bool` |
