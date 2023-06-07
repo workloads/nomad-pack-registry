@@ -1,224 +1,279 @@
-variable "config" {
-  type = object({
-    allow_flight                 = bool
-    allow_nether                 = bool
-    announce_player_achievements = bool
-    console                      = bool
-    data                         = string
-    difficulty                   = string
-    disable_healthcheck          = bool
-    enable_command_block         = bool
-    enable_query                 = bool
-    enable_rcon                  = bool
-    enable_rolling_logs          = bool
-    eula                         = bool
-    generate_structures          = bool
-    gui                          = bool
-    hardcore                     = bool
-    icon                         = string
-    level_type                   = string
-    max_build_height             = number
-    max_memory                   = string
-    max_players                  = number
-    max_tick_time                = number
-    max_world_size               = number
-    memory                       = string
-    mode                         = string
-    mods_file                    = string
-    motd                         = string
-    online_mode                  = bool
-    override_icon                = bool
-    pvp                          = bool
-    rcon_password                = string
-    remove_old_mods              = bool
-    seed                         = string
-    server_name                  = string
-    snooper_enabled              = bool
-    spawn_animals                = bool
-    spawn_monsters               = bool
-    spawn_npcs                   = bool
-    spawn_protection             = number
-    tz                           = string
-    type                         = string
-    use_aikar_flags              = bool
-    version                      = string
-    view_distance                = number
-    world                        = string
-  })
-
-  description = "Application configuration."
-
-  # this section contains a non-exhaustive selection of Minecraft Server configuration options
-  # see https://github.com/itzg/docker-minecraft-server/blob/master/README.md#server-configuration for all available options.
-  default = {
-    # toggle to enable PC flight
-    allow_flight = true
-
-    # toggle to enable The Nether
-    allow_nether = false
-
-    # toggle to announce player achievements
-    announce_player_achievements = false
-
-    # toggle to enable console
-    console = true
-
-    # directory where Application data will be stored
-    data = "/data"
-
-    # difficulty level
-    difficulty = "peaceful"
-
-    # toggle to disable container health check
-    disable_healthcheck = false
-
-    # toggle to enable Command Blocks
-    # see https://minecraft.fandom.com/wiki/Command_Block
-    enable_command_block = false
-
-    # toggle to enable Gamespy Query protocol
-    enable_query = false
-
-    # toggle to enable RCON interface
-    enable_rcon = true
-
-    # toggle to enable log rolling
-    enable_rolling_logs = true
-
-    # toggle to accept end-user license agreement
-    eula = true
-
-    # toggle to pre-generate structures (e.g.: villages, outposts)
-    generate_structures = true
-
-    # toggle to enable GUI
-    gui = true
-
-    # toggle to enable Hardcore Mode
-    # see https://minecraft.fandom.com/wiki/Hardcore
-    hardcore = false
-
-    # Server Icon
-    icon = "https://assets.workloads.io/minecraft/server-icons/tnt.png"
-
-    # Level Type (e.g.: Normal, Flat)
-    # see https://minecraft.fandom.com/wiki/Server.properties#level-type
-    level_type = "flat"
-
-    # maximum allowed building height (in blocks)
-    max_build_height = 256
-
-    # maximum allowed memory
-    max_memory = "4G" # 100% of `resources.memory`
-
-    # maximum allowed player count
-    max_players = 20
-
-    # maximum number of msec a single tick may take before watchdog kicks in
-    max_tick_time = 60000
-
-    # maximum radius of world size (in blocks)
-    max_world_size = 10000
-
-    # initial memory to assign
-    memory = "3G" # 75% of `resources.memory`
-
-    # Game Mode to start with
-    # see https://github.com/itzg/docker-minecraft-server/blob/master/README.md#game-mode
-    mode = "creative"
-
-    # path to text file with Mod URLs (e.g.: `/extras/mods.txt`)
-    mods_file = ""
-
-    # Message of the Day
-    # see https://minecraft.fandom.com/wiki/Formatting_codes
-    motd = "This server is running on §2§lHashiCorp Nomad§r!"
-
-    # toggle to enable Account Authentication (with Minecraft.net / Microsoft Account)
-    online_mode = false
-
-    # toggle to enable overriding default server icon
-    override_icon = true
-
-    # toggle to enable player-versus-player damage
-    pvp = false
-
-    # RCON Interface password
-    rcon_password = "AW96B6"
-
-    # toggle to enable removal of old Mods
-    remove_old_mods = true
-
-    # Level Seed, see https://www.reddit.com/r/minecraftseeds/ for inspiration
-    seed = "-3420545464665791887"
-
-    # name of Server
-    server_name = "Minecraft Java Edition Server"
-
-    # toggle to enable sending updates to `snoop.minecraft.net`
-    snooper_enabled = false
-
-    # toggle to enable Animals to spawn
-    spawn_animals = true
-
-    # toggle to enable Monsters to spawn
-    spawn_monsters = false
-
-    # toggle to enable Non-Player Characters to spawn
-    spawn_npcs = true
-
-    # sets area that non-ops cannot alter (in blocks)
-    spawn_protection = 0
-
-    # timezone
-    tz = "Europe/Amsterdam"
-
-    # Server Type (e.g.: `vanilla`, `fabric` etc.)
-    type = "vanilla"
-
-    # toggle to enable optimized JVM flags for GC tuning
-    # see https://github.com/itzg/docker-minecraft-server#enable-aikars-flags
-    use_aikar_flags = true
-
-    # Minecraft Version to run
-    version = "1.19.4"
-
-    # set the amount of World Data to send to clients to define viewing distance (in blocks)
-    view_distance = 20
-
-    # URL to Minecraft World ZIP archive
-    world = ""
-  }
+variable "app_allow_flight" {
+  type        = bool
+  description = "Toggle to enable PC flight."
+  default     = true
 }
 
-variable "consul_service_name" {
+variable "app_allow_nether" {
+  type        = bool
+  description = "Toggle to enable The Nether."
+  default     = false
+}
+
+variable "app_announce_player_achievements" {
+  type        = bool
+  description = "Toggle to enable Player Achievement Announcements."
+  default     = false
+}
+
+variable "app_console" {
+  type        = bool
+  description = "Toggle to enable Console."
+  default     = true
+}
+
+variable "app_data" {
   type        = string
-  description = "Consul Service Name for the Application."
-
-  # value may only contain alphanumeric characters and dashes and will be truncated to 63 characters
-  default = "minecraft-java-edition"
+  description = "Directory for Application Data."
+  default     = "/data"
 }
 
-variable "consul_service_tags" {
-  type        = list(string)
-  description = "Consul Service Tags for the Application."
+variable "app_difficulty" {
+  type        = string
+  description = "Difficulty Level."
+  default     = "peaceful"
+}
 
-  default = [
-    "minecraft",
-    "minecraft-java-edition",
-  ]
+variable "app_disable_healthcheck" {
+  type        = bool
+  description = "Toggle to disable Container Health Check."
+  default     = false
+}
+
+variable "app_enable_command_block" {
+  type        = bool
+  description = "Toggle to enable Command Blocks."
+  default     = true
+}
+
+variable "app_enable_query" {
+  type        = bool
+  description = "Toggle to enable Gamespy Query Protocol."
+  default     = false
+}
+
+variable "app_enable_rcon" {
+  type        = bool
+  description = "Toggle to enable RCON interface."
+  default     = true
+}
+
+variable "app_enable_rolling_logs" {
+  type        = bool
+  description = "Toggle to enable Log Rolling."
+  default     = true
+}
+
+variable "app_eula" {
+  type        = bool
+  description = "Toggle to accept End-User License Agreement."
+  default     = true
+}
+
+variable "app_generate_structures" {
+  type        = bool
+  description = "Toggle to pre-generate Structures (e.g.: Villages, Outposts)."
+  default     = true
+}
+
+variable "app_gui" {
+  type        = bool
+  description = "Toggle to enable GUI."
+  default     = true
+}
+
+variable "app_hardcore" {
+  type        = bool
+  description = "Toggle to enable Hardcore Mode."
+  default     = false
+}
+
+variable "app_icon" {
+  type        = string
+  description = "Server Icon."
+  default     = "https://assets.workloads.io/minecraft/server-icons/tnt.png"
+}
+
+variable "app_level_type" {
+  type        = string
+  description = "Level Type (e.g.: `normal`, `flat`)."
+  default     = "normal"
+}
+
+variable "app_max_build_height" {
+  type        = number
+  description = "Maximum allowed Building Height (in blocks)."
+  default     = 256
+}
+
+variable "app_max_memory" {
+  type        = string
+  description = "Maximum allowed Memory."
+  default     = "4G" # 100% of `resources.memory`
+}
+
+variable "app_max_players" {
+  type        = number
+  description = "Maximum Player Count."
+  default     = 20
+}
+
+variable "app_max_tick_time" {
+  type        = number
+  description = "Maximum time a Tick may take before Watchdog responds (in msec)."
+  default     = 60000
+}
+
+variable "app_max_world_size" {
+  type        = number
+  description = "Maximum Radius of World (in blocks)."
+  default     = 10000
+}
+
+variable "app_memory" {
+  type        = string
+  description = "Initial Memory."
+  default     = "3G" # 75% of `resources.memory`
+}
+
+variable "app_mode" {
+  type        = string
+  description = "Game Mode."
+  default     = "creative"
+}
+
+variable "app_mods_file" {
+  type        = string
+  description = "Path to file with Mod URLs (e.g.: `/extras/mods.txt`)"
+  default     = ""
+}
+
+variable "app_motd" {
+  type        = string
+  description = "Message of the Day."
+  default     = "This Server is running on §2§lHashiCorp Nomad§r!"
+}
+
+variable "app_online_mode" {
+  type        = bool
+  description = "Toggle to enable Account Authentication (with Minecraft.net / Microsoft Account)."
+  default     = false
+}
+
+variable "app_override_icon" {
+  type        = bool
+  description = "Toggle to allow overriding Server Icon."
+  default     = true
+}
+
+variable "app_pvp" {
+  type        = bool
+  description = "Toggle to enable PvP Damage."
+  default     = false
+}
+
+variable "app_rcon_password" {
+  type        = string
+  description = "RCON Interface Password."
+  default     = "AW96B6"
+}
+
+variable "app_remove_old_mods" {
+  type        = bool
+  description = "Toggle to enable removal of old Mods."
+  default     = true
+}
+
+variable "app_seed" {
+  type        = string
+  description = "Level Seed."
+
+  # see https://www.reddit.com/r/minecraftseeds/ for inspiration
+  default     = "-3420545464665791887"
+}
+
+variable "app_server_name" {
+  type        = string
+  description = "Server Name."
+  default     = "Minecraft Java Edition Server"
+}
+
+variable "app_snooper_enabled" {
+  type        = bool
+  description = "Toggle to enable sending updates to `snoop.minecraft.net`."
+  default     = false
+}
+
+variable "app_spawn_animals" {
+  type        = bool
+  description = "Toggle to enable Animals to spawn."
+  default     = true
+}
+
+variable "app_spawn_monsters" {
+  type        = bool
+  description = "Toggle to enable Monsters to spawn."
+  default     = false
+}
+
+variable "app_spawn_npcs" {
+  type        = bool
+  description = "Toggle to enable NPCs to spawn."
+  default     = true
+}
+
+variable "app_spawn_protection" {
+  type        = number
+  description = "Sets area that non-ops cannot alter (in blocks)."
+  default     = 0
+}
+
+variable "app_tz" {
+  type        = string
+  description = "Timezone."
+  default     = "Europe/Amsterdam"
+}
+
+variable "app_type" {
+  type        = string
+  description = "Server Type (e.g.: `vanilla`, `fabric`, etc.)."
+  default     = "vanilla"
+}
+
+variable "app_use_aikar_flags" {
+  type        = bool
+  description = "Toggle to enable optimized JVM flags for GC tuning."
+  default     = true
+}
+
+variable "app_version" {
+  type        = string
+  description = "Minecraft Version."
+  default     = "1.19.4"
+}
+
+variable "app_view_distance" {
+  type        = number
+  description = "Amount of World Data to send to define viewing distance (in blocks)."
+  default     = 20
+}
+
+variable "app_world" {
+  type        = string
+  description = "URL to Minecraft World ZIP archive."
+  default     = ""
 }
 
 variable "count" {
   type        = number
-  description = "Number of desired Job Deployments."
+  description = "Count of Deployments for the Job."
   default     = 1
 }
 
 # see https://developer.hashicorp.com/nomad/docs/concepts/architecture#datacenters
 variable "datacenters" {
   type        = list(string)
-  description = "Datacenters that are eligible for Task Placement."
+  description = "Eligible Datacenters for the Task."
 
   default = [
     "*"
@@ -239,7 +294,7 @@ variable "ephemeral_disk" {
     sticky  = bool
   })
 
-  description = "Ephemeral Disk configuration for the Application."
+  description = "Ephemeral Disk Configuration for the Application."
 
   default = {
     # make best-effort attempt to migrate data to a different node if no placement is possible on the original node.
@@ -251,6 +306,12 @@ variable "ephemeral_disk" {
     # make best-effort attempt to place an updated allocation on the same node.
     sticky = true
   }
+}
+
+variable "group_name" {
+  type        = string
+  description = "Name for the Group."
+  default     = "minecraft_java_edition"
 }
 
 variable "image" {
@@ -285,7 +346,7 @@ variable "image" {
 
 variable "job_name" {
   type        = string
-  description = "Name of the Job."
+  description = "Name for the Job."
 
   # value will be truncated to 63 characters when necessary
   default = "minecraft_java_edition"
@@ -304,7 +365,7 @@ variable "job_tags" {
 # see https://developer.hashicorp.com/nomad/docs/job-specification/job#namespace
 variable "namespace" {
   type        = string
-  description = "Namespace in which the Job should be placed."
+  description = "Namespace for the Job."
   default     = "default"
 }
 
@@ -348,36 +409,37 @@ variable "ports" {
 # see https://developer.hashicorp.com/nomad/docs/job-specification/job#priority
 variable "priority" {
   type        = number
-  description = "Priority of the Job."
+  description = "Priority for the Job."
   default     = 99
 }
 
 # see https://developer.hashicorp.com/nomad/docs/concepts/architecture#regions
 variable "region" {
   type        = string
-  description = "Regions that are eligible for Job Deployment."
+  description = "Region for the Job."
   default     = "global"
-}
-
-# see https://github.com/hashicorp/nomad-pack/blob/main/internal/creator/templates/pack_readme.md#consul-service-and-load-balancer-integration
-variable "register_consul_service" {
-  type        = bool
-  description = "Toggle to enable Consul Service Registration for the Job."
-  default     = false
 }
 
 # see https://developer.hashicorp.com/nomad/docs/job-specification/resources
 variable "resources" {
   type = object({
-    cpu    = number
-    memory = number
+    cpu        = number
+    cores      = number
+    memory     = number
+    memory_max = number
   })
 
-  description = "Resources to assign to the Application."
+  description = "Resource Limits for the Application."
 
   default = {
+    # Tasks can ask for `cpu` or `cores`, not both.
     # value in MHz
     cpu = 4000
+
+    # Tasks can ask for `cpu` or `cores`, not both.
+    # see https://developer.hashicorp.com/nomad/docs/job-specification/resources#cores
+    # and https://developer.hashicorp.com/nomad/docs/drivers/docker#cpu
+    cores = null
 
     # value in MB
     # 2048 = ~10 players, 4096 = ~25 players
@@ -385,13 +447,42 @@ variable "resources" {
     # 10240 = ~150+ players
     # see https://apexminecrafthosting.com/how-much-ram-do-i-need-for-my-server/
     memory = 4096
+
+    # value in MB
+    # see https://developer.hashicorp.com/nomad/docs/job-specification/resources#memory-oversubscription
+    # and https://developer.hashicorp.com/nomad/docs/drivers/docker#memory
+    memory_max = 5120
   }
 }
 
 variable "service_provider" {
   type        = string
-  description = "Service Provider to use for the Application."
+  description = "Provider for the Service."
   default     = "nomad"
+}
+
+variable "restart_logic" {
+  type = object({
+    attempts = number
+    interval = string
+    delay    = string
+    mode     = string
+  })
+
+  description = "Restart Logic for the Application."
+
+  default = {
+    attempts = 3
+    interval = "120s"
+    delay    = "30s"
+    mode     = "fail"
+  }
+}
+
+variable "task_name" {
+  type        = string
+  description = "Name for the Task."
+  default     = "minecraft_java_edition"
 }
 
 variable "verbose_output" {
@@ -408,7 +499,7 @@ variable "volumes" {
     read_only   = bool
   }))
 
-  description = "Mounts Configuration for the Application."
+  description = "Volumes for the Application."
 
   default = {
     minecraft_data = {

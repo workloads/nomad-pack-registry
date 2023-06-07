@@ -50,26 +50,69 @@ nomad-pack run minecraft_java_edition --registry=workloads
 
 | Name | Description | Type |
 |------|-------------|------|
-| config | Application configuration. | <pre>object({<br>    allow_flight                 = bool<br>    allow_nether                 = bool<br>    announce_player_achievements = bool<br>    console                      = bool<br>    data                         = string<br>    difficulty                   = string<br>    disable_healthcheck          = bool<br>    enable_command_block         = bool<br>    enable_query                 = bool<br>    enable_rcon                  = bool<br>    enable_rolling_logs          = bool<br>    eula                         = bool<br>    generate_structures          = bool<br>    gui                          = bool<br>    hardcore                     = bool<br>    icon                         = string<br>    level_type                   = string<br>    max_build_height             = number<br>    max_memory                   = string<br>    max_players                  = number<br>    max_tick_time                = number<br>    max_world_size               = number<br>    memory                       = string<br>    mode                         = string<br>    mods_file                    = string<br>    motd                         = string<br>    online_mode                  = bool<br>    override_icon                = bool<br>    pvp                          = bool<br>    rcon_password                = string<br>    remove_old_mods              = bool<br>    seed                         = string<br>    server_name                  = string<br>    snooper_enabled              = bool<br>    spawn_animals                = bool<br>    spawn_monsters               = bool<br>    spawn_npcs                   = bool<br>    spawn_protection             = number<br>    tz                           = string<br>    type                         = string<br>    use_aikar_flags              = bool<br>    version                      = string<br>    view_distance                = number<br>    world                        = string<br>  })</pre> |
-| consul_service_name | Consul Service Name for the Application. | `string` |
-| consul_service_tags | Consul Service Tags for the Application. | `list(string)` |
-| count | Number of desired Job Deployments. | `number` |
-| datacenters | Datacenters that are eligible for Task Placement. | `list(string)` |
+| app_allow_flight | Toggle to enable PC flight. | `bool` |
+| app_allow_nether | Toggle to enable The Nether. | `bool` |
+| app_announce_player_achievements | Toggle to enable Player Achievement Announcements. | `bool` |
+| app_console | Toggle to enable Console. | `bool` |
+| app_data | Directory for Application Data. | `string` |
+| app_difficulty | Difficulty Level. | `string` |
+| app_disable_healthcheck | Toggle to disable Container Health Check. | `bool` |
+| app_enable_command_block | Toggle to enable Command Blocks. | `bool` |
+| app_enable_query | Toggle to enable Gamespy Query Protocol. | `bool` |
+| app_enable_rcon | Toggle to enable RCON interface. | `bool` |
+| app_enable_rolling_logs | Toggle to enable Log Rolling. | `bool` |
+| app_eula | Toggle to accept End-User License Agreement. | `bool` |
+| app_generate_structures | Toggle to pre-generate Structures (e.g.: Villages, Outposts). | `bool` |
+| app_gui | Toggle to enable GUI. | `bool` |
+| app_hardcore | Toggle to enable Hardcore Mode. | `bool` |
+| app_icon | Server Icon. | `string` |
+| app_level_type | Level Type (e.g.: `normal`, `flat`). | `string` |
+| app_max_build_height | Maximum allowed Building Height (in blocks). | `number` |
+| app_max_memory | Maximum allowed Memory. | `string` |
+| app_max_players | Maximum Player Count. | `number` |
+| app_max_tick_time | Maximum time a Tick may take before Watchdog responds (in msec). | `number` |
+| app_max_world_size | Maximum Radius of World (in blocks). | `number` |
+| app_memory | Initial Memory. | `string` |
+| app_mode | Game Mode. | `string` |
+| app_mods_file | Path to file with Mod URLs (e.g.: `/extras/mods.txt`) | `string` |
+| app_motd | Message of the Day. | `string` |
+| app_online_mode | Toggle to enable Account Authentication (with Minecraft.net / Microsoft Account). | `bool` |
+| app_override_icon | Toggle to allow overriding Server Icon. | `bool` |
+| app_pvp | Toggle to enable PvP Damage. | `bool` |
+| app_rcon_password | RCON Interface Password. | `string` |
+| app_remove_old_mods | Toggle to enable removal of old Mods. | `bool` |
+| app_seed | Level Seed. | `string` |
+| app_server_name | Server Name. | `string` |
+| app_snooper_enabled | Toggle to enable sending updates to `snoop.minecraft.net`. | `bool` |
+| app_spawn_animals | Toggle to enable Animals to spawn. | `bool` |
+| app_spawn_monsters | Toggle to enable Monsters to spawn. | `bool` |
+| app_spawn_npcs | Toggle to enable NPCs to spawn. | `bool` |
+| app_spawn_protection | Sets area that non-ops cannot alter (in blocks). | `number` |
+| app_type | Server Type (e.g.: `vanilla`, `fabric`, etc.). | `string` |
+| app_tz | Timezone. | `string` |
+| app_use_aikar_flags | Toggle to enable optimized JVM flags for GC tuning. | `bool` |
+| app_version | Minecraft Version. | `string` |
+| app_view_distance | Amount of World Data to send to define viewing distance (in blocks). | `number` |
+| app_world | URL to Minecraft World ZIP archive. | `string` |
+| count | Count of Deployments for the Job. | `number` |
+| datacenters | Eligible Datacenters for the Task. | `list(string)` |
 | driver | Driver to use for the Job. | `string` |
-| ephemeral_disk | Ephemeral Disk configuration for the Application. | <pre>object({<br>    migrate = bool<br>    size    = number<br>    sticky  = bool<br>  })</pre> |
+| ephemeral_disk | Ephemeral Disk Configuration for the Application. | <pre>object({<br>    migrate = bool<br>    size    = number<br>    sticky  = bool<br>  })</pre> |
 | image | Content Address to use for the Container Image. | <pre>object({<br>    registry  = string<br>    namespace = string<br>    image     = string<br>    tag       = string<br>    digest    = string<br>  })</pre> |
-| job_name | Name of the Job. | `string` |
+| job_name | Name for the Job. | `string` |
 | job_tags | List of Tags for the Job. | `list(string)` |
-| namespace | Namespace in which the Job should be placed. | `string` |
+| namespace | Namespace for the Job. | `string` |
 | network_mode | Network Mode for the Job. | `string` |
 | ports | Port Configuration for the Application. | <pre>map(object({<br>    name = string,<br>    path = string,<br>    port = number,<br>    type = string,<br>  }))</pre> |
-| priority | Priority of the Job. | `number` |
-| region | Regions that are eligible for Job Deployment. | `string` |
-| register_consul_service | Toggle to enable Consul Service Registration for the Job. | `bool` |
-| resources | Resources to assign to the Application. | <pre>object({<br>    cpu    = number<br>    memory = number<br>  })</pre> |
-| service_provider | Service Provider to use for the Application. | `string` |
+| priority | Priority for the Job. | `number` |
+| region | Region for the Job. | `string` |
+| resources | Resource Limits for the Application. | <pre>object({<br>    cpu        = number<br>    cores      = number<br>    memory     = number<br>    memory_max = number<br>  })</pre> |
+| restart_logic | Restart Logic for the Application. | <pre>object({<br>    attempts = number<br>    interval = string<br>    delay    = string<br>    mode     = string<br>  })</pre> |
+| service_name | Name for the Service. | `string` |
+| service_provider | Provider for the Service. | `string` |
+| task_name | Name for the Task. | `string` |
 | verbose_output | Toggle to enable verbose output. | `bool` |
-| volumes | Mounts Configuration for the Application. | <pre>map(object({<br>    name        = string<br>    type        = string<br>    destination = string<br>    read_only   = bool<br>  }))</pre> |
+| volumes | Volumes for the Application. | <pre>map(object({<br>    name        = string<br>    type        = string<br>    destination = string<br>    read_only   = bool<br>  }))</pre> |
 <!-- END_PACK_DOCS -->
 
 ### Outputs
