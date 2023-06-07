@@ -30,7 +30,7 @@ variable "app_data" {
 
 variable "app_difficulty" {
   type        = string
-  description = "Difficulty Level."
+  description = "Difficulty Level (e.g.: `peaceful`, `easy`, `normal`, `hard`)."
   default     = "peaceful"
 }
 

@@ -55,7 +55,7 @@ nomad-pack run minecraft_java_edition --registry=workloads
 | app_announce_player_achievements | Toggle to enable Player Achievement Announcements. | `bool` |
 | app_console | Toggle to enable Console. | `bool` |
 | app_data | Directory for Application Data. | `string` |
-| app_difficulty | Difficulty Level. | `string` |
+| app_difficulty | Difficulty Level (e.g.: `peaceful`, `easy`, `normal`, `hard`). | `string` |
 | app_disable_healthcheck | Toggle to disable Container Health Check. | `bool` |
 | app_enable_command_block | Toggle to enable Command Blocks. | `bool` |
 | app_enable_query | Toggle to enable Gamespy Query Protocol. | `bool` |
