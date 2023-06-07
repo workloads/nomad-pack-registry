@@ -89,7 +89,17 @@ export NO_COLOR=1 && make
 * For `nomad-pack` arguments that are not supported by the [Makefile](./Makefile), the `ARGS` variable may be used like so:
 
 ```shell
- make render pack=minecraft_java_server ARGS="--render-output-template"
+ make render pack=<my_pack> ARGS="--render-output-template"
+```
+
+* The binaries for `nomad` and `nomad-pack` may be overridden by setting the `BINARY_NOMAD` and `BINARY_NOMAD_PACK` arguments when running the [Makefile](./Makefile):
+
+```shell
+# override `nomad` binary
+make render pack=<my_pack> BINARY_NOMAD=/tmp/nomad
+
+# override `nomad-pack` binary
+make render pack=<my_pack> BINARY_NOMAD_PACK=/tmp/nomad-pack
 ```
 
 ## Author Information

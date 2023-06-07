@@ -3,6 +3,8 @@
 # configuration
 ARGS                  :=
 BINARY_GLOW            = $(call check_for_binary,glow)
+BINARY_NOMAD     			?= nomad
+BINARY_NOMAD_PACK			?= nomad-pack
 DOCS_CONFIG            = .nomad-pack-docs.yml
 GLOW_WIDTH             = 160
 PACKS_DIR              = ./packs
@@ -33,10 +35,10 @@ define render_pack
 
 	$(call print_reference,$(pack))
 
-	nomad-pack \
+	$(BINARY_NOMAD_PACK) \
 		render \
-			"$(PACKS_DIR)/$(strip $(pack))" \
 			$(ARGS) \
+			"$(PACKS_DIR)/$(strip $(pack))" \
 	;
 endef
 
@@ -45,17 +47,17 @@ define run_pack
 	$(if $(pack),,$(call missing_argument,run,pack=my_pack))
 
 	$(if $(strip $(BINARY_GLOW)), \
-		nomad-pack \
+		$(BINARY_NOMAD_PACK)  \
 			run \
-				"$(PACKS_DIR)/$(strip $(pack))" \
 				$(ARGS) \
+				"$(PACKS_DIR)/$(strip $(pack))" \
 		| \
 		glow \
 			--width $(GLOW_WIDTH), \
-		nomad-pack \
+		$(BINARY_NOMAD_PACK) \
 			run \
-				"$(PACKS_DIR)/$(strip $(pack))" \
 				$(ARGS) \
+				"$(PACKS_DIR)/$(strip $(pack))" \
 	)
 endef
 
@@ -63,7 +65,7 @@ endef
 define stop_pack
 	$(if $(pack),,$(call missing_argument,stop,pack=my_pack))
 
-	nomad-pack \
+	$(BINARY_NOMAD_PACK) \
 		stop \
 			"$(PACKS_DIR)/$(strip $(pack))" \
 			$(ARGS) \
@@ -89,7 +91,7 @@ define create_test_environment
 	echo
 
 	# start Nomad in development mode, using Pack-specific configuration
-	nomad \
+	$(BINARY_NOMAD) \
 		agent \
 			-config="$(PACKS_DIR)/$(strip $(pack))/tests/nomad.hcl" \
 			-dev \
@@ -101,7 +103,7 @@ endef
 define destroy_pack
 	$(if $(pack),,$(call missing_argument,render,pack=my_pack))
 
-	nomad-pack \
+	$(BINARY_NOMAD_PACK) \
 		destroy \
 			"$(PACKS_DIR)/$(strip $(pack))" \
 			$(ARGS) \
@@ -145,7 +147,7 @@ docs: # generate documentation for all Nomad Packs [Usage: `make docs`]
 
 .SILENT .PHONY: registry
 registry: # add Nomad Pack Registry to local environment [Usage: `make registry`]
-	nomad-pack \
+	$(BINARY_NOMAD_PACK) \
 		registry \
 			add \
 				"workloads" \
