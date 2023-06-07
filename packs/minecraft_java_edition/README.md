@@ -98,6 +98,7 @@ nomad-pack run minecraft_java_edition --registry=workloads
 | datacenters | Eligible Datacenters for the Task. | `list(string)` |
 | driver | Driver to use for the Job. | `string` |
 | ephemeral_disk | Ephemeral Disk Configuration for the Application. | <pre>object({<br>    migrate = bool<br>    size    = number<br>    sticky  = bool<br>  })</pre> |
+| group_name | Name for the Group. | `string` |
 | image | Content Address to use for the Container Image. | <pre>object({<br>    registry  = string<br>    namespace = string<br>    image     = string<br>    tag       = string<br>    digest    = string<br>  })</pre> |
 | job_name | Name for the Job. | `string` |
 | job_tags | List of Tags for the Job. | `list(string)` |
@@ -108,7 +109,6 @@ nomad-pack run minecraft_java_edition --registry=workloads
 | region | Region for the Job. | `string` |
 | resources | Resource Limits for the Application. | <pre>object({<br>    cpu        = number<br>    cores      = number<br>    memory     = number<br>    memory_max = number<br>  })</pre> |
 | restart_logic | Restart Logic for the Application. | <pre>object({<br>    attempts = number<br>    interval = string<br>    delay    = string<br>    mode     = string<br>  })</pre> |
-| service_name | Name for the Service. | `string` |
 | service_provider | Provider for the Service. | `string` |
 | task_name | Name for the Task. | `string` |
 | verbose_output | Toggle to enable verbose output. | `bool` |
