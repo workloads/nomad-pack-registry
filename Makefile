@@ -9,6 +9,7 @@ DOCS_CONFIG            = .nomad-pack-docs.yml
 GLOW_WIDTH             = 160
 PACKS_DIR              = ./packs
 NEWMAN_REPORTERS      ?= "cli"
+NOMAD_ADDR            ?= "http://localhost:4646"
 NOMADVARS_SAMPLE_FILE	 = overrides.sample.hcl
 PACKS                  = $(shell ls $(PACKS_DIR))
 reporter              ?= $(NEWMAN_REPORTERS)
@@ -110,6 +111,17 @@ define destroy_pack
 	;
 endef
 
+# restart a Nomad Task
+define restart_task
+	$(if $(task),,$(call missing_argument,restart,task=my_task))
+
+	$(BINARY_NOMAD) \
+		job \
+			restart \
+			$(task) \
+	;
+endef
+
 include ../tooling/make/targets/shared.mk
 
 .SILENT .PHONY: env
@@ -139,6 +151,10 @@ stop: # stop a running Nomad Pack [Usage: `make stop pack=my_pack`]
 .SILENT .PHONY: test
 test: # test a running Nomad Pack [Usage: `make test pack=my_pack`]
 	$(call test_pack, $(pack))
+
+.SILENT .PHONY: restart
+restart: # restart a Task via the Nomad API [Usage: `make restart task=my_task`]
+	$(call restart_task,$(task))
 
 .SILENT .PHONY: docs
 docs: # generate documentation for all Nomad Packs [Usage: `make docs`]

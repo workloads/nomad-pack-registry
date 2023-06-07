@@ -42,6 +42,7 @@ run             run a Nomad Pack                              `make run pack=my_
 rerun           destroy and run a Nomad Pack                  `make rerun pack=my_pack`
 stop            stop a running Nomad Pack                     `make stop pack=my_pack`
 test            test a running Nomad Pack                     `make test pack=my_pack`
+restart         restart a Task                                `make restart task=my_task`
 docs            generate documentation for all Nomad Packs    `make docs`
 help            display a list of Make Targets                `make help`
 registry        add Nomad Pack Registry to local environment  `make registry`
