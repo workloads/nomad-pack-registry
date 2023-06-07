@@ -1,50 +1,61 @@
-[[- if .minecraft_java_edition.verbose_output ]]
-# Job: _[[ .minecraft_java_edition.job_name ]]_ (v[[ .nomad_pack.pack.version ]])
+[[- if .my.verbose_output ]]
+# Job: _[[ .my.job_name ]]_ (`v[[ .nomad_pack.pack.version ]]`)
 
-  Region:    `[[ .minecraft_java_edition.region ]]`
-  DC(s):     `[[ .minecraft_java_edition.datacenters | toJson ]]`
-  Namespace: `[[ .minecraft_java_edition.namespace ]]`
-  Name:      `[[ .minecraft_java_edition.job_name ]]`
-  Count:     [[ .minecraft_java_edition.count ]]
+  Region:    `[[ .my.region ]]`
+  DC(s):     `[[ .my.datacenters | toJson ]]`
+  Namespace: `[[ .my.namespace ]]`
+  Name:      `[[ .my.job_name ]]`
+  Count:     `[[ .my.count ]]`
 
-## Image:
+## Image
 
-  Registry:  `[[ .minecraft_java_edition.image.registry ]]`
-  Namespace: `[[ .minecraft_java_edition.image.namespace ]]`
-  Image:     `[[ .minecraft_java_edition.image.image ]]:[[ .minecraft_java_edition.image.tag ]]`
-  Digest:    `[[ .minecraft_java_edition.image.digest ]]`
-  [[ template "output_image_information" .minecraft_java_edition.image ]]
+  Registry:  `[[ .my.image.registry ]]`
+  Namespace: `[[ .my.image.namespace ]]`
+  Image:     `[[ .my.image.image ]]:[[ .my.image.tag ]]`
+  Digest:    `[[ .my.image.digest ]]`
 
-## Ports:
+  [[- /* pretty-print Image information */]]
+  [[- if eq .my.image.registry "docker.io" ]]
+  URL:       https://hub.docker.com/layers/[[ .my.image.namespace ]]/[[ .my.image.image ]]/[[ .my.image.tag ]]/images/[[ .my.image.digest | replace ":" "-" ]]
+  [[ else ]]
+  URL:       https://[[ .my.image.registry ]]/[[ .my.image.namespace ]]/[[ .my.image.image ]]:[[ .my.image.tag ]]
+  [[ end ]]
 
-  [[- range $name, $config := .minecraft_java_edition.ports ]]
-  - [[ $name ]]: `[[ $config.port ]]` (type: `[[ $config.type ]]`)
+## Ports
+
+  [[- /* remove `rcon` from `$ports` if `.my.app_enable_rcon` is false */]]
+  [[- $ports := .my.ports ]]
+  [[- if (ne .my.app_enable_rcon true) ]]
+  [[ unset $ports "rcon" ]]
+  [[- end ]]
+  [[- range $name, $config := $ports ]]
+  - `[[ $name ]]`: `[[ $config.port ]]` (type: `[[ $config.type ]]`)
   [[- end ]]
 
-## Resources:
+## Resources
 
-  CPU:    `[[ .minecraft_java_edition.resources.cpu ]]`
-  Memory: `[[ .minecraft_java_edition.resources.memory ]]`
+  CPU:    [[ .my.resources.cpu ]] MHz
+  Memory: [[ .my.resources.memory ]] MB
 
-## Volumes:
-
-  [[- range $name, $mounts := .minecraft_java_edition.volumes ]]
-  - `[[ $mounts.name | quote ]]` (type: [[ $mounts.type ]]) = `[[ $mounts.destination | toPrettyJson ]]` [[ if $mounts.read_only ]](`read-only`)[[ end ]]
+## Volumes
+  [[ range $name, $mounts := .my.volumes ]]
+  - `[[ $mounts.name ]]` = `[[ $mounts.destination | toPrettyJson ]]` (type: `[[ $mounts.type ]]`[[ if $mounts.read_only ]], read-only[[ end ]])
   [[- end ]]
 
-[[- if $.minecraft_java_edition.register_consul_service ]]
-## Consul:
+## Service
 
-  Register Service: `[[ .minecraft_java_edition.register_consul_service ]]`
-  Service Name:     `[[ .minecraft_java_edition.consul_service_name ]]`
-  Service Tags:     `[[ .minecraft_java_edition.consul_service_tags | toPrettyJson ]]`
-[[ end ]]
+  Service Provider: `[[ .my.service_provider ]]`
+  Service Name:     `[[ .my.job_name | replace "_" "-" | trunc 63 | quote ]]`
 
-## Configuration:
+  Service Tags:
+    [[- range $name := .my.job_tags ]]
+    - `[[ $name ]]`
+    [[- end ]]
 
-  [[- range $name, $config := .minecraft_java_edition.config ]]
-  [[- if not (empty $config) ]]
-  [[ $name ]] = `[[ $config ]]`
+## Application
+  [[ range $name, $value := .my -]]
+  [[ if $name | hasPrefix "app" ]]
+  - `[[ $name | upper ]]` = `[[ $value ]]`
   [[- end ]]
   [[- end ]]
 
