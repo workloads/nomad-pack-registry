@@ -54,8 +54,8 @@
 
 ## Application
   [[ range $name, $value := .my -]]
-  [[ if $name | hasPrefix "app" ]]
-  - `[[ $name | upper ]]` = `[[ $value ]]`
+  [[ if $name | hasPrefix "app_" ]]
+  - `[[ $name | trimPrefix "app_" | upper ]]` = `[[ $value ]]`
   [[- end ]]
   [[- end ]]
 

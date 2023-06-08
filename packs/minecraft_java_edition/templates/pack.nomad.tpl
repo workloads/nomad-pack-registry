@@ -102,8 +102,8 @@ job "[[ .my.job_name ]]" {
       # see https://developer.hashicorp.com/nomad/docs/job-specification/env
       env {
         [[- range $name, $value := .my -]]
-        [[ if $name | hasPrefix "app" ]]
-        [[ $name | upper ]] = "[[ $value | toString ]]"
+        [[ if $name | hasPrefix "app_" ]]
+        [[ $name | trimPrefix "app_" | upper ]] = "[[ $value | toString ]]"
         [[- end ]]
         [[- end ]]
       }

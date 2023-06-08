@@ -153,7 +153,7 @@ test: # test a running Nomad Pack [Usage: `make test pack=my_pack`]
 	$(call test_pack, $(pack))
 
 .SILENT .PHONY: restart
-restart: # restart a Task via the Nomad API [Usage: `make restart task=my_task`]
+restart: # restart a Task [Usage: `make restart task=my_task`]
 	$(call restart_task,$(task))
 
 .SILENT .PHONY: docs
