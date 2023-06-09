@@ -263,7 +263,7 @@ variable "app_version" {
 variable "app_view_distance" {
   type        = number
   description = "Amount of World Data to send to define viewing distance (in blocks)."
-  default     = 20
+  default     = 32
 }
 
 variable "app_world" {
@@ -404,7 +404,7 @@ variable "ports" {
     },
 
     # port for RCON Interface
-    # ⚠️ `rcon` is a magic name that is used to trigger certain logic inside `_helpers.tpl`
+    # ⚠️ `rcon` is a magic name that is used to trigger certain logic inside `pack.nomad.tpl`
     rcon = {
       name = "minecraft_rcon",
       path = null,
