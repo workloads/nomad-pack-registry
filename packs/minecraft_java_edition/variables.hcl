@@ -189,7 +189,15 @@ variable "app_seed" {
   description = "Level Seed."
 
   # see https://www.reddit.com/r/minecraftseeds/ for inspiration
-  default     = "-3420545464665791887"
+
+  # big cave system with ancient city
+  default = "5379859465535818918"
+
+  # cherry grove near spawn
+  # default = "416514620"
+
+  # water-heavy and islands
+  #default = "-5709450962299196479"
 }
 
 variable "app_server_name" {
@@ -311,7 +319,7 @@ variable "ephemeral_disk" {
 variable "group_name" {
   type        = string
   description = "Name for the Group."
-  default     = "minecraft_java_edition"
+  default     = "minecraft"
 }
 
 variable "image" {
@@ -337,10 +345,10 @@ variable "image" {
     image = "minecraft-server"
 
     # Tag of the Image
-    tag = "2023.4.0-java17-alpine"
+    tag = "2023.4.1-java20-alpine"
 
     # Digest of the Tag of the Image
-    digest = "sha256:acdb125f972ba820ec311251b23ef6a338d1e51c0e564747c72841983c1e2f62"
+    digest = "sha256:2243a73756fc056e1ee41f77b0a2c8759e36094eededb8e4454b131ff13c2a44"
   }
 }
 
@@ -349,7 +357,7 @@ variable "job_name" {
   description = "Name for the Job."
 
   # value will be truncated to 63 characters when necessary
-  default = "minecraft_java_edition"
+  default = "minecraft"
 }
 
 variable "job_tags" {
@@ -389,7 +397,7 @@ variable "ports" {
   default = {
     # port for Minecraft server
     main = {
-      name = "minecraft_java_edition_main",
+      name = "minecraft_main",
       path = null
       port = 25565,
       type = "tcp",
@@ -398,7 +406,7 @@ variable "ports" {
     # port for RCON Interface
     # ⚠️ `rcon` is a magic name that is used to trigger certain logic inside `_helpers.tpl`
     rcon = {
-      name = "minecraft_java_edition_rcon",
+      name = "minecraft_rcon",
       path = null,
       port = 25575,
       type = "tcp",
@@ -458,13 +466,13 @@ variable "resources" {
 variable "service_name_prefix" {
   type        = string
   description = "Name for the Service."
-  default     = "minecraft_java_edition"
+  default     = "minecraft"
 }
 
 variable "service_provider" {
   type        = string
   description = "Provider for the Service."
-  default     = "nomad"
+  default     = "consul"
 }
 
 variable "restart_logic" {
@@ -488,7 +496,7 @@ variable "restart_logic" {
 variable "task_name" {
   type        = string
   description = "Name for the Task."
-  default     = "minecraft_java_edition"
+  default     = "minecraft"
 }
 
 variable "verbose_output" {
