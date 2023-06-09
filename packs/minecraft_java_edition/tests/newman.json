@@ -99,7 +99,7 @@
 							"  pm.expect(res.UI.Label).to.be.an('object').and.not.be.empty;",
 							"});",
 							"",
-							"postman.setNextRequest('nomad-jobs');"
+							"postman.setNextRequest('nomad-job');"
 						],
 						"type": "text/javascript"
 					}
@@ -118,94 +118,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{server}}/v1/agent/self",
+					"raw": "{{nomad_server}}/v1/agent/self",
 					"host": [
-						"{{server}}"
+						"{{nomad_server}}"
 					],
 					"path": [
 						"v1",
 						"agent",
 						"self"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "nomad-jobs",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"// map Postman Response Object to variable after parsing it as JSON",
-							"var res = pm.response.json();",
-							"res = res[0];",
-							"",
-							"// define test data, taking care to map it as closely to Nomad Job configuration syntax as possible",
-							"const config = {",
-							"  ID: pm.collectionVariables.get('pack'),",
-							"  Namespace: pm.collectionVariables.get('namespace'),",
-							"  Status: 'running',",
-							"};",
-							"",
-							"pm.test('root configuration', function () {",
-							"  pm.expect(res.ID).to.eql(config.ID);",
-							"  pm.expect(res.Namespace).to.eql(config.Namespace);",
-							"  pm.expect(res.Status).to.eql(config.Status);",
-							"});",
-							"",
-							"// set Collection Variable `job_name` for downstream use",
-							"pm.collectionVariables.set('job_name', res.ID);",
-							"pm.log('main', 'Collection Variable `job_name` = `' + pm.collectionVariables.get('job_name') + '`');",
-							"",
-							"postman.setNextRequest('nomad-job');"
-						],
-						"type": "text/javascript"
-					}
-				},
-				{
-					"listen": "prerequest",
-					"script": {
-						"exec": [
-							"// clear previously-set `job_name` variable",
-							"pm.collectionVariables.unset('job_name');"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true,
-				"disableCookies": false
-			},
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "urlencoded",
-					"urlencoded": [
-						{
-							"key": "filter",
-							"value": "Name contains {{pack}}",
-							"type": "text"
-						}
-					]
-				},
-				"url": {
-					"raw": "{{server}}/v1/jobs?prefix={{pack}}",
-					"host": [
-						"{{server}}"
-					],
-					"path": [
-						"v1",
-						"jobs"
-					],
-					"query": [
-						{
-							"key": "prefix",
-							"value": "{{pack}}"
-						}
 					]
 				}
 			},
@@ -248,6 +168,7 @@
 							"    }",
 							"  ],",
 							"",
+							"  ServicesCount: 2,",
 							"  Status: 'running'",
 							"};",
 							"",
@@ -264,8 +185,17 @@
 							"  pm.expect(res.TaskGroups[0].EphemeralDisk.SizeMB).to.eql(config.EphemeralDisk.SizeMB);",
 							"});",
 							"",
+							"// set collection variable for each service, containing provider",
+							"for (taskGroup of res.TaskGroups[0].Services) {",
+							"  pm.collectionVariables.set('service_provider_' + taskGroup.Name, taskGroup.Provider);",
+							"}",
+							"",
 							"pm.test('`TaskGroups.Networks` response', function () {",
 							"  pm.expect(res.TaskGroups[0].Networks[0].ReservedPorts).to.eql(config.ReservedPorts);",
+							"});",
+							"",
+							"pm.test('`TaskGroups.Services` response', function () {",
+							"  pm.expect(res.TaskGroups[0].Services.length).to.eql(config.ServicesCount);",
 							"});",
 							"",
 							"pm.test('status is stable', function () {",
@@ -294,9 +224,9 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{server}}/v1/job/{{job_name}}",
+					"raw": "{{nomad_server}}/v1/job/{{job_name}}",
 					"host": [
-						"{{server}}"
+						"{{nomad_server}}"
 					],
 					"path": [
 						"v1",
@@ -356,9 +286,7 @@
 							"// set Collection Variable `job_name` for downstream use",
 							"// replace all underscores with dashes, as per logic inside Pack template",
 							"pm.collectionVariables.set('service_name', res.JobID.split('_').join('-'));",
-							"pm.log('main', 'Collection Variable `service_name` = `' + pm.collectionVariables.get('service_name') + '`');",
-							"",
-							"postman.setNextRequest('nomad-service-main');"
+							"pm.log('main', 'Collection Variable `service_name` = `' + pm.collectionVariables.get('service_name') + '`');"
 						],
 						"type": "text/javascript"
 					}
@@ -371,9 +299,9 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{server}}/v1/job/{{job_name}}/allocations",
+					"raw": "{{nomad_server}}/v1/job/{{job_name}}/allocations",
 					"host": [
-						"{{server}}"
+						"{{nomad_server}}"
 					],
 					"path": [
 						"v1",
@@ -392,7 +320,19 @@
 					"listen": "prerequest",
 					"script": {
 						"exec": [
-							"pm.log('pre', 'Collection Variable `service_name` = `' + pm.collectionVariables.get('service_name') + '`');"
+							"const service_name = pm.collectionVariables.get('service_name');",
+							"const service_provider = pm.collectionVariables.get('service_provider_' + service_name + '-main')",
+							"",
+							"pm.log('pre', 'Collection Variable `service_name` = `' + service_name + '`');",
+							"pm.log('pre', 'Collection Variable `service_provider` = `' + service_provider + '`');",
+							"",
+							"",
+							"// check if provider is `nomad`, or skip the test:",
+							"if (service_provider == 'consul') {",
+							"  pm.log('pre', 'Service Provider is Consul, skipping test');",
+							"",
+							"  // TODO: build logic to skip test",
+							"}"
 						],
 						"type": "text/javascript"
 					}
@@ -428,9 +368,7 @@
 							"  pm.expect(res.Port).to.eql(config.Port);",
 							"  pm.expect(res.ServiceName).to.eql(config.ServiceName);",
 							"  pm.expect(res.Tags).to.eql(config.Tags);",
-							"});",
-							"",
-							"postman.setNextRequest('nomad-service-rcon');"
+							"});"
 						],
 						"type": "text/javascript"
 					}
@@ -443,14 +381,20 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{server}}/v1/service/{{service_name}}-main",
+					"raw": "{{nomad_server}}/v1/service/?prefix={{service_name}}-main",
 					"host": [
-						"{{server}}"
+						"{{nomad_server}}"
 					],
 					"path": [
 						"v1",
 						"service",
-						"{{service_name}}-main"
+						""
+					],
+					"query": [
+						{
+							"key": "prefix",
+							"value": "{{service_name}}-main"
+						}
 					]
 				}
 			},
@@ -514,9 +458,9 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{server}}/v1/service/{{service_name}}-rcon",
+					"raw": "{{nomad_server}}/v1/service/{{service_name}}-rcon",
 					"host": [
-						"{{server}}"
+						"{{nomad_server}}"
 					],
 					"path": [
 						"v1",
@@ -561,11 +505,17 @@
 		},
 		{
 			"key": "job_name",
-			"value": ""
+			"value": "minecraft",
+			"type": "string"
 		},
 		{
 			"key": "namespace",
 			"value": "default",
+			"type": "string"
+		},
+		{
+			"key": "nomad_server",
+			"value": "http://localhost:4646",
 			"type": "string"
 		},
 		{
@@ -579,9 +529,12 @@
 			"type": "string"
 		},
 		{
-			"key": "server",
-			"value": "http://localhost:4646",
-			"type": "string"
+			"key": "service_provider_minecraft-main",
+			"value": ""
+		},
+		{
+			"key": "service_provider_minecraft-rcon",
+			"value": ""
 		},
 		{
 			"key": "service_name",
