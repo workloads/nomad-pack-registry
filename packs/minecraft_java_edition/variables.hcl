@@ -91,7 +91,7 @@ variable "app_hardcore" {
 variable "app_icon" {
   type        = string
   description = "Server Icon."
-  default     = "https://assets.workloads.io/minecraft/server-icons/tnt.png"
+  default     = "https://assets.workloads.io/minecraft/server-icons/command-block.png"
 }
 
 variable "app_level_type" {
@@ -254,6 +254,7 @@ variable "app_use_aikar_flags" {
   default     = true
 }
 
+# see https://minecraft.fandom.com/wiki/Category:Java_Edition_versions
 variable "app_version" {
   type        = string
   description = "Minecraft Version."

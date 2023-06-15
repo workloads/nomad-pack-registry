@@ -19,7 +19,7 @@
 
 ## Requirements
 
-- HashiCorp Nomad `1.5.5` or [newer](https://developer.hashicorp.com/nomad/downloads)
+- HashiCorp Nomad `1.5.6` or [newer](https://developer.hashicorp.com/nomad/downloads)
 - HashiCorp Nomad Pack `0.0.1` or [newer](https://releases.hashicorp.com/nomad-pack/)
 - a check-out of [@workloads/tooling](https://github.com/workloads/tooling)
 - `terraform-docs` `0.16.0` or [newer](https://terraform-docs.io/user-guide/installation/)
@@ -101,6 +101,13 @@ make render pack=<my_pack> BINARY_NOMAD=/tmp/nomad
 
 # override `nomad-pack` binary
 make render pack=<my_pack> BINARY_NOMAD_PACK=/tmp/nomad-pack
+```
+
+* The reporter for `newman` may be overridden by setting the `REPORTER` argument when running the [Makefile](./Makefile):
+
+```shell
+# override `newman` reporter
+make render pack=<my_pack> REPORTER="progress"
 ```
 
 ## Author Information
