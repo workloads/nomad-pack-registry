@@ -31,8 +31,11 @@ job "[[ .my.job_name ]]" {
       [[/* iterate over `$ports` to create Port Mappings */]]
       [[- range $name, $config := $ports ]]
       port "[[ $name ]]" {
-        static = [[ $config.port ]]
-        to     = [[ $config.port ]]
+        static       = [[ $config.port ]]
+        to           = [[ $config.port ]]
+        [[- if $config.host_network ]]
+        host_network = "[[ $config.host_network ]]"
+        [[- end ]]
       }
       [[ end ]]
     }
@@ -51,13 +54,13 @@ job "[[ .my.job_name ]]" {
 
       # see https://developer.hashicorp.com/nomad/docs/job-specification/check
       check {
-        name     = [[ $name | quote ]]
-        type     = [[ $port.type | quote ]]
+        name     = "[[ $name ]]"
+        type     = "[[ $port.type ]]"
         [[- if eq $port.type "http" ]]
-        path     = [[ $port.path | quote ]]
+        path     = "[[ $port.path ]]"
         [[- end ]]
-        interval = "30s"
-        timeout  = "15s"
+        interval = "[[ $port.check_interval ]]"
+        timeout  = "[[ $port.check_timeout ]]"
       }
     }
     [[ end ]]
@@ -73,9 +76,9 @@ job "[[ .my.job_name ]]" {
     # see https://developer.hashicorp.com/nomad/docs/job-specification/volume
     [[/* iterate over `var.volumes` to create Volumes */]]
     [[- range $index, $mount := .my.volumes ]]
-    volume [[ $mount.name | quote ]] {
-      source    = [[ $mount.name | quote ]]
-      type      = [[ $mount.type | quote ]]
+    volume "[[ $mount.name ]]" {
+      source    = "[[ $mount.name ]]"
+      type      = "[[ $mount.type ]]"
       read_only = [[ $mount.read_only ]]
     }
     [[ end ]]
@@ -94,7 +97,7 @@ job "[[ .my.job_name ]]" {
         # and https://developer.hashicorp.com/nomad/plugins/drivers/podman#ports
         ports = [
           [[- range $name, $port := $ports ]]
-          [[ $name | quote ]],
+          "[[ $name ]]",
           [[- end ]]
         ]
       }
@@ -112,8 +115,8 @@ job "[[ .my.job_name ]]" {
       [[/* iterate over `var.volumes` to create Volume Mounts */]]
       [[- range $index, $mount := .my.volumes ]]
       volume_mount {
-          volume      = [[ $mount.name | quote ]]
-          destination = [[ $mount.destination | quote ]]
+          volume      = "[[ $mount.name ]]"
+          destination = "[[ $mount.destination ]]"
           read_only   = [[ $mount.read_only ]]
       }
       [[ end ]]

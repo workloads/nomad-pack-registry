@@ -19,9 +19,12 @@
 
 ## Requirements
 
-- HashiCorp Nomad `1.5.6` or [newer](https://developer.hashicorp.com/nomad/downloads)
+- HashiCorp Nomad `1.5.0` or [newer](https://developer.hashicorp.com/nomad/downloads)
 - HashiCorp Nomad Pack `0.0.1` or [newer](https://releases.hashicorp.com/nomad-pack/)
 - a check-out of [@workloads/tooling](https://github.com/workloads/tooling)
+
+Optional, and only needed for development and testing of Packs:
+
 - `terraform-docs` `0.16.0` or [newer](https://terraform-docs.io/user-guide/installation/)
 - `newman` `5.3.2` or [newer](https://learning.postman.com/docs/collections/using-newman-cli/installing-running-newman/)
 

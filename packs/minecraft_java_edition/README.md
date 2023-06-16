@@ -104,7 +104,7 @@ nomad-pack run minecraft_java_edition --registry=workloads
 | job_tags | List of Tags for the Job. | `list(string)` |
 | namespace | Namespace for the Job. | `string` |
 | network_mode | Network Mode for the Job. | `string` |
-| ports | Port Configuration for the Application. | <pre>map(object({<br>    name = string,<br>    path = string,<br>    port = number,<br>    type = string,<br>  }))</pre> |
+| ports | Port Configuration for the Application. | <pre>map(object({<br>    name           = string,<br>    path           = string,<br>    port           = number,<br>    type           = string,<br>    host_network   = string,<br>    check_interval = string,<br>    check_timeout  = string,<br>  }))</pre> |
 | priority | Priority for the Job. | `number` |
 | region | Region for the Job. | `string` |
 | resources | Resource Limits for the Application. | <pre>object({<br>    cpu        = number<br>    cores      = number<br>    memory     = number<br>    memory_max = number<br>  })</pre> |

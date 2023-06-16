@@ -1,4 +1,4 @@
-# Makefile for Nomad Pack Maintenance
+# Makefile for Nomad Pack Lifecycle Management
 
 # configuration
 ARGS                  :=
