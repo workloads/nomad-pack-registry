@@ -11,6 +11,7 @@
   * [Usage](#usage)
     * [Inputs](#inputs)
     * [Outputs](#outputs)
+  * [Notes](#notes)
   * [Author Information](#author-information)
   * [License](#license)
 <!-- TOC -->
@@ -123,6 +124,10 @@ For outputs, see [./outputs.tpl](./outputs.tpl).
 > **Note**
 >
 > The outputs are only rendered if `verbose_output` is set to `true`.
+
+## Notes
+
+- By default, this Pack deploys a Minecraft server with persistent storage. This requires three [Nomad Volumes](https://developer.hashicorp.com/nomad/docs/job-specification/volume) to be configured. See the [test configuration](./tests/nomad.hcl) for an example.
 
 ## Author Information
 
