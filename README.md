@@ -9,6 +9,9 @@
   * [Table of Contents](#table-of-contents)
   * [Requirements](#requirements)
   * [Usage](#usage)
+  * [Adding the Nomad Pack Registry](#adding-the-nomad-pack-registry)
+  * [Running a Nomad Pack](#running-a-nomad-pack)
+    * [Testing a Nomad Pack](#testing-a-nomad-pack)
   * [Notes](#notes)
   * [Author Information](#author-information)
   * [License](#license)
@@ -16,9 +19,14 @@
 
 ## Requirements
 
-* HashiCorp Nomad `1.5.5` or [newer](https://developer.hashicorp.com/nomad/downloads).
-* HashiCorp Nomad Pack `0.0.1` or [newer](https://releases.hashicorp.com/nomad-pack/).
-* `terraform-docs` `0.16.0` or [newer](https://terraform-docs.io/user-guide/installation/).
+- HashiCorp Nomad `1.5.0` or [newer](https://developer.hashicorp.com/nomad/downloads)
+- HashiCorp Nomad Pack `0.0.1` or [newer](https://releases.hashicorp.com/nomad-pack/)
+- a check-out of [@workloads/tooling](https://github.com/workloads/tooling)
+
+Optional, and only needed for development and testing of Packs:
+
+- `terraform-docs` `0.16.0` or [newer](https://terraform-docs.io/user-guide/installation/)
+- `newman` `5.3.2` or [newer](https://learning.postman.com/docs/collections/using-newman-cli/installing-running-newman/)
 
 ## Usage
 
@@ -27,16 +35,52 @@ This repository provides a workflow that is wrapped through a [Makefile](./Makef
 Running `make` without commands will print out the following help information:
 
 ```text
-NOMAD PACKS MAINTENANCE
 
-help       Displays a list of Make Targets              Usage: `make` or `make help`
-render     Renders a Nomad Pack                         Usage: `make render pack=my-pack`
-run        Runs a Nomad Pack                            Usage: `make run pack=my-pack`
-rerun      Destroys and Runs a Nomad Pack               Usage: `make rerun pack=my-pack`
-stop       Stops a (running) Nomad Pack                 Usage: `make stop pack=my-pack`
-docs       Generates Documentation for all Packs        Usage: `make docs`
-selfcheck  Lints Makefile                               Usage: `make selfcheck`
+🟢 NOMAD PACKS
+
+Target          Description                                   Usage
+env             create Nomad environment for testing          `make env pack=my_pack`
+render          render a Nomad Pack                           `make render pack=my_pack`
+run             run a Nomad Pack                              `make run pack=my_pack`
+rerun           destroy and run a Nomad Pack                  `make rerun pack=my_pack`
+stop            stop a running Nomad Pack                     `make stop pack=my_pack`
+test            test a running Nomad Pack                     `make test pack=my_pack`
+restart         restart a Task                                `make restart task=my_task`
+docs            generate documentation for all Nomad Packs    `make docs`
+help            display a list of Make Targets                `make help`
+registry        add Nomad Pack Registry to local environment  `make registry`
+_listincludes   list all included Makefiles and *.mk files    `make _listincludes`
+_selfcheck      lint Makefile                                 `make _selfcheck`
 ```
+
+## Adding the Nomad Pack Registry
+
+This Nomad Pack Registry may be added to an environment like so:
+
+```shell
+make registry
+````
+
+For more information see [developer.hashicorp.com](https://developer.hashicorp.com/nomad/tutorials/nomad-pack/nomad-pack-intro#adding-non-default-pack-registries).
+
+## Running a Nomad Pack
+
+Nomad Packs are stored in the [`./packs`](./packs) directory and feature detailed documentation and accompanying files.
+
+A Nomad Pack may be run like so:
+
+```shell
+make run pack=my_pack
+````
+
+### Testing a Nomad Pack
+
+The Nomad Packs in this Registry provide a test harness that may be used to verify the functionality of the Pack.
+
+The harness is exposed through the `make env` and `make test` targets:
+
+- `make env` starts a Nomad environment, using the configuration stored inside the Pack's `./tests/nomad.hcl` file.
+- `make test` runs a [Postman Collection](https://learning.postman.com/docs/collections/collections-overview/), using the requests stored inside the Pack's `./tests/newman.json` file.
 
 ## Notes
 
@@ -44,6 +88,29 @@ selfcheck  Lints Makefile                               Usage: `make selfcheck`
 
 ```shell
 export NO_COLOR=1 && make
+```
+
+* For `nomad-pack` arguments that are not supported by the [Makefile](./Makefile), the `ARGS` variable may be used like so:
+
+```shell
+ make render pack=<my_pack> ARGS="--render-output-template"
+```
+
+* The binaries for `nomad` and `nomad-pack` may be overridden by setting the `BINARY_NOMAD` and `BINARY_NOMAD_PACK` arguments when running the [Makefile](./Makefile):
+
+```shell
+# override `nomad` binary
+make render pack=<my_pack> BINARY_NOMAD=/tmp/nomad
+
+# override `nomad-pack` binary
+make render pack=<my_pack> BINARY_NOMAD_PACK=/tmp/nomad-pack
+```
+
+* The reporter for `newman` may be overridden by setting the `REPORTER` argument when running the [Makefile](./Makefile):
+
+```shell
+# override `newman` reporter
+make render pack=<my_pack> REPORTER="progress"
 ```
 
 ## Author Information
