@@ -47,7 +47,7 @@ job "[[ .my.job_name ]]" {
     [[ range $name, $port := $ports ]]
     # see https://developer.hashicorp.com/nomad/docs/job-specification/service
     service {
-      name     = "[[ $service_name | replace "_" "-" | trunc 63 ]]-[[ $name ]]"
+      name     = "[[ $service_name | replace "_" "-" | trunc 20 ]]-[[ $name | replace "_" "-" | trunc 43 ]]"
       tags     = [[ $job_tags | toJson ]]
       port     = [[ $port.port ]]
       provider = "[[ $service_provider ]]"

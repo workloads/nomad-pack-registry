@@ -401,11 +401,11 @@ variable "ports" {
   default = {
     # port for Minecraft server
     main = {
-      name           = "minecraft_main",
+      name           = "minecraft_main"
       path           = null
-      port           = 25565,
-      type           = "tcp",
-      host_network   = null,
+      port           = 25565
+      type           = "tcp"
+      host_network   = null
       check_interval = "30s"
       check_timeout  = "15s"
     },
@@ -413,11 +413,11 @@ variable "ports" {
     # port for RCON Interface
     # ⚠️ `rcon` is a magic name that is used to trigger certain logic inside `pack.nomad.tpl`
     rcon = {
-      name           = "minecraft_rcon",
-      path           = null,
-      port           = 25575,
-      type           = "tcp",
-      host_network   = null,
+      name           = "minecraft_rcon"
+      path           = null
+      port           = 25575
+      type           = "tcp"
+      host_network   = null
       check_interval = "30s"
       check_timeout  = "15s"
     },
