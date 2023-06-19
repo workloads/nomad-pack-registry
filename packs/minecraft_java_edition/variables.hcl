@@ -387,13 +387,13 @@ variable "network_mode" {
 
 variable "ports" {
   type = map(object({
-    name           = string,
-    path           = string,
-    port           = number,
-    type           = string,
-    host_network   = string,
-    check_interval = string,
-    check_timeout  = string,
+    name           = string
+    path           = string
+    port           = number
+    type           = string
+    host_network   = string
+    check_interval = string
+    check_timeout  = string
   }))
 
   description = "Port Configuration for the Application."
