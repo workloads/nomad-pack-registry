@@ -27,7 +27,13 @@ include ../tooling/make/functions/shared.mk
 # conditionally load Pack-specific configuration if the
 # target is `env` and the `pack` argument is not empty
 ifeq ($(and $(pack),$(MAKECMDGOALS)),env)
-    include $(PACKS_DIR)/$(strip $(pack))/tests/test.mk
+	include $(PACKS_DIR)/$(strip $(pack))/tests/config.mk
+
+# conditionally load Git-ignored Pack-specific configuration
+ifneq ($(wildcard $(PACKS_DIR)/$(strip $(pack))/tests/ignored_config.mk),)
+	include $(PACKS_DIR)/$(strip $(pack))/tests/ignored_config.mk
+endif
+
 endif
 
 # render a Nomad Pack
