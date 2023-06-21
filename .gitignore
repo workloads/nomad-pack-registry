@@ -1,3 +1,4 @@
 # ignored temporary Terraform files
 packs/**/*.temporary.tf
 packs/**/overrides.hcl
+packs/**/tests/ignored_config.mk
