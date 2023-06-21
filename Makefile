@@ -13,6 +13,8 @@ NOMAD_ADDR            ?= "http://localhost:4646"
 NOMADVARS_SAMPLE_FILE	 = overrides.sample.hcl
 PACKS                  = $(shell ls $(PACKS_DIR))
 reporter              ?= $(NEWMAN_REPORTERS)
+SCREEN_SESSION         = nomad_pack_test_environment
+SLEEP_NOMAD_STARTUP    = 5
 TITLE                  = 🟢 NOMAD PACKS
 
 # override default reporter if `REPORTER` is set
@@ -96,13 +98,32 @@ define create_test_environment
 	$(foreach TEST_DIRECTORY,$(TEST_DIRECTORIES),$(call safely_create_directory,$(TEST_DIRECTORY)))
 
 	echo
+	echo "1️⃣️  Starting Nomad in background (Screen Session \`$(STYLE_GROUP_CODE)$(SCREEN_SESSION)$(STYLE_RESET)\`)..."
 
-	# start Nomad in development mode, using Pack-specific configuration
-	$(BINARY_NOMAD) \
-		agent \
-			-config="$(PACKS_DIR)/$(strip $(pack))/tests/nomad.hcl" \
+	# using `screen`, start Nomad in development mode, using Pack-specific configuration
+	screen \
+		-d \
+		-m \
+		-S "$(SCREEN_SESSION)" \
+		$(BINARY_NOMAD) \
+			agent \
+			-config=./packs/$(1)/tests/nomad.hcl \
 			-dev \
 			$(ARGS) \
+	;
+
+	echo "2️⃣️  Waiting for Nomad to finish start-up operations..."
+	echo
+	sleep $(SLEEP_NOMAD_STARTUP)
+
+	# insert sleep to allow inspection of Variable lifecycle
+	# and bring Nomad session back to foreground
+	echo
+	echo "3️⃣  Reattaching Screen Session \`$(STYLE_GROUP_CODE)$(SCREEN_SESSION)$(STYLE_RESET)\`..."
+	sleep 2
+
+	screen \
+		-r "$(SCREEN_SESSION)" \
 	;
 endef
 
