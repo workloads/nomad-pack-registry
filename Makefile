@@ -90,6 +90,20 @@ define test_pack
 	echo
 endef
 
+# force-create (or update) a Nomad Variable
+define put_nomad_variable
+	$(call print_reference,$(2))
+
+	$(BINARY_NOMAD) \
+		var \
+			put \
+				-force \
+				-in "json" \
+				"nomad/jobs/$(1)/$(1)/$(1)" \
+				$(2) \
+	;
+endef
+
 # create Nomad environment for testing
 define create_test_environment
 	$(if $(pack),,$(call missing_argument,test,pack=my_pack))
@@ -115,6 +129,8 @@ define create_test_environment
 	echo "2️⃣️  Waiting for Nomad to finish start-up operations..."
 	echo
 	sleep $(SLEEP_NOMAD_STARTUP)
+
+	$(foreach NOMAD_VARIABLE,$(NOMAD_VARIABLES),$(call put_nomad_variable,$(pack),$(NOMAD_VARIABLE)))
 
 	# insert sleep to allow inspection of Variable lifecycle
 	# and bring Nomad session back to foreground
