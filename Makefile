@@ -94,12 +94,13 @@ endef
 define put_nomad_variable
 	$(call print_reference,$(2))
 
+	# Variables are created at the root of the Job, allowing Groups and Tasks to reference it, too
 	$(BINARY_NOMAD) \
 		var \
 			put \
 				-force \
 				-in "json" \
-				"nomad/jobs/$(1)/$(1)/$(1)" \
+				"nomad/jobs/$(1)" \
 				$(2) \
 	;
 endef
@@ -112,7 +113,7 @@ define create_test_environment
 	$(foreach TEST_DIRECTORY,$(TEST_DIRECTORIES),$(call safely_create_directory,$(TEST_DIRECTORY)))
 
 	echo
-	echo "1️⃣️  Starting Nomad in background (Screen Session \`$(STYLE_GROUP_CODE)$(SCREEN_SESSION)$(STYLE_RESET)\`)..."
+	echo "1️⃣️  Starting Nomad in background (Screen Session \`$(STYLE_GROUP_CODE)$(SCREEN_SESSION)$(STYLE_RESET)\`)"
 
 	# using `screen`, start Nomad in development mode, using Pack-specific configuration
 	screen \
@@ -126,7 +127,7 @@ define create_test_environment
 			$(ARGS) \
 	;
 
-	echo "2️⃣️  Waiting for Nomad to finish start-up operations..."
+	echo "2️⃣️  Waiting for Nomad to finish start-up operations"
 	echo
 	sleep $(SLEEP_NOMAD_STARTUP)
 
@@ -135,7 +136,7 @@ define create_test_environment
 	# insert sleep to allow inspection of Variable lifecycle
 	# and bring Nomad session back to foreground
 	echo
-	echo "3️⃣  Reattaching Screen Session \`$(STYLE_GROUP_CODE)$(SCREEN_SESSION)$(STYLE_RESET)\`..."
+	echo "3️⃣  Reattaching Screen Session \`$(STYLE_GROUP_CODE)$(SCREEN_SESSION)$(STYLE_RESET)\`"
 	sleep 2
 
 	screen \
