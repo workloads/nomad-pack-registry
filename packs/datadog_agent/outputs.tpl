@@ -18,11 +18,13 @@
   CPU:    [[ .my.resources.cpu ]] MHz
   Memory: [[ .my.resources.memory ]] MB
 
+[[- if .my.volumes ]]
 ## Volumes
 
   [[- range $name, $mounts := .my.volumes ]]
   - `[[ $mounts.name ]]` = `[[ $mounts.destination | toPrettyJson ]]` (type: `[[ $mounts.type ]]`[[ if $mounts.read_only ]], read-only[[ end ]])
   [[- end ]]
+[[ end ]]
 
 ## Service
 
