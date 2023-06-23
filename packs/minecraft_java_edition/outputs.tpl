@@ -29,7 +29,7 @@
   [[ unset $ports "rcon" ]]
   [[- end ]]
   [[- range $name, $config := $ports ]]
-  - `[[ $name ]]`: `[[ $config.port ]]` (type: `[[ $config.type ]]`)
+  - `[[ $name ]]`: `[[ $config.port ]]` (type: `[[ $config.type ]]` [[ if and (eq $config.type "http") (eq $config.protocol "https") ]]protocol: `https`[[ end ]])
   [[- end ]]
 
 ## Resources
@@ -38,7 +38,8 @@
   Memory: [[ .my.resources.memory ]] MB
 
 ## Volumes
-  [[ range $name, $mounts := .my.volumes ]]
+
+  [[- range $name, $mounts := .my.volumes ]]
   - `[[ $mounts.name ]]` = `[[ $mounts.destination | toPrettyJson ]]` (type: `[[ $mounts.type ]]`[[ if $mounts.read_only ]], read-only[[ end ]])
   [[- end ]]
 
@@ -52,11 +53,14 @@
     - `[[ $name ]]`
     [[- end ]]
 
-## Application
-  [[ range $name, $value := .my -]]
-  [[ if $name | hasPrefix "app_" ]]
-  - `[[ $name | trimPrefix "app_" | upper ]]` = `[[ $value ]]`
-  [[- end ]]
-  [[- end ]]
+## Application Configuration
+
+```env
+[[- range $name, $value := .my -]]
+[[ if $name | hasPrefix "app_" ]]
+[[ $name | trimPrefix "app_" | upper ]]` = `[[ $value ]]
+[[- end ]]
+[[- end ]]
+```
 
 [[ end -]]
