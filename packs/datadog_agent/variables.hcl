@@ -396,12 +396,6 @@ variable "app_dd_secret_backend_remove_trailing_line_break" {
   default     = false
 }
 
-variable "app_include_nomad_tags" {
-  type        = bool
-  description = "Toggle to include Nomad-specific Tags as part of the `DD_EXTRA_TAGS` environment variable."
-  default     = true
-}
-
 ################################################
 ## Log Collection Configuration               ##
 ## see https://docs.datadoghq.com/agent/logs/ ##
@@ -1293,11 +1287,17 @@ variable "app_dd_otlp_config_debug_verbosity" {
 ## Pack-specifc Agent Configuration #
 #####################################
 
-# values are attached in-app to every metric, event, log, trace, and service check emitted by this Agent.
+variable "include_nomad_tags" {
+  type        = bool
+  description = "Toggle to include Nomad-specific Tags as part of the `DD_EXTRA_TAGS` environment variable."
+  default     = true
+}
+
+# Tags that are attached in-app to every metric, event, log, trace, and service check emitted by this Agent.
 # see https://docs.datadoghq.com/tagging/
 variable "dd_tags" {
   type        = list(string)
-  description = "List of Strings of Host Tags"
+  description = "List of Strings of Host Tags."
 
   default = [
     "orchestrator:nomad",

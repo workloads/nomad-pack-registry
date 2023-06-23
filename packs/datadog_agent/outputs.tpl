@@ -9,13 +9,8 @@
 
 ## Ports
 
-  [[- /* remove `rcon` from `$ports` if `.my.app_enable_rcon` is false */]]
-  [[- $ports := .my.ports ]]
-  [[/* - if (ne .my.app_enable_rcon true) */]]
-  [[/* unset $ports "rcon" */]]
-  [[/* - end */]]
-  [[- range $name, $config := $ports ]]
-  - `[[ $name ]]`: `[[ $config.port ]]` (type: `[[ $config.type ]]`)
+  [[- range $name, $config := .my.ports ]]
+  - `[[ $name ]]`: `[[ $config.port ]]` (type: `[[ $config.type ]]` [[ if and (eq $config.type "http") (eq $config.protocol "https") ]]protocol: `https`[[ end ]])
   [[- end ]]
 
 ## Resources
@@ -24,7 +19,8 @@
   Memory: [[ .my.resources.memory ]] MB
 
 ## Volumes
-  [[ range $name, $mounts := .my.volumes ]]
+
+  [[- range $name, $mounts := .my.volumes ]]
   - `[[ $mounts.name ]]` = `[[ $mounts.destination | toPrettyJson ]]` (type: `[[ $mounts.type ]]`[[ if $mounts.read_only ]], read-only[[ end ]])
   [[- end ]]
 
