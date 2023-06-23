@@ -1,0 +1,51 @@
+{
+	"info": {
+		"_postman_id": "5995cb17-f2d2-4f99-becc-283715e72434",
+		"name": "datadog_agent",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20135",
+		"_collection_link": "https://wrklds.postman.co/workspace/Team-Workspace~6bd90753-17de-4e29-86da-52ea739451c8/collection/20135-5995cb17-f2d2-4f99-becc-283715e72434?action=share&creator=20135&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "datadog-healthcheck",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// map Postman Response Object to variable after parsing it as JSON",
+							"var res = pm.response.json();",
+							"",
+							"pm.test('Healthchecks', function () {",
+							"  pm.expect(res.Healthy.length).to.not.eql(null);",
+							"  pm.expect(res.Unhealthy).to.eql(null);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5555/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5555",
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
