@@ -48,8 +48,8 @@ job "[[ .my.job_name ]]" {
       port     = [[ $port.port ]]
       provider = "[[ $service_provider ]]"
 
-      [[- /* specifically ignore DogStatsD port, as the check requires an unsupported protocol (UDP) */]]
-      [[ if not (eq $port.port 8125) ]]
+      [[- /* specifically ignore IPC, GUI, and DogStatsD ports, as the check require unsupported strategies */]]
+      [[ if not (or (eq $port.port 5001) (eq $port.port 5002) (eq $port.port 8125)) ]]
       # see https://developer.hashicorp.com/nomad/docs/job-specification/check
       check {
         name            = "[[ $name ]]"
