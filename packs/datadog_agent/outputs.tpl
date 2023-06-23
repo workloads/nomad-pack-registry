@@ -40,4 +40,9 @@
 [[- template "configuration" . ]]
 ```
 
+## URLs:
+
+  Datadog Interface:  [[ .my.app_dd_url ]]
+  Infrastructure Map: [[ .my.app_dd_url ]]/infrastructure/map?fillby=avg%%3Adatadog.agent.running&filter=[[ first .my.dd_tags | replace ":" "%%3A" ]]
+
 [[ end -]]
