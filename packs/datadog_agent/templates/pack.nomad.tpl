@@ -48,6 +48,8 @@ job "[[ .my.job_name ]]" {
       port     = [[ $port.port ]]
       provider = "[[ $service_provider ]]"
 
+      [[- /* specifically ignore DogStatsD port, as the check requires an unsupported protocol (UDP) */]]
+      [[ if not (eq $port.port 8125) ]]
       # see https://developer.hashicorp.com/nomad/docs/job-specification/check
       check {
         name            = "[[ $name ]]"
@@ -59,6 +61,7 @@ job "[[ .my.job_name ]]" {
         interval        = "[[ $port.check_interval ]]"
         timeout         = "[[ $port.check_timeout ]]"
       }
+      [[ end ]]
     }
     [[ end ]]
 
