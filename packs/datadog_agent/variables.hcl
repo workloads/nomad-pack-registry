@@ -32,10 +32,11 @@ variable "app_dd_min_tls_version" {
   default     = "tlsv1.2"
 }
 
+# default to Nomad-provided Hostname
 variable "app_dd_hostname" {
   type        = string
   description = "Force-set the Hostname."
-  default     = ""
+  default     = "$${attr.unique.hostname}"
 }
 
 # see https://docs.datadoghq.com/agent/faq/how-datadog-agent-determines-the-hostname/
@@ -728,10 +729,11 @@ variable "app_dd_compliance_config_check_max_events_per_run" {
 
 # `DD_USE_DOGSTATS` is set to `true` automatically, if DogStatsD is specified in `var.ports`
 
+# defaults to IPv4, but can be set to `::1` to enable IPv6
 variable "app_dd_bind_host" {
   type        = string
   description = "Host to listen on for DogStatsD and Trace Agent traffic."
-  default     = "localhost"
+  default     = "127.0.01"
 }
 
 variable "app_dd_dogstatsd_socket" {
@@ -1287,12 +1289,6 @@ variable "app_dd_otlp_config_debug_verbosity" {
 ## Pack-specifc Agent Configuration #
 #####################################
 
-variable "include_nomad_tags" {
-  type        = bool
-  description = "Toggle to include Nomad-specific Tags as part of the `DD_EXTRA_TAGS` environment variable."
-  default     = true
-}
-
 # Tags that are attached in-app to every metric, event, log, trace, and service check emitted by this Agent.
 # see https://docs.datadoghq.com/tagging/
 variable "dd_tags" {
@@ -1305,6 +1301,12 @@ variable "dd_tags" {
     "region:$${NOMAD_REGION}",
     "service:$${NOMAD_JOB_NAME}",
   ]
+}
+
+variable "include_nomad_tags" {
+  type        = bool
+  description = "Toggle to include Nomad-specific Tags as part of the `DD_EXTRA_TAGS` environment variable."
+  default     = true
 }
 
 variable "nomad_tags" {

@@ -240,13 +240,13 @@ nomad-pack run datadog_agent --registry=workloads
 | app_dd_url | Hostname of the Intake Server to use. | `string` |
 | app_dd_use_proxy_for_cloud_metadata | Toggle to remove CSP IPs from the transport's `no_proxy` list. | `bool` |
 | app_dd_windows_use_pythonpath | Toggle to honour the value of the `PYTHONPATH` environment variable. Windows only. | `bool` |
-| app_include_nomad_tags | Toggle to include Nomad-specific Tags as part of the `DD_EXTRA_TAGS` environment variable. | `bool` |
 | count | Count of Deployments for the Job. | `number` |
 | datacenters | Eligible Datacenters for the Task. | `list(string)` |
-| dd_tags | List of Strings of Host Tags | `list(string)` |
+| dd_tags | List of Strings of Host Tags. | `list(string)` |
 | driver | Driver to use for the Job. | `string` |
 | ephemeral_disk | Ephemeral Disk Configuration for the Application. | <pre>object({<br>    migrate = bool<br>    size    = number<br>    sticky  = bool<br>  })</pre> |
 | group_name | Name for the Group. | `string` |
+| include_nomad_tags | Toggle to include Nomad-specific Tags as part of the `DD_EXTRA_TAGS` environment variable. | `bool` |
 | job_name | Name for the Job. | `string` |
 | job_tags | List of Tags for the Job. | `list(string)` |
 | namespace | Namespace for the Job. | `string` |
