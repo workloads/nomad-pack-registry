@@ -44,7 +44,10 @@
 
 ## URLs:
 
-  Datadog Interface:  [[ .my.app_dd_url ]]
-  Infrastructure Map: [[ .my.app_dd_url ]]/infrastructure/map?fillby=avg%%3Adatadog.agent.running&filter=[[ first .my.dd_tags | replace ":" "%%3A" ]]
+  Datadog Interface:     [[ .my.app_dd_url ]]
+  Infrastructure Map:    [[ .my.app_dd_url ]]/infrastructure/map?fillby=avg%%3Adatadog.agent.running&filter=[[ first .my.dd_tags | replace ":" "%%3A" ]]
 
+  [[- if .my.ports.gui ]]
+  Datadog Agent Manager: [[ .my.ports.gui.protocol ]]://[[ .my.app_dd_bind_host ]]:[[ .my.ports.gui.port ]][[ .my.ports.gui.path ]]
+  [[- end ]]
 [[ end -]]
