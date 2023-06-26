@@ -120,6 +120,7 @@ define create_test_environment
 		-d \
 		-m \
 		-S "$(SCREEN_SESSION)" \
+		-t "Testing Environment for the \`$(pack)\` Nomad Pack." \
 		$(BINARY_NOMAD) \
 			agent \
 			-config=./packs/$(1)/tests/nomad.hcl \
