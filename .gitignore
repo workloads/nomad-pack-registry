@@ -2,3 +2,4 @@
 packs/**/*.temporary.tf
 packs/**/overrides.hcl
 packs/**/tests/gitignored_config.mk
+packs/**/tests/gitignored_spec.nv.hcl

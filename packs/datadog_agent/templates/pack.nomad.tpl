@@ -107,11 +107,11 @@ job "[[ .my.job_name ]]" {
 
         # render template with sensitive data
         # see https://app.datadoghq.com/account/settings
-        data = <<EOF
+        data = <<DATA
           {{- with nomadVar "nomad/jobs/[[ .my.job_name ]]" -}}
           DD_API_KEY = "{{ .api_key }}"
           {{- end -}}
-        EOF
+        DATA
 
         # make it harder to leak sensitive data by writing to the Secrets directory
         destination          = "${NOMAD_SECRETS_DIR}/env.vars"

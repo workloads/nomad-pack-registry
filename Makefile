@@ -92,16 +92,16 @@ endef
 
 # force-create (or update) a Nomad Variable
 define put_nomad_variable
-	$(call print_reference,$(2))
+	$(call print_reference,$(1))
 
 	# Variables are created at the root of the Job, allowing Groups and Tasks to reference it, too
 	$(BINARY_NOMAD) \
 		var \
 			put \
 				-force \
-				-in "json" \
+				-in "hcl" \
 				"nomad/jobs/$(1)" \
-				$(2) \
+				"@packs/$(1)/tests/gitignored_spec.nv.hcl" \
 	;
 endef
 
@@ -132,7 +132,7 @@ define create_test_environment
 	echo
 	sleep $(SLEEP_NOMAD_STARTUP)
 
-	$(foreach NOMAD_VARIABLE,$(NOMAD_VARIABLES),$(call put_nomad_variable,$(pack),$(NOMAD_VARIABLE)))
+	$(call put_nomad_variable,$(pack))
 
 	# insert sleep to allow inspection of Variable lifecycle
 	# and bring Nomad session back to foreground
