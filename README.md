@@ -79,12 +79,12 @@ The Nomad Packs in this Registry provide a test harness that may be used to veri
 
 The harness is exposed through the `make env` and `make test` targets:
 
-- `make env` starts a Nomad environment, using the configuration stored inside the Pack's `./tests/nomad.hcl` file.
+- `make env` starts a Nomad environment, using the configuration stored inside the Pack's `./tests/nomad_config.hcl` file.
 - `make test` runs a [Postman Collection](https://learning.postman.com/docs/collections/collections-overview/), using the requests stored inside the Pack's `./tests/newman.json` file.
 
 The `make env` command automatically creates any directories and variables that are set in `./tests/test.mk`.
 
-Additionally, `./tests/ignored_config.mk` may be used to set sensitive variables, such as API tokens, that should not be committed to version control.
+Additionally, `./tests/gitignored_config.mk` may be used to set sensitive variables, such as API tokens, that should not be committed to version control.
 
 ## Notes
 

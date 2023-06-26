@@ -32,8 +32,8 @@ ifeq ($(and $(pack),$(MAKECMDGOALS)),env)
 	include $(PACKS_DIR)/$(strip $(pack))/tests/config.mk
 
 # conditionally load Git-ignored Pack-specific configuration
-ifneq ($(wildcard $(PACKS_DIR)/$(strip $(pack))/tests/ignored_config.mk),)
-	include $(PACKS_DIR)/$(strip $(pack))/tests/ignored_config.mk
+ifneq ($(wildcard $(PACKS_DIR)/$(strip $(pack))/tests/gitignored_config.mk),)
+	include $(PACKS_DIR)/$(strip $(pack))/tests/gitignored_config.mk
 endif
 
 endif
@@ -123,7 +123,7 @@ define create_test_environment
 		-t "Testing Environment for the \`$(pack)\` Nomad Pack." \
 		$(BINARY_NOMAD) \
 			agent \
-			-config=./packs/$(1)/tests/nomad.hcl \
+			-config=./packs/$(1)/tests/nomad_config.hcl \
 			-dev \
 			$(ARGS) \
 	;
