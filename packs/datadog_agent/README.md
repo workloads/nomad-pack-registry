@@ -274,6 +274,9 @@ For outputs, see [./outputs.tpl](./outputs.tpl).
 
 ### Notes
 
+* Datadog Agents require an API key to transmit data to a Datadog Intake Server.
+  This value is provided via the Nomad Variable `api_key`, which is stored at `nomad/jobs/datadog_agent`.
+
 * The `dd_tags` variable is pre-configured to map Nomad Runtime Environment variables to common Datadog variables.
 
 * Setting the `app_include_nomad_tags` variable to `true` will transmit Nomad-specifc tags (e.g.: Job, Task, Allocation data) as part of the Datadog Agent's payload.

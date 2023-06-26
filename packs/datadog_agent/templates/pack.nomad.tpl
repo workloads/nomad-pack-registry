@@ -4,7 +4,7 @@
 job "[[ .my.job_name ]]" {
   region      = "[[ .my.region ]]"
   datacenters = [[ .my.datacenters | toJson ]]
-  type        = "service"
+  type        = "system"
   namespace   = "[[ .my.namespace ]]"
   priority    = [[ .my.priority ]]
 
