@@ -240,7 +240,6 @@ nomad-pack run datadog_agent --registry=workloads
 | app_dd_url | Hostname of the Intake Server to use. | `string` |
 | app_dd_use_proxy_for_cloud_metadata | Toggle to remove CSP IPs from the transport's `no_proxy` list. | `bool` |
 | app_dd_windows_use_pythonpath | Toggle to honour the value of the `PYTHONPATH` environment variable. Windows only. | `bool` |
-| count | Count of Deployments for the Job. | `number` |
 | datacenters | Eligible Datacenters for the Task. | `list(string)` |
 | dd_tags | List of Strings of Host Tags. | `list(string)` |
 | driver | Driver to use for the Job. | `string` |

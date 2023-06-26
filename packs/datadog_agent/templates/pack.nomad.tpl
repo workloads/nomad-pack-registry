@@ -10,8 +10,6 @@ job "[[ .my.job_name ]]" {
 
   # see https://developer.hashicorp.com/nomad/docs/job-specification/group
   group "[[ .my.group_name ]]" {
-    count = [[ .my.count ]]
-
     # see https://developer.hashicorp.com/nomad/docs/job-specification/ephemeral_disk
     ephemeral_disk {
       migrate = [[ .my.ephemeral_disk.migrate ]]
