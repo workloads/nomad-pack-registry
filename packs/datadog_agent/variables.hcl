@@ -1324,12 +1324,6 @@ variable "nomad_tags" {
   ]
 }
 
-variable "count" {
-  type        = number
-  description = "Count of Deployments for the Job."
-  default     = 1
-}
-
 # see https://developer.hashicorp.com/nomad/docs/concepts/architecture#datacenters
 variable "datacenters" {
   type        = list(string)
