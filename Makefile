@@ -116,6 +116,7 @@ define create_test_environment
 	# create test directories if they do not exist
 	$(foreach TEST_DIRECTORY,$(TEST_DIRECTORIES),$(call safely_create_directory,$(TEST_DIRECTORY)))
 
+	echo
 	echo "[1/4] Starting Nomad in background (Screen Session \`$(STYLE_GROUP_CODE)$(SCREEN_SESSION)$(STYLE_RESET)\`)"
 
 	# using `screen`, start Nomad in development mode, using Pack-specific configuration

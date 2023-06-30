@@ -15,7 +15,7 @@
   Digest:    `[[ .my.image.digest ]]`
 
   [[- /* pretty-print Image information */]]
-  [[- if eq .my.image.registry "docker.io" ]]
+  [[- if eq .my.image.registry "index.docker.io" ]]
   URL:       https://hub.docker.com/layers/[[ .my.image.namespace ]]/[[ .my.image.image ]]/[[ .my.image.tag ]]/images/[[ .my.image.digest | replace ":" "-" ]]
   [[ else ]]
   URL:       https://[[ .my.image.registry ]]/[[ .my.image.namespace ]]/[[ .my.image.image ]]:[[ .my.image.tag ]]
@@ -58,11 +58,7 @@
 ## Application Configuration
 
 ```env
-[[- range $name, $value := .my -]]
-[[ if $name | hasPrefix "app_" ]]
-[[ $name | trimPrefix "app_" | upper ]]` = `[[ $value ]]
-[[- end ]]
-[[- end ]]
+[[- template "configuration" . ]]
 ```
 
 [[ end -]]
