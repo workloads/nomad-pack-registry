@@ -13,6 +13,8 @@ NOMAD_ADDR            ?= "http://localhost:4646"
 NOMADVARS_SAMPLE_FILE	 = overrides.sample.hcl
 PACKS                  = $(shell ls $(PACKS_DIR))
 reporter              ?= $(NEWMAN_REPORTERS)
+SCREEN_SESSION         = nomad_pack_test_environment
+SLEEP_NOMAD_STARTUP    = 5
 TITLE                  = 🟢 NOMAD PACKS
 
 # override default reporter if `REPORTER` is set
@@ -27,7 +29,13 @@ include ../tooling/make/functions/shared.mk
 # conditionally load Pack-specific configuration if the
 # target is `env` and the `pack` argument is not empty
 ifeq ($(and $(pack),$(MAKECMDGOALS)),env)
-    include $(PACKS_DIR)/$(strip $(pack))/tests/test.mk
+	include $(PACKS_DIR)/$(strip $(pack))/tests/config.mk
+
+# conditionally load Git-ignored Pack-specific configuration
+ifneq ($(wildcard $(PACKS_DIR)/$(strip $(pack))/tests/gitignored_config.mk),)
+	include $(PACKS_DIR)/$(strip $(pack))/tests/gitignored_config.mk
+endif
+
 endif
 
 # render a Nomad Pack
@@ -82,6 +90,21 @@ define test_pack
 	echo
 endef
 
+# force-create (or update) a Nomad Variable
+define put_nomad_variable
+	$(call print_reference,$(1))
+
+	# Variables are created at the root of the Job, allowing Groups and Tasks to reference it, too
+	$(BINARY_NOMAD) \
+		var \
+			put \
+				-force \
+				-in "hcl" \
+				"nomad/jobs/$(1)" \
+				"@packs/$(1)/tests/gitignored_spec.nv.hcl" \
+	;
+endef
+
 # create Nomad environment for testing
 define create_test_environment
 	$(if $(pack),,$(call missing_argument,test,pack=my_pack))
@@ -90,13 +113,35 @@ define create_test_environment
 	$(foreach TEST_DIRECTORY,$(TEST_DIRECTORIES),$(call safely_create_directory,$(TEST_DIRECTORY)))
 
 	echo
+	echo "1️⃣️  Starting Nomad in background (Screen Session \`$(STYLE_GROUP_CODE)$(SCREEN_SESSION)$(STYLE_RESET)\`)"
 
-	# start Nomad in development mode, using Pack-specific configuration
-	$(BINARY_NOMAD) \
-		agent \
-			-config="$(PACKS_DIR)/$(strip $(pack))/tests/nomad.hcl" \
+	# using `screen`, start Nomad in development mode, using Pack-specific configuration
+	screen \
+		-d \
+		-m \
+		-S "$(SCREEN_SESSION)" \
+		-t "Testing Environment for the \`$(pack)\` Nomad Pack." \
+		$(BINARY_NOMAD) \
+			agent \
+			-config=./packs/$(1)/tests/nomad_config.hcl \
 			-dev \
 			$(ARGS) \
+	;
+
+	echo "2️⃣️  Waiting for Nomad to finish start-up operations"
+	echo
+	sleep $(SLEEP_NOMAD_STARTUP)
+
+	$(call put_nomad_variable,$(pack))
+
+	# insert sleep to allow inspection of Variable lifecycle
+	# and bring Nomad session back to foreground
+	echo
+	echo "3️⃣  Reattaching Screen Session \`$(STYLE_GROUP_CODE)$(SCREEN_SESSION)$(STYLE_RESET)\`"
+	sleep 2
+
+	screen \
+		-r "$(SCREEN_SESSION)" \
 	;
 endef
 

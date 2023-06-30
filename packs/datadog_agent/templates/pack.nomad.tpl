@@ -1,21 +1,15 @@
-[[/* remove `rcon` from `$ports` if `.my.app_enable_rcon` is false */]]
 [[- $ports := .my.ports ]]
-[[- if (ne .my.app_enable_rcon true) ]]
-[[ unset $ports "rcon" ]]
-[[- end ]]
 
 # see https://developer.hashicorp.com/nomad/docs/job-specification/job
 job "[[ .my.job_name ]]" {
   region      = "[[ .my.region ]]"
   datacenters = [[ .my.datacenters | toJson ]]
-  type        = "service"
+  type        = "system"
   namespace   = "[[ .my.namespace ]]"
   priority    = [[ .my.priority ]]
 
   # see https://developer.hashicorp.com/nomad/docs/job-specification/group
   group "[[ .my.group_name ]]" {
-    count = [[ .my.count ]]
-
     # see https://developer.hashicorp.com/nomad/docs/job-specification/ephemeral_disk
     ephemeral_disk {
       migrate = [[ .my.ephemeral_disk.migrate ]]
@@ -52,16 +46,20 @@ job "[[ .my.job_name ]]" {
       port     = [[ $port.port ]]
       provider = "[[ $service_provider ]]"
 
+      [[- /* specifically ignore IPC, GUI, and DogStatsD ports, as the check require unsupported strategies */]]
+      [[ if not (or (eq $port.port 5001) (eq $port.port 5002) (eq $port.port 8125)) ]]
       # see https://developer.hashicorp.com/nomad/docs/job-specification/check
       check {
-        name     = "[[ $name ]]"
-        type     = "[[ $port.type ]]"
+        name            = "[[ $name ]]"
+        type            = "[[ $port.type ]]"
         [[- if eq $port.type "http" ]]
-        path     = "[[ $port.path ]]"
+        path            = "[[ $port.path ]]"
+        protocol        = "[[ $port.protocol ]]"
         [[- end ]]
-        interval = "[[ $port.check_interval ]]"
-        timeout  = "[[ $port.check_timeout ]]"
+        interval        = "[[ $port.check_interval ]]"
+        timeout         = "[[ $port.check_timeout ]]"
       }
+      [[ end ]]
     }
     [[ end ]]
 
@@ -88,27 +86,35 @@ job "[[ .my.job_name ]]" {
       # see https://developer.hashicorp.com/nomad/docs/drivers
       driver = "[[ .my.driver ]]"
 
-      # see https://developer.hashicorp.com/nomad/docs/drivers/docker
-      # and https://developer.hashicorp.com/nomad/plugins/drivers/podman
+      # see https://developer.hashicorp.com/nomad/docs/drivers/raw_exec
+      # and https://developer.hashicorp.com/nomad/docs/drivers/exec
       config {
-        image = "[[ .my.image.registry ]]/[[ .my.image.namespace ]]/[[ .my.image.image ]]:[[ .my.image.tag ]]@[[ .my.image.digest ]]"
-
-        # see https://developer.hashicorp.com/nomad/docs/drivers/docker#ports
-        # and https://developer.hashicorp.com/nomad/plugins/drivers/podman#ports
-        ports = [
-          [[- range $name, $port := $ports ]]
-          "[[ $name ]]",
-          [[- end ]]
-        ]
+        # see https://docs.datadoghq.com/agent/guide/agent-commands/?tab=agentv6v7
+        command = "datadog-agent"
+        args    = ["run"]
       }
 
       # see https://developer.hashicorp.com/nomad/docs/job-specification/env
       env {
-        [[- range $name, $value := .my -]]
-        [[ if $name | hasPrefix "app_" ]]
-        [[ $name | trimPrefix "app_" | upper ]] = "[[ $value | toString ]]"
-        [[- end ]]
-        [[- end ]]
+        [[- template "configuration" . ]]
+      }
+
+      # see https://developer.hashicorp.com/nomad/docs/job-specification/template
+      template {
+        change_mode = "restart"
+
+        # render template with sensitive data
+        # see https://app.datadoghq.com/account/settings
+        data = <<DATA
+          {{- with nomadVar "nomad/jobs/[[ .my.job_name ]]" -}}
+          DD_API_KEY = "{{ .api_key }}"
+          {{- end -}}
+        DATA
+
+        # make it harder to leak sensitive data by writing to the Secrets directory
+        destination          = "${NOMAD_SECRETS_DIR}/env.vars"
+        env                  = true
+        error_on_missing_key = true
       }
 
       # see https://developer.hashicorp.com/nomad/docs/job-specification/volume_mount

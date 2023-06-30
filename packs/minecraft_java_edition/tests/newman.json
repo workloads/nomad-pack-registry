@@ -56,7 +56,7 @@
 							"",
 							"  Datacenter: pm.collectionVariables.get('datacenter'),",
 							"  DevMode: true,",
-							"  File: 'packs/' + pm.collectionVariables.get('pack') + '/tests/nomad.hcl',",
+							"  File: 'packs/' + pm.collectionVariables.get('pack') + '/tests/nomad_config.hcl',",
 							"",
 							"  Plugins: [",
 							"    {",

@@ -11,15 +11,16 @@
   * [Usage](#usage)
     * [Inputs](#inputs)
     * [Outputs](#outputs)
+  * [Notes](#notes)
   * [Author Information](#author-information)
   * [License](#license)
 <!-- TOC -->
 
 ## Requirements
 
-- HashiCorp Nomad `1.5.x` or newer
+- HashiCorp Nomad `1.5.0` or newer
 - HashiCorp nomad-pack `0.0.1` or newer
-- Nomad Task Driver(s) for either [`docker`](https://developer.hashicorp.com/nomad/docs/drivers/docker) or [`podman`](https://developer.hashicorp.com/nomad/plugins/drivers/podman)
+- Nomad Task Driver(s) for [`docker`](https://developer.hashicorp.com/nomad/docs/drivers/docker) or [`podman`](https://developer.hashicorp.com/nomad/plugins/drivers/podman)
 
 ## Usage
 
@@ -104,7 +105,7 @@ nomad-pack run minecraft_java_edition --registry=workloads
 | job_tags | List of Tags for the Job. | `list(string)` |
 | namespace | Namespace for the Job. | `string` |
 | network_mode | Network Mode for the Job. | `string` |
-| ports | Port Configuration for the Application. | <pre>map(object({<br>    name           = string,<br>    path           = string,<br>    port           = number,<br>    type           = string,<br>    host_network   = string,<br>    check_interval = string,<br>    check_timeout  = string,<br>  }))</pre> |
+| ports | Port Configuration for the Application. | <pre>map(object({<br>    name           = string<br>    path           = string<br>    port           = number<br>    type           = string<br>    host_network   = string<br>    check_interval = string<br>    check_timeout  = string<br>  }))</pre> |
 | priority | Priority for the Job. | `number` |
 | region | Region for the Job. | `string` |
 | resources | Resource Limits for the Application. | <pre>object({<br>    cpu        = number<br>    cores      = number<br>    memory     = number<br>    memory_max = number<br>  })</pre> |
@@ -123,6 +124,10 @@ For outputs, see [./outputs.tpl](./outputs.tpl).
 > **Note**
 >
 > The outputs are only rendered if `verbose_output` is set to `true`.
+
+## Notes
+
+- By default, this Pack deploys a Minecraft server with persistent storage. This requires three [Nomad Volumes](https://developer.hashicorp.com/nomad/docs/job-specification/volume) to be configured. See the [test configuration](./tests/nomad_config.hcl) for an example.
 
 ## Author Information
 

@@ -7,28 +7,9 @@
   Name:      `[[ .my.job_name ]]`
   Count:     `[[ .my.count ]]`
 
-## Image
-
-  Registry:  `[[ .my.image.registry ]]`
-  Namespace: `[[ .my.image.namespace ]]`
-  Image:     `[[ .my.image.image ]]:[[ .my.image.tag ]]`
-  Digest:    `[[ .my.image.digest ]]`
-
-  [[- /* pretty-print Image information */]]
-  [[- if eq .my.image.registry "docker.io" ]]
-  URL:       https://hub.docker.com/layers/[[ .my.image.namespace ]]/[[ .my.image.image ]]/[[ .my.image.tag ]]/images/[[ .my.image.digest | replace ":" "-" ]]
-  [[ else ]]
-  URL:       https://[[ .my.image.registry ]]/[[ .my.image.namespace ]]/[[ .my.image.image ]]:[[ .my.image.tag ]]
-  [[ end ]]
-
 ## Ports
 
-  [[- /* remove `rcon` from `$ports` if `.my.app_enable_rcon` is false */]]
-  [[- $ports := .my.ports ]]
-  [[- if (ne .my.app_enable_rcon true) ]]
-  [[ unset $ports "rcon" ]]
-  [[- end ]]
-  [[- range $name, $config := $ports ]]
+  [[- range $name, $config := .my.ports ]]
   - `[[ $name ]]`: `[[ $config.port ]]` (type: `[[ $config.type ]]` [[ if and (eq $config.type "http") (eq $config.protocol "https") ]]protocol: `https`[[ end ]])
   [[- end ]]
 
@@ -58,11 +39,15 @@
 ## Application Configuration
 
 ```env
-[[- range $name, $value := .my -]]
-[[ if $name | hasPrefix "app_" ]]
-[[ $name | trimPrefix "app_" | upper ]]` = `[[ $value ]]
-[[- end ]]
-[[- end ]]
+[[- template "configuration" . ]]
 ```
 
+## URLs:
+
+  Datadog Interface:     [[ .my.app_dd_url ]]
+  Infrastructure Map:    [[ .my.app_dd_url ]]/infrastructure/map?fillby=avg%%3Adatadog.agent.running&filter=[[ first .my.dd_tags | replace ":" "%%3A" ]]
+
+  [[- if .my.ports.gui ]]
+  Datadog Agent Manager: [[ .my.ports.gui.protocol ]]://[[ .my.app_dd_bind_host ]]:[[ .my.ports.gui.port ]][[ .my.ports.gui.path ]]
+  [[- end ]]
 [[ end -]]
