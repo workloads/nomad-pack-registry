@@ -1,9 +1,3 @@
-[[/* remove `rcon` from `$ports` if `.my.app_enable_rcon` is false */]]
-[[- $ports := .my.ports ]]
-[[- if (ne .my.app_enable_rcon true) ]]
-[[ unset $ports "rcon" ]]
-[[- end ]]
-
 # see https://developer.hashicorp.com/nomad/docs/job-specification/job
 job "[[ .my.job_name ]]" {
   region      = "[[ .my.region ]]"
@@ -28,14 +22,11 @@ job "[[ .my.job_name ]]" {
       # see https://developer.hashicorp.com/nomad/docs/job-specification/network#network-modes
       mode = "[[ .my.network_mode ]]"
 
-      [[/* iterate over `$ports` to create Port Mappings */]]
-      [[- range $name, $config := $ports ]]
+      [[/* iterate over `.my.ports` to create Port Mappings */]]
+      [[- range $name, $config := .my.ports ]]
       port "[[ $name ]]" {
-        static       = [[ $config.port ]]
-        to           = [[ $config.port ]]
-        [[- if $config.host_network ]]
-        host_network = "[[ $config.host_network ]]"
-        [[- end ]]
+        static = [[ $config.port ]]
+        to     = [[ $config.port ]]
       }
       [[ end ]]
     }
@@ -43,8 +34,8 @@ job "[[ .my.job_name ]]" {
     [[- $job_tags := .my.job_tags -]]
     [[- $service_name := .my.service_name_prefix -]]
     [[- $service_provider := .my.service_provider -]]
-    [[/* iterate over `$ports` to map Services */]]
-    [[ range $name, $port := $ports ]]
+    [[/* iterate over `.my.ports` to map Services */]]
+    [[ range $name, $port := .my.ports ]]
     # see https://developer.hashicorp.com/nomad/docs/job-specification/service
     service {
       name     = "[[ $service_name | replace "_" "-" | trunc 20 ]]-[[ $name | replace "_" "-" | trunc 43 ]]"
@@ -54,13 +45,13 @@ job "[[ .my.job_name ]]" {
 
       # see https://developer.hashicorp.com/nomad/docs/job-specification/check
       check {
-        name     = "[[ $name ]]"
-        type     = "[[ $port.type ]]"
+        name     = [[ $name | quote ]]
+        type     = [[ $port.type | quote ]]
         [[- if eq $port.type "http" ]]
-        path     = "[[ $port.path ]]"
+        path     = [[ $port.path | quote ]]
         [[- end ]]
-        interval = "[[ $port.check_interval ]]"
-        timeout  = "[[ $port.check_timeout ]]"
+        interval = "30s"
+        timeout  = "15s"
       }
     }
     [[ end ]]
@@ -76,9 +67,9 @@ job "[[ .my.job_name ]]" {
     # see https://developer.hashicorp.com/nomad/docs/job-specification/volume
     [[/* iterate over `var.volumes` to create Volumes */]]
     [[- range $index, $mount := .my.volumes ]]
-    volume "[[ $mount.name ]]" {
-      source    = "[[ $mount.name ]]"
-      type      = "[[ $mount.type ]]"
+    volume [[ $mount.name | quote ]] {
+      source    = [[ $mount.name | quote ]]
+      type      = [[ $mount.type | quote ]]
       read_only = [[ $mount.read_only ]]
     }
     [[ end ]]
@@ -96,8 +87,8 @@ job "[[ .my.job_name ]]" {
         # see https://developer.hashicorp.com/nomad/docs/drivers/docker#ports
         # and https://developer.hashicorp.com/nomad/plugins/drivers/podman#ports
         ports = [
-          [[- range $name, $port := $ports ]]
-          "[[ $name ]]",
+          [[- range $name, $port := .my.ports ]]
+          [[ $name | quote ]],
           [[- end ]]
         ]
       }
@@ -111,8 +102,8 @@ job "[[ .my.job_name ]]" {
       [[/* iterate over `var.volumes` to create Volume Mounts */]]
       [[- range $index, $mount := .my.volumes ]]
       volume_mount {
-          volume      = "[[ $mount.name ]]"
-          destination = "[[ $mount.destination ]]"
+          volume      = [[ $mount.name | quote ]]
+          destination = [[ $mount.destination | quote ]]
           read_only   = [[ $mount.read_only ]]
       }
       [[ end ]]

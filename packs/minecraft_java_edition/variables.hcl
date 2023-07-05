@@ -337,7 +337,7 @@ variable "image" {
   # see https://hub.docker.com/r/itzg/minecraft-server/tags
   default = {
     # Container Registry URL where the Image is hosted
-    registry = "docker.io"
+    registry = "index.docker.io"
 
     # Namespace of the Image
     namespace = "itzg"
@@ -346,10 +346,10 @@ variable "image" {
     image = "minecraft-server"
 
     # Tag of the Image
-    tag = "2023.4.1-java20-alpine"
+    tag = "2023.6.4-java20-alpine"
 
     # Digest of the Tag of the Image
-    digest = "sha256:2243a73756fc056e1ee41f77b0a2c8759e36094eededb8e4454b131ff13c2a44"
+    digest = "sha256:722dde03948a7979681221b31b99d08608e082e8d76c9b65b5dbb20791278da6"
   }
 }
 
@@ -482,7 +482,7 @@ variable "service_name_prefix" {
 variable "service_provider" {
   type        = string
   description = "Provider for the Service."
-  default     = "consul"
+  default     = "nomad"
 }
 
 variable "restart_logic" {

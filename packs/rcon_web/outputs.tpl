@@ -23,12 +23,7 @@
 
 ## Ports
 
-  [[- /* remove `rcon` from `$ports` if `.my.app_enable_rcon` is false */]]
-  [[- $ports := .my.ports ]]
-  [[- if (ne .my.app_enable_rcon true) ]]
-  [[ unset $ports "rcon" ]]
-  [[- end ]]
-  [[- range $name, $config := $ports ]]
+  [[- range $name, $config := .my.ports ]]
   - `[[ $name ]]`: `[[ $config.port ]]` (type: `[[ $config.type ]]` [[ if and (eq $config.type "http") (eq $config.protocol "https") ]]protocol: `https`[[ end ]])
   [[- end ]]
 
@@ -60,5 +55,11 @@
 ```env
 [[- template "configuration" . ]]
 ```
+
+## URLs:
+
+  [[- if .my.ports.main ]]
+  web interface: http://127.0.0.1:[[ .my.ports.main.port ]][[ .my.ports.main.path ]]
+  [[- end ]]
 
 [[ end -]]
