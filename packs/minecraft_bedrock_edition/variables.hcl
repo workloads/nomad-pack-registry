@@ -214,13 +214,13 @@ variable "ephemeral_disk" {
   }
 }
 
-variable "group_name" {
+variable "nomad_group_name" {
   type        = string
   description = "Name for the Group."
   default     = "minecraft"
 }
 
-variable "image" {
+variable "nomad_task_image" {
   type = object({
     registry  = string
     namespace = string
@@ -310,14 +310,14 @@ variable "nomad_group_ports" {
 }
 
 # see https://developer.hashicorp.com/nomad/docs/job-specification/job#priority
-variable "priority" {
+variable "nomad_priority" {
   type        = number
   description = "Priority for the Job."
   default     = 99
 }
 
 # see https://developer.hashicorp.com/nomad/docs/concepts/architecture#regions
-variable "region" {
+variable "nomad_job_region" {
   type        = string
   description = "Region for the Job."
   default     = "global"

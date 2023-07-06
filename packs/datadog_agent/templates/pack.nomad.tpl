@@ -2,14 +2,14 @@
 
 # see https://developer.hashicorp.com/nomad/docs/job-specification/job
 job "[[ .my.nomad_job_name ]]" {
-  region      = "[[ .my.region ]]"
+  region      = "[[ .my.nomad_job_region ]]"
   datacenters = [[ .my.nomad_job_datacenters | toJson ]]
   type        = "system"
   namespace   = "[[ .my.nomad_job_namespace ]]"
-  priority    = [[ .my.priority ]]
+  priority    = [[ .my.nomad_priority ]]
 
   # see https://developer.hashicorp.com/nomad/docs/job-specification/group
-  group "[[ .my.group_name ]]" {
+  group "[[ .my.nomad_group_name ]]" {
     # see https://developer.hashicorp.com/nomad/docs/job-specification/ephemeral_disk
     ephemeral_disk {
       migrate = [[ .my.ephemeral_disk.migrate ]]

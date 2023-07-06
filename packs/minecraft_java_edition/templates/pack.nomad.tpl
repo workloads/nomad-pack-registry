@@ -6,14 +6,14 @@
 
 # see https://developer.hashicorp.com/nomad/docs/job-specification/job
 job "[[ .my.nomad_job_name ]]" {
-  region      = "[[ .my.region ]]"
+  region      = "[[ .my.nomad_job_region ]]"
   datacenters = [[ .my.nomad_job_datacenters | toJson ]]
   type        = "service"
   namespace   = "[[ .my.nomad_job_namespace ]]"
-  priority    = [[ .my.priority ]]
+  priority    = [[ .my.nomad_priority ]]
 
   # see https://developer.hashicorp.com/nomad/docs/job-specification/group
-  group "[[ .my.group_name ]]" {
+  group "[[ .my.nomad_group_name ]]" {
     count = [[ .my.nomad_group_count ]]
 
     # see https://developer.hashicorp.com/nomad/docs/job-specification/ephemeral_disk
@@ -92,7 +92,7 @@ job "[[ .my.nomad_job_name ]]" {
       # see https://developer.hashicorp.com/nomad/docs/drivers/docker
       # and https://developer.hashicorp.com/nomad/plugins/drivers/podman
       config {
-        image = "[[ .my.image.registry ]]/[[ .my.image.namespace ]]/[[ .my.image.image ]]:[[ .my.image.tag ]]@[[ .my.image.digest ]]"
+        image = "[[ .my.nomad_task_image.registry ]]/[[ .my.nomad_task_image.namespace ]]/[[ .my.nomad_task_image.image ]]:[[ .my.nomad_task_image.tag ]]@[[ .my.nomad_task_image.digest ]]"
 
         # see https://developer.hashicorp.com/nomad/docs/drivers/docker#ports
         # and https://developer.hashicorp.com/nomad/plugins/drivers/podman#ports

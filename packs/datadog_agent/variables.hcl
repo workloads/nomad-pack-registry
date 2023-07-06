@@ -1362,7 +1362,7 @@ variable "ephemeral_disk" {
   }
 }
 
-variable "group_name" {
+variable "nomad_group_name" {
   type        = string
   description = "Name for the Group."
   default     = "datadog_agent"
@@ -1528,14 +1528,14 @@ variable "nomad_group_ports" {
 }
 
 # see https://developer.hashicorp.com/nomad/docs/job-specification/job#priority
-variable "priority" {
+variable "nomad_priority" {
   type        = number
   description = "Priority for the Job."
   default     = 50
 }
 
 # see https://developer.hashicorp.com/nomad/docs/concepts/architecture#regions
-variable "region" {
+variable "nomad_job_region" {
   type        = string
   description = "Region for the Job."
   default     = "global"
