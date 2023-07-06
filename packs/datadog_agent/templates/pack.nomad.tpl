@@ -3,7 +3,7 @@
 # see https://developer.hashicorp.com/nomad/docs/job-specification/job
 job "[[ .my.nomad_job_name ]]" {
   region      = "[[ .my.region ]]"
-  datacenters = [[ .my.datacenters | toJson ]]
+  datacenters = [[ .my.nomad_job_datacenters | toJson ]]
   type        = "system"
   namespace   = "[[ .my.nomad_job_namespace ]]"
   priority    = [[ .my.priority ]]
@@ -85,7 +85,7 @@ job "[[ .my.nomad_job_name ]]" {
     # see https://developer.hashicorp.com/nomad/docs/job-specification/task
     task "[[ .my.nomad_task_name ]]" {
       # see https://developer.hashicorp.com/nomad/docs/drivers
-      driver = "[[ .my.driver ]]"
+      driver = "[[ .my.nomad_task_driver ]]"
 
       # see https://developer.hashicorp.com/nomad/docs/drivers/raw_exec
       # and https://developer.hashicorp.com/nomad/docs/drivers/exec

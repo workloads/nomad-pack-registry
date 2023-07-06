@@ -1,14 +1,14 @@
 # see https://developer.hashicorp.com/nomad/docs/job-specification/job
 job "[[ .my.nomad_job_name ]]" {
   region      = "[[ .my.region ]]"
-  datacenters = [[ .my.datacenters | toJson ]]
+  datacenters = [[ .my.nomad_job_datacenters | toJson ]]
   type        = "service"
   namespace   = "[[ .my.nomad_job_namespace ]]"
   priority    = [[ .my.priority ]]
 
   # see https://developer.hashicorp.com/nomad/docs/job-specification/group
   group "[[ .my.group_name ]]" {
-    count = [[ .my.count ]]
+    count = [[ .my.nomad_group_count ]]
 
     # see https://developer.hashicorp.com/nomad/docs/job-specification/ephemeral_disk
     ephemeral_disk {
@@ -78,7 +78,7 @@ job "[[ .my.nomad_job_name ]]" {
     # see https://developer.hashicorp.com/nomad/docs/job-specification/task
     task "[[ .my.nomad_task_name ]]" {
       # see https://developer.hashicorp.com/nomad/docs/drivers
-      driver = "[[ .my.driver ]]"
+      driver = "[[ .my.nomad_task_driver ]]"
 
       # see https://developer.hashicorp.com/nomad/docs/drivers/docker
       # and https://developer.hashicorp.com/nomad/plugins/drivers/podman

@@ -2,10 +2,10 @@
 # Job: _[[ .my.nomad_job_name ]]_ (`v[[ .nomad_pack.pack.version ]]`)
 
   Region:    `[[ .my.region ]]`
-  DC(s):     `[[ .my.datacenters | toJson ]]`
+  DC(s):     `[[ .my.nomad_job_datacenters | toJson ]]`
   Namespace: `[[ .my.nomad_job_namespace ]]`
   Name:      `[[ .my.nomad_job_name ]]`
-  Count:     `[[ .my.count ]]`
+  Count:     `[[ .my.nomad_group_count ]]`
 
 ## Ports
 

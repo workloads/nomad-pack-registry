@@ -76,14 +76,14 @@ variable "app_rwa_web_rcon" {
   default     = false
 }
 
-variable "count" {
+variable "nomad_group_count" {
   type        = number
   description = "Count of Deployments for the Job."
   default     = 1
 }
 
 # see https://developer.hashicorp.com/nomad/docs/concepts/architecture#datacenters
-variable "datacenters" {
+variable "nomad_job_datacenters" {
   type        = list(string)
   description = "Eligible Datacenters for the Task."
 
@@ -92,7 +92,7 @@ variable "datacenters" {
   ]
 }
 
-variable "driver" {
+variable "nomad_task_driver" {
   type        = string
   description = "Driver to use for the Job."
   default     = "docker"
