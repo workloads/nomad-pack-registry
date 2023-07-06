@@ -381,20 +381,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{nomad_server}}/v1/service/?prefix={{service_name}}-main",
+					"raw": "{{nomad_server}}/v1/service/{{service_name}}-main",
 					"host": [
 						"{{nomad_server}}"
 					],
 					"path": [
 						"v1",
 						"service",
-						""
-					],
-					"query": [
-						{
-							"key": "prefix",
-							"value": "{{service_name}}-main"
-						}
+						"{{service_name}}-main"
 					]
 				}
 			},
@@ -504,7 +498,7 @@
 			"type": "string"
 		},
 		{
-			"key": "nomad_job_name",
+			"key": "job_name",
 			"value": "minecraft",
 			"type": "string"
 		},
