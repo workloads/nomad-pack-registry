@@ -1,4 +1,4 @@
-[[- if .my.verbose_output ]]
+[[- if .my.nomad_pack_verbose_output ]]
 # Job: _[[ .my.nomad_job_name ]]_ (`v[[ .nomad_pack.pack.version ]]`)
 
   Region:    `[[ .my.nomad_job_region ]]`

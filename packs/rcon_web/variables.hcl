@@ -306,7 +306,7 @@ variable "nomad_task_name" {
   default     = "rcon_web"
 }
 
-variable "verbose_output" {
+variable "nomad_pack_verbose_output" {
   type        = bool
   description = "Toggle to enable verbose output."
   default     = true
