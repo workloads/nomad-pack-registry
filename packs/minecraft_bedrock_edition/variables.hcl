@@ -1,3 +1,7 @@
+#######################################
+## Application-specific Configuration #
+#######################################
+
 # this section contains a non-exhaustive selection of Minecraft Server configuration options
 # see https://minecraft.fandom.com/wiki/Server.properties#Bedrock_Edition_3 for all available options.
 
@@ -170,11 +174,19 @@ variable "app_view_distance" {
   default     = 32
 }
 
+###############################
+## Pack-specifc Configuration #
+###############################
+
 variable "nomad_pack_verbose_output" {
   type        = bool
   description = "Toggle to enable verbose output."
   default     = true
 }
+
+#####################################
+## Nomad Job-specific Configuration #
+#####################################
 
 # see https://developer.hashicorp.com/nomad/docs/concepts/architecture#datacenters
 variable "nomad_job_datacenters" {

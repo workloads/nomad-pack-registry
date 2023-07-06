@@ -1,6 +1,6 @@
-#######################
-# Basic Configuration #
-#######################
+#######################################
+## Application-specific Configuration #
+#######################################
 
 variable "app_dd_site" {
   type        = string
@@ -271,10 +271,6 @@ variable "app_dd_observability_pipelines_worker_traces_url" {
   description = "URL endpoint for the Observability Pipelines Worker to send Traces to."
   default     = ""
 }
-
-##########################
-# Advanced Configuration #
-##########################
 
 variable "app_dd_confd_path" {
   type        = string
@@ -1285,9 +1281,9 @@ variable "app_dd_otlp_config_debug_verbosity" {
   default     = "normal"
 }
 
-#####################################
-## Pack-specifc Agent Configuration #
-#####################################
+###############################
+## Pack-specifc Configuration #
+###############################
 
 # Tags that are attached in-app to every metric, event, log, trace, and service check emitted by this Agent.
 # see https://docs.datadoghq.com/tagging/
@@ -1303,15 +1299,15 @@ variable "dd_tags" {
   ]
 }
 
-variable "include_nomad_tags" {
+variable "include_dd_extra_tags" {
   type        = bool
   description = "Toggle to include Nomad-specific Tags as part of the `DD_EXTRA_TAGS` environment variable."
   default     = true
 }
 
-variable "nomad_tags" {
+variable "dd_extra_tags" {
   type        = list(string)
-  description = "List of Nomad-specific Host Tags."
+  description = "List of Nomad-specific Tags."
 
   default = [
     "nomad-dc:$${NOMAD_DC}",
@@ -1323,6 +1319,16 @@ variable "nomad_tags" {
     "nomad-task-name:$${NOMAD_TASK_NAME}",
   ]
 }
+
+variable "nomad_pack_verbose_output" {
+  type        = bool
+  description = "Toggle to enable verbose output."
+  default     = true
+}
+
+#####################################
+## Nomad Job-specific Configuration #
+#####################################
 
 # see https://developer.hashicorp.com/nomad/docs/concepts/architecture#datacenters
 variable "nomad_job_datacenters" {
@@ -1606,12 +1612,6 @@ variable "nomad_task_name" {
   type        = string
   description = "Name for the Task."
   default     = "datadog_agent"
-}
-
-variable "nomad_pack_verbose_output" {
-  type        = bool
-  description = "Toggle to enable verbose output."
-  default     = true
 }
 
 variable "nomad_group_volumes" {

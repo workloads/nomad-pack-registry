@@ -1,3 +1,7 @@
+#######################################
+## Application-specific Configuration #
+#######################################
+
 variable "app_rwa_admin" {
   type        = bool
   description = "Toggle to set Initial User as Admin."
@@ -76,11 +80,19 @@ variable "app_rwa_web_rcon" {
   default     = false
 }
 
+###############################
+## Pack-specifc Configuration #
+###############################
+
 variable "nomad_pack_verbose_output" {
   type        = bool
   description = "Toggle to enable verbose output."
   default     = true
 }
+
+############################
+## Nomad Job Configuration #
+############################
 
 # see https://developer.hashicorp.com/nomad/docs/concepts/architecture#datacenters
 variable "nomad_job_datacenters" {

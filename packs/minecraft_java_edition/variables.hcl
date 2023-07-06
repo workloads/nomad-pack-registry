@@ -273,6 +273,20 @@ variable "app_world" {
   default     = ""
 }
 
+###############################
+## Pack-specifc Configuration #
+###############################
+
+variable "nomad_pack_verbose_output" {
+  type        = bool
+  description = "Toggle to enable verbose output."
+  default     = true
+}
+
+#####################################
+## Nomad Job-specific Configuration #
+#####################################
+
 variable "nomad_group_count" {
   type        = number
   description = "Count of Deployments for the Job."
@@ -507,12 +521,6 @@ variable "nomad_task_name" {
   type        = string
   description = "Name for the Task."
   default     = "minecraft"
-}
-
-variable "nomad_pack_verbose_output" {
-  type        = bool
-  description = "Toggle to enable verbose output."
-  default     = true
 }
 
 variable "nomad_group_volumes" {

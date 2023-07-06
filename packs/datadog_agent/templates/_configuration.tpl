@@ -15,8 +15,8 @@
 
         DD_TAGS = "[[ .my.dd_tags | toStrings | join " " ]]"
 
-  [[- if (eq .my.include_nomad_tags true) ]]
-        DD_EXTRA_TAGS = "[[ .my.nomad_tags | toStrings | join " " ]]"
+  [[- if (eq .my.include_dd_extra_tags true) ]]
+        DD_EXTRA_TAGS = "[[ .my.dd_extra_tags | toStrings | join " " ]]"
   [[- end ]]
         DD_APM_RECEIVER_PORT = [[ .my.nomad_group_ports.apm_receiver.port ]]
   [[- if .my.nomad_group_ports.ipc ]]
