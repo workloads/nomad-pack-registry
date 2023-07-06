@@ -1,10 +1,10 @@
 [[- if .my.verbose_output ]]
-# Job: _[[ .my.job_name ]]_ (`v[[ .nomad_pack.pack.version ]]`)
+# Job: _[[ .my.nomad_job_name ]]_ (`v[[ .nomad_pack.pack.version ]]`)
 
   Region:    `[[ .my.region ]]`
   DC(s):     `[[ .my.datacenters | toJson ]]`
   Namespace: `[[ .my.namespace ]]`
-  Name:      `[[ .my.job_name ]]`
+  Name:      `[[ .my.nomad_job_name ]]`
   Count:     `[[ .my.count ]]`
 
 ## Image
@@ -48,10 +48,10 @@
 ## Service
 
   Service Provider: `[[ .my.service_provider ]]`
-  Service Name:     `[[ .my.job_name | replace "_" "-" | trunc 63 | quote ]]`
+  Service Name:     `[[ .my.nomad_job_name | replace "_" "-" | trunc 63 | quote ]]`
 
   Service Tags:
-    [[- range $name := .my.job_tags ]]
+    [[- range $name := .my.nomad_group_tags ]]
     - `[[ $name ]]`
     [[- end ]]
 

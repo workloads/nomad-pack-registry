@@ -250,7 +250,7 @@ variable "image" {
   }
 }
 
-variable "job_name" {
+variable "nomad_job_name" {
   type        = string
   description = "Name for the Job."
 
@@ -258,7 +258,7 @@ variable "job_name" {
   default = "minecraft"
 }
 
-variable "job_tags" {
+variable "nomad_group_tags" {
   type        = list(string)
   description = "List of Tags for the Job."
 

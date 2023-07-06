@@ -504,7 +504,7 @@
 			"type": "string"
 		},
 		{
-			"key": "job_name",
+			"key": "nomad_job_name",
 			"value": "minecraft",
 			"type": "string"
 		},

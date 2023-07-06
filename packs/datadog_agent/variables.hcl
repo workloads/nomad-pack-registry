@@ -1368,7 +1368,7 @@ variable "group_name" {
   default     = "datadog_agent"
 }
 
-variable "job_name" {
+variable "nomad_job_name" {
   type        = string
   description = "Name for the Job."
 
@@ -1376,7 +1376,7 @@ variable "job_name" {
   default = "datadog_agent"
 }
 
-variable "job_tags" {
+variable "nomad_group_tags" {
   type        = list(string)
   description = "List of Tags for the Job."
 

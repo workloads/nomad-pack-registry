@@ -5,7 +5,7 @@
 [[- end ]]
 
 # see https://developer.hashicorp.com/nomad/docs/job-specification/job
-job "[[ .my.job_name ]]" {
+job "[[ .my.nomad_job_name ]]" {
   region      = "[[ .my.region ]]"
   datacenters = [[ .my.datacenters | toJson ]]
   type        = "service"
@@ -40,7 +40,7 @@ job "[[ .my.job_name ]]" {
       [[ end ]]
     }
 
-    [[- $job_tags := .my.job_tags -]]
+    [[- $job_tags := .my.nomad_group_tags -]]
     [[- $service_name := .my.nomad_group_service_name_prefix -]]
     [[- $service_provider := .my.nomad_group_service_provider -]]
     [[/* iterate over `$ports` to map Services */]]
