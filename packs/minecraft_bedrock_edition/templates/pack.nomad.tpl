@@ -6,7 +6,7 @@ job "[[ .my.nomad_job_name ]]" {
   datacenters = [[ .my.nomad_job_datacenters | toJson ]]
   type        = "service"
   namespace   = "[[ .my.nomad_job_namespace ]]"
-  priority    = [[ .my.nomad_priority ]]
+  priority    = [[ .my.nomad_job_priority ]]
 
   # see https://developer.hashicorp.com/nomad/docs/job-specification/group
   group "[[ .my.nomad_group_name ]]" {
@@ -14,7 +14,7 @@ job "[[ .my.nomad_job_name ]]" {
 
     # see https://developer.hashicorp.com/nomad/docs/job-specification/ephemeral_disk
     ephemeral_disk {
-      [[- $ephemeral_disk := .my.ephemeral_disk ]]
+      [[- $ephemeral_disk := .my.nomad_group_ephemeral_disk ]]
       migrate = [[ $ephemeral_disk.migrate ]]
       size    = [[ $ephemeral_disk.size ]]
       sticky  = [[ $ephemeral_disk.sticky ]]

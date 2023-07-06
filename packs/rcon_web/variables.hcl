@@ -99,7 +99,7 @@ variable "nomad_task_driver" {
 }
 
 # see https://developer.hashicorp.com/nomad/docs/job-specification/ephemeral_disk
-variable "ephemeral_disk" {
+variable "nomad_group_ephemeral_disk" {
   type = object({
     migrate = bool
     size    = number
@@ -226,7 +226,7 @@ variable "nomad_group_ports" {
 }
 
 # see https://developer.hashicorp.com/nomad/docs/job-specification/job#priority
-variable "nomad_priority" {
+variable "nomad_job_priority" {
   type        = number
   description = "Priority for the Job."
   default     = 50
