@@ -22,7 +22,7 @@ job "[[ .my.nomad_job_name ]]" {
     # see https://developer.hashicorp.com/nomad/docs/job-specification/network
     network {
       # see https://developer.hashicorp.com/nomad/docs/job-specification/network#network-modes
-      mode = "[[ .my.network_mode ]]"
+      mode = "[[ .my.nomad_group_network_mode ]]"
 
       [[/* iterate over `$ports` to create Port Mappings */]]
       [[- range $name, $config := $ports ]]

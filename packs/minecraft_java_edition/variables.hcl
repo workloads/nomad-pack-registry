@@ -379,7 +379,7 @@ variable "nomad_job_namespace" {
 }
 
 # see https://developer.hashicorp.com/nomad/docs/job-specification/network#network-modes
-variable "network_mode" {
+variable "nomad_group_network_mode" {
   type        = string
   description = "Network Mode for the Job."
   default     = "host"
