@@ -1340,10 +1340,33 @@ variable "nomad_job_datacenters" {
   ]
 }
 
-variable "nomad_task_driver" {
+variable "nomad_job_name" {
   type        = string
-  description = "Driver to use for the Job."
-  default     = "raw_exec"
+  description = "Name for the Job."
+
+  # value will be truncated to 63 characters when necessary
+  default = "datadog_agent"
+}
+
+# see https://developer.hashicorp.com/nomad/docs/job-specification/job#namespace
+variable "nomad_job_namespace" {
+  type        = string
+  description = "Namespace for the Job."
+  default     = "default"
+}
+
+# see https://developer.hashicorp.com/nomad/docs/job-specification/job#priority
+variable "nomad_job_priority" {
+  type        = number
+  description = "Priority for the Job."
+  default     = 50
+}
+
+# see https://developer.hashicorp.com/nomad/docs/concepts/architecture#regions
+variable "nomad_job_region" {
+  type        = string
+  description = "Region for the Job."
+  default     = "global"
 }
 
 # see https://developer.hashicorp.com/nomad/docs/job-specification/ephemeral_disk
@@ -1372,31 +1395,6 @@ variable "nomad_group_name" {
   type        = string
   description = "Name for the Group."
   default     = "datadog_agent"
-}
-
-variable "nomad_job_name" {
-  type        = string
-  description = "Name for the Job."
-
-  # value will be truncated to 63 characters when necessary
-  default = "datadog_agent"
-}
-
-variable "nomad_group_tags" {
-  type        = list(string)
-  description = "List of Tags for the Job."
-
-  default = [
-    "datadog",
-    "datadog-agent",
-  ]
-}
-
-# see https://developer.hashicorp.com/nomad/docs/job-specification/job#namespace
-variable "nomad_job_namespace" {
-  type        = string
-  description = "Namespace for the Job."
-  default     = "default"
 }
 
 # see https://developer.hashicorp.com/nomad/docs/job-specification/network#network-modes
@@ -1533,18 +1531,69 @@ variable "nomad_group_ports" {
   }
 }
 
-# see https://developer.hashicorp.com/nomad/docs/job-specification/job#priority
-variable "nomad_job_priority" {
-  type        = number
-  description = "Priority for the Job."
-  default     = 50
+variable "nomad_group_restart_logic" {
+  type = object({
+    attempts = number
+    interval = string
+    delay    = string
+    mode     = string
+  })
+
+  description = "Restart Logic for the Application."
+
+  default = {
+    attempts = 3
+    interval = "120s"
+    delay    = "30s"
+    mode     = "fail"
+  }
 }
 
-# see https://developer.hashicorp.com/nomad/docs/concepts/architecture#regions
-variable "nomad_job_region" {
+variable "nomad_group_service_name_prefix" {
   type        = string
-  description = "Region for the Job."
-  default     = "global"
+  description = "Name for the Group Service."
+  default     = "datadog_agent"
+}
+
+variable "nomad_group_service_provider" {
+  type        = string
+  description = "Provider for the Group Service."
+  default     = "nomad"
+}
+
+variable "nomad_group_tags" {
+  type        = list(string)
+  description = "List of Tags for the Job."
+
+  default = [
+    "datadog",
+    "datadog-agent",
+  ]
+}
+
+variable "nomad_group_volumes" {
+  type = map(object({
+    name        = string
+    type        = string
+    destination = string
+    read_only   = bool
+  }))
+
+  description = "Volumes for the Group."
+
+  default = {}
+}
+
+variable "nomad_task_driver" {
+  type        = string
+  description = "Driver to use for the Job."
+  default     = "raw_exec"
+}
+
+variable "nomad_task_name" {
+  type        = string
+  description = "Name for the Task."
+  default     = "datadog_agent"
 }
 
 # see https://developer.hashicorp.com/nomad/docs/job-specification/resources
@@ -1576,53 +1625,4 @@ variable "nomad_task_resources" {
     # and https://developer.hashicorp.com/nomad/docs/drivers/docker#memory
     memory_max = 1024
   }
-}
-
-variable "nomad_group_service_name_prefix" {
-  type        = string
-  description = "Name for the Group Service."
-  default     = "datadog_agent"
-}
-
-variable "nomad_group_service_provider" {
-  type        = string
-  description = "Provider for the Group Service."
-  default     = "nomad"
-}
-
-variable "nomad_group_restart_logic" {
-  type = object({
-    attempts = number
-    interval = string
-    delay    = string
-    mode     = string
-  })
-
-  description = "Restart Logic for the Application."
-
-  default = {
-    attempts = 3
-    interval = "120s"
-    delay    = "30s"
-    mode     = "fail"
-  }
-}
-
-variable "nomad_task_name" {
-  type        = string
-  description = "Name for the Task."
-  default     = "datadog_agent"
-}
-
-variable "nomad_group_volumes" {
-  type = map(object({
-    name        = string
-    type        = string
-    destination = string
-    read_only   = bool
-  }))
-
-  description = "Volumes for the Group."
-
-  default = {}
 }

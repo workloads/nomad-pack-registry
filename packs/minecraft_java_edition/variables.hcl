@@ -287,12 +287,6 @@ variable "nomad_pack_verbose_output" {
 ## Nomad Job-specific Configuration #
 #####################################
 
-variable "nomad_group_count" {
-  type        = number
-  description = "Count of Deployments for the Job."
-  default     = 1
-}
-
 # see https://developer.hashicorp.com/nomad/docs/concepts/architecture#datacenters
 variable "nomad_job_datacenters" {
   type        = list(string)
@@ -303,10 +297,39 @@ variable "nomad_job_datacenters" {
   ]
 }
 
-variable "nomad_task_driver" {
+variable "nomad_job_name" {
   type        = string
-  description = "Driver to use for the Job."
-  default     = "docker"
+  description = "Name for the Job."
+
+  # value will be truncated to 63 characters when necessary
+  default = "minecraft"
+}
+
+# see https://developer.hashicorp.com/nomad/docs/job-specification/job#namespace
+variable "nomad_job_namespace" {
+  type        = string
+  description = "Namespace for the Job."
+  default     = "default"
+}
+
+# see https://developer.hashicorp.com/nomad/docs/job-specification/job#priority
+variable "nomad_job_priority" {
+  type        = number
+  description = "Priority for the Job."
+  default     = 99
+}
+
+# see https://developer.hashicorp.com/nomad/docs/concepts/architecture#regions
+variable "nomad_job_region" {
+  type        = string
+  description = "Region for the Job."
+  default     = "global"
+}
+
+variable "nomad_group_count" {
+  type        = number
+  description = "Count of Deployments for the Job."
+  default     = 1
 }
 
 # see https://developer.hashicorp.com/nomad/docs/job-specification/ephemeral_disk
@@ -335,61 +358,6 @@ variable "nomad_group_name" {
   type        = string
   description = "Name for the Group."
   default     = "minecraft"
-}
-
-variable "nomad_task_image" {
-  type = object({
-    registry  = string
-    namespace = string
-    image     = string
-    tag       = string
-    digest    = string
-  })
-
-  description = "Content Address to use for the Container Image."
-
-  # see https://hub.docker.com/r/itzg/minecraft-server/tags
-  default = {
-    # Container Registry URL where the Image is hosted
-    registry = "index.docker.io"
-
-    # Namespace of the Image
-    namespace = "itzg"
-
-    # Slug of the Image
-    image = "minecraft-server"
-
-    # Tag of the Image
-    tag = "2023.6.4-java20-alpine"
-
-    # Digest of the Tag of the Image
-    digest = "sha256:722dde03948a7979681221b31b99d08608e082e8d76c9b65b5dbb20791278da6"
-  }
-}
-
-variable "nomad_job_name" {
-  type        = string
-  description = "Name for the Job."
-
-  # value will be truncated to 63 characters when necessary
-  default = "minecraft"
-}
-
-variable "nomad_group_tags" {
-  type        = list(string)
-  description = "List of Tags for the Job."
-
-  default = [
-    "minecraft",
-    "minecraft-java-edition"
-  ]
-}
-
-# see https://developer.hashicorp.com/nomad/docs/job-specification/job#namespace
-variable "nomad_job_namespace" {
-  type        = string
-  description = "Namespace for the Job."
-  default     = "default"
 }
 
 # see https://developer.hashicorp.com/nomad/docs/job-specification/network#network-modes
@@ -438,18 +406,120 @@ variable "nomad_group_ports" {
   }
 }
 
-# see https://developer.hashicorp.com/nomad/docs/job-specification/job#priority
-variable "nomad_job_priority" {
-  type        = number
-  description = "Priority for the Job."
-  default     = 99
+variable "nomad_group_restart_logic" {
+  type = object({
+    attempts = number
+    interval = string
+    delay    = string
+    mode     = string
+  })
+
+  description = "Restart Logic for the Application."
+
+  default = {
+    attempts = 3
+    interval = "120s"
+    delay    = "30s"
+    mode     = "fail"
+  }
 }
 
-# see https://developer.hashicorp.com/nomad/docs/concepts/architecture#regions
-variable "nomad_job_region" {
+variable "nomad_group_service_name_prefix" {
   type        = string
-  description = "Region for the Job."
-  default     = "global"
+  description = "Name for the Group Service."
+  default     = "minecraft"
+}
+
+variable "nomad_group_service_provider" {
+  type        = string
+  description = "Provider for the Group Service."
+  default     = "nomad"
+}
+
+variable "nomad_group_tags" {
+  type        = list(string)
+  description = "List of Tags for the Job."
+
+  default = [
+    "minecraft",
+    "minecraft-java-edition"
+  ]
+}
+
+variable "nomad_group_volumes" {
+  type = map(object({
+    name        = string
+    type        = string
+    destination = string
+    read_only   = bool
+  }))
+
+  description = "Volumes for the Group."
+
+  default = {
+    minecraft_data = {
+      name        = "minecraft_data",
+      type        = "host"
+      destination = "/data"
+      read_only   = false
+    },
+
+    minecraft_extras = {
+      name        = "minecraft_extras",
+      type        = "host"
+      destination = "/extras"
+      read_only   = false
+    },
+
+    minecraft_worlds = {
+      name        = "minecraft_worlds",
+      type        = "host"
+      destination = "/worlds"
+      read_only   = false
+    },
+  }
+}
+
+variable "nomad_task_driver" {
+  type        = string
+  description = "Driver to use for the Job."
+  default     = "docker"
+}
+
+variable "nomad_task_image" {
+  type = object({
+    registry  = string
+    namespace = string
+    image     = string
+    tag       = string
+    digest    = string
+  })
+
+  description = "Content Address to use for the Container Image."
+
+  # see https://hub.docker.com/r/itzg/minecraft-server/tags
+  default = {
+    # Container Registry URL where the Image is hosted
+    registry = "index.docker.io"
+
+    # Namespace of the Image
+    namespace = "itzg"
+
+    # Slug of the Image
+    image = "minecraft-server"
+
+    # Tag of the Image
+    tag = "2023.6.4-java20-alpine"
+
+    # Digest of the Tag of the Image
+    digest = "sha256:722dde03948a7979681221b31b99d08608e082e8d76c9b65b5dbb20791278da6"
+  }
+}
+
+variable "nomad_task_name" {
+  type        = string
+  description = "Name for the Task."
+  default     = "minecraft"
 }
 
 # see https://developer.hashicorp.com/nomad/docs/job-specification/resources
@@ -484,75 +554,5 @@ variable "nomad_task_resources" {
     # see https://developer.hashicorp.com/nomad/docs/job-specification/resources#memory-oversubscription
     # and https://developer.hashicorp.com/nomad/docs/drivers/docker#memory
     memory_max = 5120
-  }
-}
-
-variable "nomad_group_service_name_prefix" {
-  type        = string
-  description = "Name for the Group Service."
-  default     = "minecraft"
-}
-
-variable "nomad_group_service_provider" {
-  type        = string
-  description = "Provider for the Group Service."
-  default     = "nomad"
-}
-
-variable "nomad_group_restart_logic" {
-  type = object({
-    attempts = number
-    interval = string
-    delay    = string
-    mode     = string
-  })
-
-  description = "Restart Logic for the Application."
-
-  default = {
-    attempts = 3
-    interval = "120s"
-    delay    = "30s"
-    mode     = "fail"
-  }
-}
-
-variable "nomad_task_name" {
-  type        = string
-  description = "Name for the Task."
-  default     = "minecraft"
-}
-
-variable "nomad_group_volumes" {
-  type = map(object({
-    name        = string
-    type        = string
-    destination = string
-    read_only   = bool
-  }))
-
-  description = "Volumes for the Group."
-
-  default = {
-    minecraft_data = {
-      name        = "minecraft_data",
-      type        = "host"
-      destination = "/data"
-      read_only   = false
-    },
-
-    minecraft_extras = {
-      name        = "minecraft_extras",
-      type        = "host"
-      destination = "/extras"
-      read_only   = false
-    },
-
-    minecraft_worlds = {
-      name        = "minecraft_worlds",
-      type        = "host"
-      destination = "/worlds"
-      read_only   = false
-    },
   }
 }
