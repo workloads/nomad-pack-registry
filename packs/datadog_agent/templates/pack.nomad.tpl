@@ -73,7 +73,7 @@ job "[[ .my.job_name ]]" {
 
     # see https://developer.hashicorp.com/nomad/docs/job-specification/volume
     [[/* iterate over `var.volumes` to create Volumes */]]
-    [[- range $index, $mount := .my.volumes ]]
+    [[- range $index, $mount := .my.nomad_group_volumes ]]
     volume "[[ $mount.name ]]" {
       source    = "[[ $mount.name ]]"
       type      = "[[ $mount.type ]]"
@@ -119,7 +119,7 @@ job "[[ .my.job_name ]]" {
 
       # see https://developer.hashicorp.com/nomad/docs/job-specification/volume_mount
       [[/* iterate over `var.volumes` to create Volume Mounts */]]
-      [[- range $index, $mount := .my.volumes ]]
+      [[- range $index, $mount := .my.nomad_group_volumes ]]
       volume_mount {
           volume      = "[[ $mount.name ]]"
           destination = "[[ $mount.destination ]]"

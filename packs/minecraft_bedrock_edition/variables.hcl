@@ -400,7 +400,7 @@ variable "verbose_output" {
   default     = true
 }
 
-variable "volumes" {
+variable "nomad_group_volumes" {
   type = map(object({
     name        = string
     type        = string
@@ -408,7 +408,7 @@ variable "volumes" {
     read_only   = bool
   }))
 
-  description = "Volumes for the Application."
+  description = "Volumes for the Group."
 
   default = {
     data = {

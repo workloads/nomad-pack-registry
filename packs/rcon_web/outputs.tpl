@@ -32,10 +32,10 @@
   CPU:    [[ .my.resources.cpu ]] MHz
   Memory: [[ .my.resources.memory ]] MB
 
-[[- if .my.volumes ]]
+[[- if .my.nomad_group_volumes ]]
 ## Volumes
 
-  [[- range $name, $mounts := .my.volumes ]]
+  [[- range $name, $mounts := .my.nomad_group_volumes ]]
   - `[[ $mounts.name ]]` = `[[ $mounts.destination | toPrettyJson ]]` (type: `[[ $mounts.type ]]`[[ if $mounts.read_only ]], read-only[[ end ]])
   [[- end ]]
 [[ end ]]
