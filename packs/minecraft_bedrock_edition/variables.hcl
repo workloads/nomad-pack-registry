@@ -358,15 +358,15 @@ variable "resources" {
   }
 }
 
-variable "service_name_prefix" {
+variable "nomad_group_service_name_prefix" {
   type        = string
-  description = "Name for the Service."
+  description = "Name for the Group Service."
   default     = "minecraft"
 }
 
-variable "service_provider" {
+variable "nomad_group_service_provider" {
   type        = string
-  description = "Provider for the Service."
+  description = "Provider for the Group Service."
   default     = "nomad"
 }
 

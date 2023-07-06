@@ -32,7 +32,7 @@ job "[[ .my.job_name ]]" {
     }
 
     [[- $job_tags := .my.job_tags -]]
-    [[- $service_name := .my.service_name_prefix -]]
+    [[- $service_name := .my.nomad_group_service_name_prefix -]]
     [[- $service_provider := .my.service_provider -]]
     [[/* iterate over `.my.ports` to map Services */]]
     [[ range $name, $port := .my.ports ]]
