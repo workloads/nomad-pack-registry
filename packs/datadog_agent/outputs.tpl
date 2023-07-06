@@ -9,14 +9,14 @@
 
 ## Ports
 
-  [[- range $name, $config := .my.ports ]]
+  [[- range $name, $config := .my.nomad_group_ports ]]
   - `[[ $name ]]`: `[[ $config.port ]]` (type: `[[ $config.type ]]` [[ if and (eq $config.type "http") (eq $config.protocol "https") ]]protocol: `https`[[ end ]])
   [[- end ]]
 
 ## Resources
 
-  CPU:    [[ .my.resources.cpu ]] MHz
-  Memory: [[ .my.resources.memory ]] MB
+  CPU:    [[ .my.nomad_task_resources.cpu ]] MHz
+  Memory: [[ .my.nomad_task_resources.memory ]] MB
 
 [[- if .my.nomad_group_volumes ]]
 ## Volumes
@@ -47,7 +47,7 @@
   Datadog Interface:     [[ .my.app_dd_url ]]
   Infrastructure Map:    [[ .my.app_dd_url ]]/infrastructure/map?fillby=avg%%3Adatadog.agent.running&filter=[[ first .my.dd_tags | replace ":" "%%3A" ]]
 
-  [[- if .my.ports.gui ]]
-  Datadog Agent Manager: [[ .my.ports.gui.protocol ]]://[[ .my.app_dd_bind_host ]]:[[ .my.ports.gui.port ]][[ .my.ports.gui.path ]]
+  [[- if .my.nomad_group_ports.gui ]]
+  Datadog Agent Manager: [[ .my.nomad_group_ports.gui.protocol ]]://[[ .my.app_dd_bind_host ]]:[[ .my.nomad_group_ports.gui.port ]][[ .my.nomad_group_ports.gui.path ]]
   [[- end ]]
 [[ end -]]

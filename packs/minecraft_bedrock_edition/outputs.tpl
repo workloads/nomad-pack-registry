@@ -24,7 +24,7 @@
 ## Ports
 
   [[- /* remove `rcon` from `$ports` if `.my.app_enable_rcon` is false */]]
-  [[- $ports := .my.ports ]]
+  [[- $ports := .my.nomad_group_ports ]]
   [[- if (ne .my.app_enable_rcon true) ]]
   [[ unset $ports "rcon" ]]
   [[- end ]]
@@ -34,8 +34,8 @@
 
 ## Resources
 
-  CPU:    [[ .my.resources.cpu ]] MHz
-  Memory: [[ .my.resources.memory ]] MB
+  CPU:    [[ .my.nomad_task_resources.cpu ]] MHz
+  Memory: [[ .my.nomad_task_resources.memory ]] MB
 
 [[- if .my.nomad_group_volumes ]]
 ## Volumes

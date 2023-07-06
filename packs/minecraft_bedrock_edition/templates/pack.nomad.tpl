@@ -1,4 +1,4 @@
-[[- $ports := .my.ports ]]
+[[- $ports := .my.nomad_group_ports ]]
 
 # see https://developer.hashicorp.com/nomad/docs/job-specification/job
 job "[[ .my.job_name ]]" {
@@ -38,7 +38,7 @@ job "[[ .my.job_name ]]" {
 
     [[- $job_tags := .my.job_tags -]]
     [[- $service_name := .my.nomad_group_service_name_prefix -]]
-    [[- $service_provider := .my.service_provider -]]
+    [[- $service_provider := .my.nomad_group_service_provider -]]
     [[/* iterate over `$ports` to map Services */]]
     [[ range $name, $port := $ports ]]
     # see https://developer.hashicorp.com/nomad/docs/job-specification/service
@@ -80,7 +80,7 @@ job "[[ .my.job_name ]]" {
     [[ end ]]
 
     # see https://developer.hashicorp.com/nomad/docs/job-specification/task
-    task "[[ .my.task_name ]]" {
+    task "[[ .my.nomad_task_name ]]" {
       # see https://developer.hashicorp.com/nomad/docs/drivers
       driver = "[[ .my.driver ]]"
 
@@ -115,12 +115,13 @@ job "[[ .my.job_name ]]" {
 
       # see https://developer.hashicorp.com/nomad/docs/job-specification/resources
       resources {
-        cpu        = [[ .my.resources.cpu ]]
-        cores      = [[ .my.resources.cores | default "null" ]]
-        memory     = [[ .my.resources.memory ]]
+        [[- $resources := .my.nomad_task_resources ]]
+        cpu        = [[ $resources.cpu ]]
+        cores      = [[ $resources.cores | default "null" ]]
+        memory     = [[ $resources.memory ]]
 
         # TODO: add support for memory oversubscription
-        # memory_max = [[ .my.resources.memory_max ]]
+        # memory_max = [[ $resources.memory_max ]]
       }
     }
   }

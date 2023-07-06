@@ -22,8 +22,8 @@ job "[[ .my.job_name ]]" {
       # see https://developer.hashicorp.com/nomad/docs/job-specification/network#network-modes
       mode = "[[ .my.network_mode ]]"
 
-      [[/* iterate over `.my.ports` to create Port Mappings */]]
-      [[- range $name, $config := .my.ports ]]
+      [[/* iterate over `.my.nomad_group_ports` to create Port Mappings */]]
+      [[- range $name, $config := .my.nomad_group_ports ]]
       port "[[ $name ]]" {
         static = [[ $config.port ]]
         to     = [[ $config.port ]]
@@ -33,9 +33,9 @@ job "[[ .my.job_name ]]" {
 
     [[- $job_tags := .my.job_tags -]]
     [[- $service_name := .my.nomad_group_service_name_prefix -]]
-    [[- $service_provider := .my.service_provider -]]
-    [[/* iterate over `.my.ports` to map Services */]]
-    [[ range $name, $port := .my.ports ]]
+    [[- $service_provider := .my.nomad_group_service_provider -]]
+    [[/* iterate over `.my.nomad_group_ports` to map Services */]]
+    [[ range $name, $port := .my.nomad_group_ports ]]
     # see https://developer.hashicorp.com/nomad/docs/job-specification/service
     service {
       name     = "[[ $service_name | replace "_" "-" | trunc 20 ]]-[[ $name | replace "_" "-" | trunc 43 ]]"
@@ -75,7 +75,7 @@ job "[[ .my.job_name ]]" {
     [[ end ]]
 
     # see https://developer.hashicorp.com/nomad/docs/job-specification/task
-    task "[[ .my.task_name ]]" {
+    task "[[ .my.nomad_task_name ]]" {
       # see https://developer.hashicorp.com/nomad/docs/drivers
       driver = "[[ .my.driver ]]"
 
@@ -87,7 +87,7 @@ job "[[ .my.job_name ]]" {
         # see https://developer.hashicorp.com/nomad/docs/drivers/docker#ports
         # and https://developer.hashicorp.com/nomad/plugins/drivers/podman#ports
         ports = [
-          [[- range $name, $port := .my.ports ]]
+          [[- range $name, $port := .my.nomad_group_ports ]]
           [[ $name | quote ]],
           [[- end ]]
         ]
@@ -110,12 +110,13 @@ job "[[ .my.job_name ]]" {
 
       # see https://developer.hashicorp.com/nomad/docs/job-specification/resources
       resources {
-        cpu        = [[ .my.resources.cpu ]]
-        cores      = [[ .my.resources.cores | default "null" ]]
-        memory     = [[ .my.resources.memory ]]
+        [[- $resources := .my.nomad_task_resources ]]
+        cpu        = [[ $resources.cpu ]]
+        cores      = [[ $resources.cores | default "null" ]]
+        memory     = [[ $resources.memory ]]
 
         # TODO: add support for memory oversubscription
-        # memory_max = [[ .my.resources.memory_max ]]
+        # memory_max = [[ $resources.memory_max ]]
       }
     }
   }

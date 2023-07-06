@@ -1400,7 +1400,7 @@ variable "network_mode" {
   default     = "host"
 }
 
-variable "ports" {
+variable "nomad_group_ports" {
   type = map(object({
     name           = string
     path           = string
@@ -1542,7 +1542,7 @@ variable "region" {
 }
 
 # see https://developer.hashicorp.com/nomad/docs/job-specification/resources
-variable "resources" {
+variable "nomad_task_resources" {
   type = object({
     cpu        = number
     cores      = number
@@ -1550,7 +1550,7 @@ variable "resources" {
     memory_max = number
   })
 
-  description = "Resource Limits for the Application."
+  description = "Resource Limits for the Task."
 
   default = {
     # Tasks can ask for `cpu` or `cores`, not both.
@@ -1602,7 +1602,7 @@ variable "restart_logic" {
   }
 }
 
-variable "task_name" {
+variable "nomad_task_name" {
   type        = string
   description = "Name for the Task."
   default     = "datadog_agent"

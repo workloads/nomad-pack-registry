@@ -23,14 +23,14 @@
 
 ## Ports
 
-  [[- range $name, $config := .my.ports ]]
+  [[- range $name, $config := .my.nomad_group_ports ]]
   - `[[ $name ]]`: `[[ $config.port ]]` (type: `[[ $config.type ]]` [[ if and (eq $config.type "http") (eq $config.protocol "https") ]]protocol: `https`[[ end ]])
   [[- end ]]
 
 ## Resources
 
-  CPU:    [[ .my.resources.cpu ]] MHz
-  Memory: [[ .my.resources.memory ]] MB
+  CPU:    [[ .my.nomad_task_resources.cpu ]] MHz
+  Memory: [[ .my.nomad_task_resources.memory ]] MB
 
 [[- if .my.nomad_group_volumes ]]
 ## Volumes
@@ -58,8 +58,8 @@
 
 ## URLs:
 
-  [[- if .my.ports.main ]]
-  web interface: http://127.0.0.1:[[ .my.ports.main.port ]][[ .my.ports.main.path ]]
+  [[- if .my.nomad_group_ports.main ]]
+  web interface: http://127.0.0.1:[[ .my.nomad_group_ports.main.port ]][[ .my.nomad_group_ports.main.path ]]
   [[- end ]]
 
 [[ end -]]
