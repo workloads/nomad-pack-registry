@@ -65,10 +65,11 @@ job "[[ .my.nomad_job_name ]]" {
 
     # see https://developer.hashicorp.com/nomad/docs/job-specification/restart
     restart {
-      attempts = [[ .my.restart_logic.attempts ]]
-      interval = "[[ .my.restart_logic.interval ]]"
-      delay    = "[[ .my.restart_logic.delay ]]"
-      mode     = "[[ .my.restart_logic.mode ]]"
+      [[- $restart_logic := .my.nomad_group_restart_logic ]]
+      attempts = [[ $restart_logic.attempts ]]
+      interval = "[[ $restart_logic.interval ]]"
+      delay    = "[[ $restart_logic.delay ]]"
+      mode     = "[[ $restart_logic.mode ]]"
     }
 
     # see https://developer.hashicorp.com/nomad/docs/job-specification/volume

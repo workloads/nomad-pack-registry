@@ -370,7 +370,7 @@ variable "nomad_group_service_provider" {
   default     = "nomad"
 }
 
-variable "restart_logic" {
+variable "nomad_group_restart_logic" {
   type = object({
     attempts = number
     interval = string
