@@ -84,7 +84,8 @@ job "[[ .my.nomad_job_name ]]" {
       # see https://developer.hashicorp.com/nomad/docs/drivers/docker
       # and https://developer.hashicorp.com/nomad/plugins/drivers/podman
       config {
-        image = "[[ .my.nomad_task_image.registry ]]/[[ .my.nomad_task_image.namespace ]]/[[ .my.nomad_task_image.image ]]:[[ .my.nomad_task_image.tag ]]@[[ .my.nomad_task_image.digest ]]"
+        [[- $image := .my.nomad_task_image ]]
+        image = "[[ $image.registry ]]/[[ $image.namespace ]]/[[ $image.image ]]:[[ $image.tag ]]@[[ $image.digest ]]"
 
         # see https://developer.hashicorp.com/nomad/docs/drivers/docker#ports
         # and https://developer.hashicorp.com/nomad/plugins/drivers/podman#ports
