@@ -76,10 +76,10 @@ variable "app_rwa_web_rcon" {
   default     = false
 }
 
-variable "nomad_group_count" {
-  type        = number
-  description = "Count of Deployments for the Job."
-  default     = 1
+variable "nomad_pack_verbose_output" {
+  type        = bool
+  description = "Toggle to enable verbose output."
+  default     = true
 }
 
 # see https://developer.hashicorp.com/nomad/docs/concepts/architecture#datacenters
@@ -90,6 +90,41 @@ variable "nomad_job_datacenters" {
   default = [
     "*"
   ]
+}
+
+variable "nomad_job_name" {
+  type        = string
+  description = "Name for the Job."
+
+  # value will be truncated to 63 characters when necessary
+  default = "rcon_web"
+}
+
+# see https://developer.hashicorp.com/nomad/docs/job-specification/job#namespace
+variable "nomad_job_namespace" {
+  type        = string
+  description = "Namespace for the Job."
+  default     = "default"
+}
+
+# see https://developer.hashicorp.com/nomad/docs/job-specification/job#priority
+variable "nomad_job_priority" {
+  type        = number
+  description = "Priority for the Job."
+  default     = 50
+}
+
+# see https://developer.hashicorp.com/nomad/docs/concepts/architecture#regions
+variable "nomad_job_region" {
+  type        = string
+  description = "Region for the Job."
+  default     = "global"
+}
+
+variable "nomad_group_count" {
+  type        = number
+  description = "Count of Deployments for the Job."
+  default     = 1
 }
 
 variable "nomad_task_driver" {
@@ -156,30 +191,6 @@ variable "nomad_task_image" {
   }
 }
 
-variable "nomad_job_name" {
-  type        = string
-  description = "Name for the Job."
-
-  # value will be truncated to 63 characters when necessary
-  default = "rcon_web"
-}
-
-variable "nomad_group_tags" {
-  type        = list(string)
-  description = "List of Tags for the Job."
-
-  default = [
-    "rcon",
-  ]
-}
-
-# see https://developer.hashicorp.com/nomad/docs/job-specification/job#namespace
-variable "nomad_job_namespace" {
-  type        = string
-  description = "Namespace for the Job."
-  default     = "default"
-}
-
 # see https://developer.hashicorp.com/nomad/docs/job-specification/network#network-modes
 variable "nomad_group_network_mode" {
   type        = string
@@ -225,18 +236,62 @@ variable "nomad_group_ports" {
   }
 }
 
-# see https://developer.hashicorp.com/nomad/docs/job-specification/job#priority
-variable "nomad_job_priority" {
-  type        = number
-  description = "Priority for the Job."
-  default     = 50
+variable "nomad_group_restart_logic" {
+  type = object({
+    attempts = number
+    interval = string
+    delay    = string
+    mode     = string
+  })
+
+  description = "Restart Logic for the Application."
+
+  default = {
+    attempts = 3
+    interval = "120s"
+    delay    = "30s"
+    mode     = "fail"
+  }
 }
 
-# see https://developer.hashicorp.com/nomad/docs/concepts/architecture#regions
-variable "nomad_job_region" {
+variable "nomad_group_service_name_prefix" {
   type        = string
-  description = "Region for the Job."
-  default     = "global"
+  description = "Name for the Group Service."
+  default     = "rcon_web"
+}
+
+variable "nomad_group_service_provider" {
+  type        = string
+  description = "Provider for the Group Service."
+  default     = "nomad"
+}
+
+variable "nomad_group_tags" {
+  type        = list(string)
+  description = "List of Tags for the Job."
+
+  default = [
+    "rcon",
+  ]
+}
+
+variable "nomad_group_volumes" {
+  type = map(object({
+    name        = string
+    type        = string
+    destination = string
+    read_only   = bool
+  }))
+
+  description = "Volumes for the Group."
+
+  default = {}
+}
+
+variable "nomad_task_name" {
+  type        = string
+  description = "Name for the Task."
+  default     = "rcon_web"
 }
 
 # see https://developer.hashicorp.com/nomad/docs/job-specification/resources
@@ -268,59 +323,4 @@ variable "nomad_task_resources" {
     # and https://developer.hashicorp.com/nomad/docs/drivers/docker#memory
     memory_max = 1024
   }
-}
-
-variable "nomad_group_service_name_prefix" {
-  type        = string
-  description = "Name for the Group Service."
-  default     = "rcon_web"
-}
-
-variable "nomad_group_service_provider" {
-  type        = string
-  description = "Provider for the Group Service."
-  default     = "nomad"
-}
-
-variable "nomad_group_restart_logic" {
-  type = object({
-    attempts = number
-    interval = string
-    delay    = string
-    mode     = string
-  })
-
-  description = "Restart Logic for the Application."
-
-  default = {
-    attempts = 3
-    interval = "120s"
-    delay    = "30s"
-    mode     = "fail"
-  }
-}
-
-variable "nomad_task_name" {
-  type        = string
-  description = "Name for the Task."
-  default     = "rcon_web"
-}
-
-variable "nomad_pack_verbose_output" {
-  type        = bool
-  description = "Toggle to enable verbose output."
-  default     = true
-}
-
-variable "nomad_group_volumes" {
-  type = map(object({
-    name        = string
-    type        = string
-    destination = string
-    read_only   = bool
-  }))
-
-  description = "Volumes for the Group."
-
-  default = {}
 }
