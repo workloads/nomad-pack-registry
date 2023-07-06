@@ -41,10 +41,6 @@ nomad-pack registry add workloads github.com/workloads/nomad-pack-registry
 nomad-pack run rcon_web --registry=workloads
 ```
 
-> **Note**
->
-> For a more detailed description on how to use Nomad Pack, see [this guide](https://developer.hashicorp.com/nomad/tutorials/nomad-pack/nomad-pack-intro#basic-use).
-
 <!-- BEGIN_PACK_DOCS -->
 ### Inputs
 
@@ -91,7 +87,7 @@ For outputs, see [./outputs.tpl](./outputs.tpl).
 
 > **Note**
 >
-> The outputs are only rendered if `verbose_output` is set to `true`.
+> The outputs are only rendered if `nomad_pack_verbose_output` is set to `true`.
 
 ## Author Information
 
