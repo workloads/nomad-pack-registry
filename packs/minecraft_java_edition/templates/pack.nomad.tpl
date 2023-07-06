@@ -18,9 +18,10 @@ job "[[ .my.nomad_job_name ]]" {
 
     # see https://developer.hashicorp.com/nomad/docs/job-specification/ephemeral_disk
     ephemeral_disk {
-      migrate = [[ .my.ephemeral_disk.migrate ]]
-      size    = [[ .my.ephemeral_disk.size ]]
-      sticky  = [[ .my.ephemeral_disk.sticky ]]
+      [[- $ephemeral_disk := .my.ephemeral_disk ]]
+      migrate = [[ $ephemeral_disk.migrate ]]
+      size    = [[ $ephemeral_disk.size ]]
+      sticky  = [[ $ephemeral_disk.sticky ]]
     }
 
     # see https://developer.hashicorp.com/nomad/docs/job-specification/network
