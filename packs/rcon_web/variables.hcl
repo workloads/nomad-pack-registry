@@ -174,7 +174,7 @@ variable "nomad_group_tags" {
 }
 
 # see https://developer.hashicorp.com/nomad/docs/job-specification/job#namespace
-variable "namespace" {
+variable "nomad_job_namespace" {
   type        = string
   description = "Namespace for the Job."
   default     = "default"

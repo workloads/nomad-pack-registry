@@ -3,14 +3,14 @@
 
   Region:    `[[ .my.region ]]`
   DC(s):     `[[ .my.datacenters | toJson ]]`
-  Namespace: `[[ .my.namespace ]]`
+  Namespace: `[[ .my.nomad_job_namespace ]]`
   Name:      `[[ .my.nomad_job_name ]]`
   Count:     `[[ .my.count ]]`
 
 ## Image
 
   Registry:  `[[ .my.image.registry ]]`
-  Namespace: `[[ .my.image.namespace ]]`
+  Namespace: `[[ .my.image.nomad_job_namespace ]]`
   Image:     `[[ .my.image.image ]]:[[ .my.image.tag ]]`
   Digest:    `[[ .my.image.digest ]]`
 

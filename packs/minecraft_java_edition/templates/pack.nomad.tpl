@@ -9,7 +9,7 @@ job "[[ .my.nomad_job_name ]]" {
   region      = "[[ .my.region ]]"
   datacenters = [[ .my.datacenters | toJson ]]
   type        = "service"
-  namespace   = "[[ .my.namespace ]]"
+  namespace   = "[[ .my.nomad_job_namespace ]]"
   priority    = [[ .my.priority ]]
 
   # see https://developer.hashicorp.com/nomad/docs/job-specification/group

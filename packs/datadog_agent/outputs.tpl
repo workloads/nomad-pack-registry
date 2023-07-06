@@ -3,7 +3,7 @@
 
   Region:    `[[ .my.region ]]`
   DC(s):     `[[ .my.datacenters | toJson ]]`
-  Namespace: `[[ .my.namespace ]]`
+  Namespace: `[[ .my.nomad_job_namespace ]]`
   Name:      `[[ .my.nomad_job_name ]]`
   Count:     `[[ .my.count ]]`
 
