@@ -170,10 +170,10 @@ variable "app_view_distance" {
   default     = 32
 }
 
-variable "nomad_group_count" {
-  type        = number
-  description = "Count of Deployments for the Job."
-  default     = 1
+variable "nomad_pack_verbose_output" {
+  type        = bool
+  description = "Toggle to enable verbose output."
+  default     = true
 }
 
 # see https://developer.hashicorp.com/nomad/docs/concepts/architecture#datacenters
@@ -186,10 +186,39 @@ variable "nomad_job_datacenters" {
   ]
 }
 
-variable "nomad_task_driver" {
+variable "nomad_job_name" {
   type        = string
-  description = "Driver to use for the Job."
-  default     = "docker"
+  description = "Name for the Job."
+
+  # value will be truncated to 63 characters when necessary
+  default = "minecraft"
+}
+
+# see https://developer.hashicorp.com/nomad/docs/job-specification/job#namespace
+variable "nomad_job_namespace" {
+  type        = string
+  description = "Namespace for the Job."
+  default     = "default"
+}
+
+# see https://developer.hashicorp.com/nomad/docs/job-specification/job#priority
+variable "nomad_job_priority" {
+  type        = number
+  description = "Priority for the Job."
+  default     = 99
+}
+
+# see https://developer.hashicorp.com/nomad/docs/concepts/architecture#regions
+variable "nomad_job_region" {
+  type        = string
+  description = "Region for the Job."
+  default     = "global"
+}
+
+variable "nomad_group_count" {
+  type        = number
+  description = "Count of Deployments for the Job."
+  default     = 1
 }
 
 # see https://developer.hashicorp.com/nomad/docs/job-specification/ephemeral_disk
@@ -218,61 +247,6 @@ variable "nomad_group_name" {
   type        = string
   description = "Name for the Group."
   default     = "minecraft"
-}
-
-variable "nomad_task_image" {
-  type = object({
-    registry  = string
-    namespace = string
-    image     = string
-    tag       = string
-    digest    = string
-  })
-
-  description = "Content Address to use for the Container Image."
-
-  # see https://hub.docker.com/r/itzg/minecraft-bedrock-server/tags
-  default = {
-    # Container Registry URL where the Image is hosted
-    registry = "index.docker.io"
-
-    # Namespace of the Image
-    namespace = "itzg"
-
-    # Slug of the Image
-    image = "minecraft-bedrock-server"
-
-    # Tag of the Image
-    tag = "latest"
-
-    # Digest of the Tag of the Image
-    digest = "sha256:e64c3e8bbcdf78445fb0534105d975e97a6ca75d538e18a4165042bfd93fd4cc"
-  }
-}
-
-variable "nomad_job_name" {
-  type        = string
-  description = "Name for the Job."
-
-  # value will be truncated to 63 characters when necessary
-  default = "minecraft"
-}
-
-variable "nomad_group_tags" {
-  type        = list(string)
-  description = "List of Tags for the Job."
-
-  default = [
-    "minecraft",
-    "minecraft-bedrock-edition"
-  ]
-}
-
-# see https://developer.hashicorp.com/nomad/docs/job-specification/job#namespace
-variable "nomad_job_namespace" {
-  type        = string
-  description = "Namespace for the Job."
-  default     = "default"
 }
 
 # see https://developer.hashicorp.com/nomad/docs/job-specification/network#network-modes
@@ -309,18 +283,106 @@ variable "nomad_group_ports" {
   }
 }
 
-# see https://developer.hashicorp.com/nomad/docs/job-specification/job#priority
-variable "nomad_job_priority" {
-  type        = number
-  description = "Priority for the Job."
-  default     = 99
+variable "nomad_group_restart_logic" {
+  type = object({
+    attempts = number
+    interval = string
+    delay    = string
+    mode     = string
+  })
+
+  description = "Restart Logic for the Application."
+
+  default = {
+    attempts = 3
+    interval = "120s"
+    delay    = "30s"
+    mode     = "fail"
+  }
 }
 
-# see https://developer.hashicorp.com/nomad/docs/concepts/architecture#regions
-variable "nomad_job_region" {
+variable "nomad_group_service_name_prefix" {
   type        = string
-  description = "Region for the Job."
-  default     = "global"
+  description = "Name for the Group Service."
+  default     = "minecraft"
+}
+
+variable "nomad_group_service_provider" {
+  type        = string
+  description = "Provider for the Group Service."
+  default     = "nomad"
+}
+
+variable "nomad_group_tags" {
+  type        = list(string)
+  description = "List of Tags for the Job."
+
+  default = [
+    "minecraft",
+    "minecraft-bedrock-edition"
+  ]
+}
+
+variable "nomad_group_volumes" {
+  type = map(object({
+    name        = string
+    type        = string
+    destination = string
+    read_only   = bool
+  }))
+
+  description = "Volumes for the Group."
+
+  default = {
+    data = {
+      name        = "minecraft_bedrock_data",
+      type        = "host"
+      destination = "/data"
+      read_only   = false
+    },
+  }
+}
+
+variable "nomad_task_driver" {
+  type        = string
+  description = "Driver to use for the Job."
+  default     = "docker"
+}
+
+variable "nomad_task_image" {
+  type = object({
+    registry  = string
+    namespace = string
+    image     = string
+    tag       = string
+    digest    = string
+  })
+
+  description = "Content Address to use for the Container Image."
+
+  # see https://hub.docker.com/r/itzg/minecraft-bedrock-server/tags
+  default = {
+    # Container Registry URL where the Image is hosted
+    registry = "index.docker.io"
+
+    # Namespace of the Image
+    namespace = "itzg"
+
+    # Slug of the Image
+    image = "minecraft-bedrock-server"
+
+    # Tag of the Image
+    tag = "latest"
+
+    # Digest of the Tag of the Image
+    digest = "sha256:e64c3e8bbcdf78445fb0534105d975e97a6ca75d538e18a4165042bfd93fd4cc"
+  }
+}
+
+variable "nomad_task_name" {
+  type        = string
+  description = "Name for the Task."
+  default     = "minecraft"
 }
 
 # see https://developer.hashicorp.com/nomad/docs/job-specification/resources
@@ -355,67 +417,5 @@ variable "nomad_task_resources" {
     # see https://developer.hashicorp.com/nomad/docs/job-specification/resources#memory-oversubscription
     # and https://developer.hashicorp.com/nomad/docs/drivers/docker#memory
     memory_max = 5120
-  }
-}
-
-variable "nomad_group_service_name_prefix" {
-  type        = string
-  description = "Name for the Group Service."
-  default     = "minecraft"
-}
-
-variable "nomad_group_service_provider" {
-  type        = string
-  description = "Provider for the Group Service."
-  default     = "nomad"
-}
-
-variable "nomad_group_restart_logic" {
-  type = object({
-    attempts = number
-    interval = string
-    delay    = string
-    mode     = string
-  })
-
-  description = "Restart Logic for the Application."
-
-  default = {
-    attempts = 3
-    interval = "120s"
-    delay    = "30s"
-    mode     = "fail"
-  }
-}
-
-variable "nomad_task_name" {
-  type        = string
-  description = "Name for the Task."
-  default     = "minecraft"
-}
-
-variable "nomad_pack_verbose_output" {
-  type        = bool
-  description = "Toggle to enable verbose output."
-  default     = true
-}
-
-variable "nomad_group_volumes" {
-  type = map(object({
-    name        = string
-    type        = string
-    destination = string
-    read_only   = bool
-  }))
-
-  description = "Volumes for the Group."
-
-  default = {
-    data = {
-      name        = "minecraft_bedrock_data",
-      type        = "host"
-      destination = "/data"
-      read_only   = false
-    },
   }
 }
