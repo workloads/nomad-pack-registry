@@ -191,7 +191,7 @@ variable "nomad_pack_verbose_output" {
 # see https://developer.hashicorp.com/nomad/docs/concepts/architecture#datacenters
 variable "nomad_job_datacenters" {
   type        = list(string)
-  description = "Eligible Datacenters for the Task."
+  description = "Eligible Datacenters for the Job."
 
   default = [
     "*"
@@ -229,7 +229,7 @@ variable "nomad_job_region" {
 
 variable "nomad_group_count" {
   type        = number
-  description = "Count of Deployments for the Job."
+  description = "Count of Deployments for the Group."
   default     = 1
 }
 
@@ -241,7 +241,7 @@ variable "nomad_group_ephemeral_disk" {
     sticky  = bool
   })
 
-  description = "Ephemeral Disk Configuration for the Application."
+  description = "Ephemeral Disk Configuration for the Group."
 
   default = {
     # make best-effort attempt to migrate data to a different node if no placement is possible on the original node.
@@ -264,7 +264,7 @@ variable "nomad_group_name" {
 # see https://developer.hashicorp.com/nomad/docs/job-specification/network#network-modes
 variable "nomad_group_network_mode" {
   type        = string
-  description = "Network Mode for the Job."
+  description = "Network Mode for the Group."
   default     = "host"
 }
 
@@ -279,7 +279,7 @@ variable "nomad_group_ports" {
     check_timeout  = string
   }))
 
-  description = "Port Configuration for the Application."
+  description = "Port Configuration for the Group."
 
   default = {
     # port for Minecraft server
@@ -303,7 +303,7 @@ variable "nomad_group_restart_logic" {
     mode     = string
   })
 
-  description = "Restart Logic for the Application."
+  description = "Restart Logic for the Group."
 
   default = {
     attempts = 3
@@ -315,19 +315,19 @@ variable "nomad_group_restart_logic" {
 
 variable "nomad_group_service_name_prefix" {
   type        = string
-  description = "Name for the Group Service."
+  description = "Name of the Service for the Group."
   default     = "minecraft"
 }
 
 variable "nomad_group_service_provider" {
   type        = string
-  description = "Provider for the Group Service."
+  description = "Provider of the Service for the Group."
   default     = "nomad"
 }
 
 variable "nomad_group_tags" {
   type        = list(string)
-  description = "List of Tags for the Job."
+  description = "List of Tags for the Group."
 
   default = [
     "minecraft",
@@ -357,7 +357,7 @@ variable "nomad_group_volumes" {
 
 variable "nomad_task_driver" {
   type        = string
-  description = "Driver to use for the Job."
+  description = "Driver to use for the Task."
   default     = "docker"
 }
 
@@ -370,7 +370,7 @@ variable "nomad_task_image" {
     digest    = string
   })
 
-  description = "Content Address to use for the Container Image."
+  description = "Content Address to use for the Container Image for the Task."
 
   # see https://hub.docker.com/r/itzg/minecraft-bedrock-server/tags
   default = {
