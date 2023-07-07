@@ -1,5 +1,36 @@
 ---
 
+content: |-
+  ### Inputs
+
+  This Nomad Pack exposes configuration options via application- and Nomad-specific variables.
+
+  #### Application
+
+  This section describes application-specific configuration.
+
+  {{ $prefix_app := "app_" -}}
+  | Name | Description | Default |
+  | ---- | ----------- | ------- |
+  {{- range .Module.Inputs -}}
+  {{if eq (printf "%.[1]*s" (len $prefix_app) .Name) $prefix_app }}
+   | `{{ .Name }}` | {{ .Description }} | `{{ .Default }}` |
+  {{- end }}
+  {{- end }}
+
+  #### Nomad
+
+  This section describes Nomad and Nomad Pack-specific configuration.
+
+  {{ $prefix_app := "nomad_" -}}
+  | Name | Description | Default |
+  | ---- | ----------- | ------- |
+  {{- range .Module.Inputs -}}
+  {{if eq (printf "%.[1]*s" (len $prefix_app) .Name) $prefix_app }}
+   | `{{ .Name }}` | {{ .Description }} | `{{ .Default }}` |
+  {{- end }}
+  {{- end }}
+
 # see https://terraform-docs.io/user-guide/configuration/formatter/
 formatter: "markdown table"
 
@@ -16,12 +47,16 @@ output:
 settings:
   anchor: false
   color: true
-  default: false
+  default: true
+  description: false
   escape: false
+  hide-empty: true
+  html: false
   indent: 3
+  read-comments: false
   required: false
-  sensitive: true
-  type: true
+  sensitive: false
+  type: false
 
 # see https://terraform-docs.io/user-guide/configuration/sort/
 sort:
