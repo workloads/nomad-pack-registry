@@ -44,56 +44,54 @@ nomad-pack run rcon_web --registry=workloads
 ```
 
 <!-- BEGIN_PACK_DOCS -->
-### Inputs
-
-This Nomad Pack exposes configuration options via application- and Nomad-specific variables.
 
 #### Application
 
-This section describes application-specific configuration.
+This section describes Application-specific configuration.
 
-| Name | Description | Default |
-| ---- | ----------- | ------- |
-| `app_rwa_admin` | Toggle to set Initial User as Admin. | `true` |
-| `app_rwa_env` | Toggle to allow configuration through Environment Variables. | `true` |
-| `app_rwa_game` | Initial Game-Type. | `minecraft` |
-| `app_rwa_password` | Initial User Password. | `AW96B6` |
-| `app_rwa_rcon_host` | RCON Target Server Host. | `172.17.0.2` |
-| `app_rwa_rcon_password` | RCON Target Server Password. | `AW96B6` |
-| `app_rwa_rcon_port` | RCON Target Server Port. | `25575` |
-| `app_rwa_read_only_widget_options` | Toggle to prevent Initial User from changing Widget Options. | `false` |
-| `app_rwa_restrict_commands` | Restricted Commands for Initial User. | `ban,deop,stop` |
-| `app_rwa_restrict_widgets` | Hidden Widgets for Initial User. | `` |
-| `app_rwa_server_name` | Name of Target Server. | `minecraft` |
-| `app_rwa_username` | Initial User Username. | `admin` |
-| `app_rwa_web_rcon` | Toggle to enable Web RCON on Target Server. | `false` |
+| Name                               | Description                                                   | Default |
+| ---------------------------------- | ------------------------------------------------------------- | ------- |
+| app_rwa_admin                      | Toggle to set Initial User as Admin.                          | `true` |
+| app_rwa_env                        | Toggle to allow configuration through Environment Variables.  | `true` |
+| app_rwa_game                       | Initial Game-Type.                                            | `"minecraft"` |
+| app_rwa_password                   | Initial User Password.                                        | `"AW96B6"` |
+| app_rwa_rcon_host                  | RCON Target Server Host.                                      | `"172.17.0.2"` |
+| app_rwa_rcon_password              | RCON Target Server Password.                                  | `"AW96B6"` |
+| app_rwa_rcon_port                  | RCON Target Server Port.                                      | `25575` |
+| app_rwa_read_only_widget_options   | Toggle to prevent Initial User from changing Widget Options.  | `false` |
+| app_rwa_restrict_commands          | Restricted Commands for Initial User.                         | `"ban,deop,stop"` |
+| app_rwa_restrict_widgets           | Hidden Widgets for Initial User.                              | n/a |
+| app_rwa_server_name                | Name of Target Server.                                        | `"minecraft"` |
+| app_rwa_username                   | Initial User Username.                                        | `"admin"` |
+| app_rwa_web_rcon                   | Toggle to enable Web RCON on Target Server.                   | `false` |
 
 #### Nomad
 
-This section describes Nomad and Nomad Pack-specific configuration.
+This section describes Nomad-specific configuration.
 
-| Name | Description | Default |
-| ---- | ----------- | ------- |
-| `nomad_group_count` | Count of Deployments for the Group. | `1` |
-| `nomad_group_ephemeral_disk` | Ephemeral Disk Configuration for the Group. | `map[migrate:true size:128 sticky:false]` |
-| `nomad_group_name` | Name for the Group. | `rcon` |
-| `nomad_group_network_mode` | Network Mode for the Group. | `host` |
-| `nomad_group_ports` | Port Configuration for the Group. | `map[main:map[check_interval:30s check_timeout:15s host_network:<nil> name:rcon_web_main path:/ port:4326 type:http] websocket:map[check_interval:30s check_timeout:15s host_network:<nil> name:rcon_web_websocket path:<nil> port:4327 type:tcp]]` |
-| `nomad_group_restart_logic` | Restart Logic for the Group. | `map[attempts:3 delay:30s interval:120s mode:fail]` |
-| `nomad_group_service_name_prefix` | Name of the Service for the Group. | `rcon_web` |
-| `nomad_group_service_provider` | Provider of the Service for the Group. | `nomad` |
-| `nomad_group_tags` | List of Tags for the Group. | `[rcon]` |
-| `nomad_group_volumes` | Volumes for the Group. | `map[]` |
-| `nomad_job_datacenters` | Eligible Datacenters for the Job. | `[*]` |
-| `nomad_job_name` | Name for the Job. | `rcon_web` |
-| `nomad_job_namespace` | Namespace for the Job. | `default` |
-| `nomad_job_priority` | Priority for the Job. | `50` |
-| `nomad_job_region` | Region for the Job. | `global` |
-| `nomad_pack_verbose_output` | Toggle to enable verbose output. | `true` |
-| `nomad_task_driver` | Driver to use for the Task. | `docker` |
-| `nomad_task_image` | Content Address to use for the Container Image for the Task. | `map[digest:sha256:a9fc0b4116a7034c4849a4160d139a589bbf9211df64b48cc404e74c3e7bb730 image:rcon namespace:itzg registry:index.docker.io tag:latest]` |
-| `nomad_task_name` | Name for the Task. | `rcon_web` |
-| `nomad_task_resources` | Resource Limits for the Task. | `map[cores:<nil> cpu:500 memory:512 memory_max:1024]` |
+| Name                              | Description                                                   | Default |
+| --------------------------------- | ------------------------------------------------------------- | ------- |
+| nomad_group_count                 | Count of Deployments for the Group.                           | `1` |
+| nomad_group_ephemeral_disk        | Ephemeral Disk Configuration for the Group.                   | `{"migrate":true,"size":128,"sticky":false}` |
+| nomad_group_name                  | Name for the Group.                                           | `"rcon"` |
+| nomad_group_network_mode          | Network Mode for the Group.                                   | `"host"` |
+| nomad_group_ports                 | Port Configuration for the Group.                             | `{"main":{"check_interval":"30s","check_timeout":"15s","host_network":null,"name":"rcon_web_main","path":"/","port":4326,"type":"http"},"websocket":{"check_interval":"30s","check_timeout":"15s","host_network":null,"name":"rcon_web_websocket","path":null,"port":4327,"type":"tcp"}}` |
+| nomad_group_restart_logic         | Restart Logic for the Group.                                  | `{"attempts":3,"delay":"30s","interval":"120s","mode":"fail"}` |
+| nomad_group_service_name_prefix   | Name of the Service for the Group.                            | `"rcon_web"` |
+| nomad_group_service_provider      | Provider of the Service for the Group.                        | `"nomad"` |
+| nomad_group_tags                  | List of Tags for the Group.                                   | `["rcon"]` |
+| nomad_group_volumes               | Volumes for the Group.                                        | `{}` |
+| nomad_job_datacenters             | Eligible Datacenters for the Job.                             | `["*"]` |
+| nomad_job_name                    | Name for the Job.                                             | `"rcon_web"` |
+| nomad_job_namespace               | Namespace for the Job.                                        | `"default"` |
+| nomad_job_priority                | Priority for the Job.                                         | `50` |
+| nomad_job_region                  | Region for the Job.                                           | `"global"` |
+| nomad_pack_verbose_output         | Toggle to enable verbose output.                              | `true` |
+| nomad_task_driver                 | Driver to use for the Task.                                   | `"docker"` |
+| nomad_task_image                  | Content Address to use for the Container Image for the Task.  | `{"digest":"sha256:a9fc0b4116a7034c4849a4160d139a589bbf9211df64b48cc404e74c3e7bb730","image":"rcon","namespace":"itzg","registry":"index.docker.io","tag":"latest"}` |
+| nomad_task_name                   | Name for the Task.                                            | `"rcon_web"` |
+| nomad_task_resources              | Resource Limits for the Task.                                 | `{"cores":null,"cpu":500,"memory":512,"memory_max":1024}` |
+
 <!-- END_PACK_DOCS -->
 
 ### Outputs

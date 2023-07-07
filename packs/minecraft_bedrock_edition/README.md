@@ -45,70 +45,68 @@ nomad-pack run minecraft_bedrock_edition --registry=workloads
 ```
 
 <!-- BEGIN_PACK_DOCS -->
-### Inputs
-
-This Nomad Pack exposes configuration options via application- and Nomad-specific variables.
 
 #### Application
 
-This section describes application-specific configuration.
+This section describes Application-specific configuration.
 
-| Name | Description | Default |
-| ---- | ----------- | ------- |
-| `app_allow_cheats` | Toggle to enable Commands and Cheats. | `true` |
-| `app_allow_list` | Toggle to enable Allow-List (as stored in `allowlist.json`). | `false` |
-| `app_compression_threshold` | Size of raw Network Payload to compress. | `1` |
-| `app_content_log_file_enabled` | Toggle to disable file-based Logging. | `false` |
-| `app_correct_player_movement` | Toggle to enable server-side Movement Validation. | `false` |
-| `app_default_player_permission_level` | Default Permission for new Players. | `member` |
-| `app_difficulty` | Difficulty Level. | `peaceful` |
-| `app_eula` | Toggle to accept End-User License Agreement. | `true` |
-| `app_force_gamemode` | Toggle to force Players to always join in the default Game Mode. | `false` |
-| `app_gamemode` | Game Mode. | `creative` |
-| `app_level_name` | Name of Level to load. | `` |
-| `app_level_seed` | Level Seed | `-3420545464665791887` |
-| `app_level_type` | Level Type. | `DEFAULT` |
-| `app_max_players` | Maximum allowed Player Count. | `10` |
-| `app_max_threads` | Maximum amount of Threads to use. | `0` |
-| `app_online_mode` | Toggle to enable Account Authentication (with Minecraft.net / Microsoft Account). | `false` |
-| `app_player_idle_timeout` | Idle Timeout (in minutes) after which a Player is kicked. | `15` |
-| `app_player_movement_distance_threshold` | Minimum Distance (in blocks) a Player must move before their Movement is validated. | `0.3` |
-| `app_player_movement_duration_threshold_in_ms` | Minimum Duration (in msec) a Player must move before their Movement is validated. | `500` |
-| `app_player_movement_score_threshold` | Number of incongruent Movements before a Player is kicked. | `20` |
-| `app_server_authoritative_block_breaking` | Toggle to enable Server-Side Block Breaking Validation. | `false` |
-| `app_server_authoritative_movement` | Toggle to enable Server-Authoritative Movement Validation. | `server-auth` |
-| `app_server_name` | Name of the Server. | `Minecraft Bedrock Edition Server` |
-| `app_texturepack_required` | Toggle to enable Texture Pack Requirement | `false` |
-| `app_tick_distance` | Maximum allowed Tick Distance (in chunks). | `4` |
-| `app_version` | Minecraft Version. | `1.20.1.02` |
-| `app_view_distance` | Maximum allowed View Distance (in chunks). | `32` |
+| Name                                           | Description                                                                          | Default |
+| ---------------------------------------------- | ------------------------------------------------------------------------------------ | ------- |
+| app_allow_cheats                               | Toggle to enable Commands and Cheats.                                                | `true` |
+| app_allow_list                                 | Toggle to enable Allow-List (as stored in `allowlist.json`).                         | `false` |
+| app_compression_threshold                      | Size of raw Network Payload to compress.                                             | `1` |
+| app_content_log_file_enabled                   | Toggle to disable file-based Logging.                                                | `false` |
+| app_correct_player_movement                    | Toggle to enable server-side Movement Validation.                                    | `false` |
+| app_default_player_permission_level            | Default Permission for new Players.                                                  | `"member"` |
+| app_difficulty                                 | Difficulty Level.                                                                    | `"peaceful"` |
+| app_eula                                       | Toggle to accept End-User License Agreement.                                         | `true` |
+| app_force_gamemode                             | Toggle to force Players to always join in the default Game Mode.                     | `false` |
+| app_gamemode                                   | Game Mode.                                                                           | `"creative"` |
+| app_level_name                                 | Name of Level to load.                                                               | n/a |
+| app_level_seed                                 | Level Seed                                                                           | `"-3420545464665791887"` |
+| app_level_type                                 | Level Type.                                                                          | `"DEFAULT"` |
+| app_max_players                                | Maximum allowed Player Count.                                                        | `10` |
+| app_max_threads                                | Maximum amount of Threads to use.                                                    | n/a |
+| app_online_mode                                | Toggle to enable Account Authentication (with Minecraft.net / Microsoft Account).    | `false` |
+| app_player_idle_timeout                        | Idle Timeout (in minutes) after which a Player is kicked.                            | `15` |
+| app_player_movement_distance_threshold         | Minimum Distance (in blocks) a Player must move before their Movement is validated.  | `0.3` |
+| app_player_movement_duration_threshold_in_ms   | Minimum Duration (in msec) a Player must move before their Movement is validated.    | `500` |
+| app_player_movement_score_threshold            | Number of incongruent Movements before a Player is kicked.                           | `20` |
+| app_server_authoritative_block_breaking        | Toggle to enable Server-Side Block Breaking Validation.                              | `false` |
+| app_server_authoritative_movement              | Toggle to enable Server-Authoritative Movement Validation.                           | `"server-auth"` |
+| app_server_name                                | Name of the Server.                                                                  | `"Minecraft Bedrock Edition Server"` |
+| app_texturepack_required                       | Toggle to enable Texture Pack Requirement                                            | `false` |
+| app_tick_distance                              | Maximum allowed Tick Distance (in chunks).                                           | `4` |
+| app_version                                    | Minecraft Version.                                                                   | `"1.20.1.02"` |
+| app_view_distance                              | Maximum allowed View Distance (in chunks).                                           | `32` |
 
 #### Nomad
 
-This section describes Nomad and Nomad Pack-specific configuration.
+This section describes Nomad-specific configuration.
 
-| Name | Description | Default |
-| ---- | ----------- | ------- |
-| `nomad_group_count` | Count of Deployments for the Group. | `1` |
-| `nomad_group_ephemeral_disk` | Ephemeral Disk Configuration for the Group. | `map[migrate:true size:1024 sticky:true]` |
-| `nomad_group_name` | Name for the Group. | `minecraft` |
-| `nomad_group_network_mode` | Network Mode for the Group. | `host` |
-| `nomad_group_ports` | Port Configuration for the Group. | `map[main:map[check_interval:30s check_timeout:15s host_network:<nil> name:minecraft_main path:<nil> port:19132 type:tcp]]` |
-| `nomad_group_restart_logic` | Restart Logic for the Group. | `map[attempts:3 delay:30s interval:120s mode:fail]` |
-| `nomad_group_service_name_prefix` | Name of the Service for the Group. | `minecraft` |
-| `nomad_group_service_provider` | Provider of the Service for the Group. | `nomad` |
-| `nomad_group_tags` | List of Tags for the Group. | `[minecraft minecraft-bedrock-edition]` |
-| `nomad_group_volumes` | Volumes for the Group. | `map[data:map[destination:/data name:minecraft_bedrock_data read_only:false type:host]]` |
-| `nomad_job_datacenters` | Eligible Datacenters for the Job. | `[*]` |
-| `nomad_job_name` | Name for the Job. | `minecraft` |
-| `nomad_job_namespace` | Namespace for the Job. | `default` |
-| `nomad_job_priority` | Priority for the Job. | `99` |
-| `nomad_job_region` | Region for the Job. | `global` |
-| `nomad_pack_verbose_output` | Toggle to enable verbose output. | `true` |
-| `nomad_task_driver` | Driver to use for the Task. | `docker` |
-| `nomad_task_image` | Content Address to use for the Container Image for the Task. | `map[digest:sha256:e64c3e8bbcdf78445fb0534105d975e97a6ca75d538e18a4165042bfd93fd4cc image:minecraft-bedrock-server namespace:itzg registry:index.docker.io tag:latest]` |
-| `nomad_task_name` | Name for the Task. | `minecraft` |
-| `nomad_task_resources` | Resource Limits for the Task. | `map[cores:<nil> cpu:4000 memory:4096 memory_max:5120]` |
+| Name                              | Description                                                   | Default |
+| --------------------------------- | ------------------------------------------------------------- | ------- |
+| nomad_group_count                 | Count of Deployments for the Group.                           | `1` |
+| nomad_group_ephemeral_disk        | Ephemeral Disk Configuration for the Group.                   | `{"migrate":true,"size":1024,"sticky":true}` |
+| nomad_group_name                  | Name for the Group.                                           | `"minecraft"` |
+| nomad_group_network_mode          | Network Mode for the Group.                                   | `"host"` |
+| nomad_group_ports                 | Port Configuration for the Group.                             | `{"main":{"check_interval":"30s","check_timeout":"15s","host_network":null,"name":"minecraft_main","path":null,"port":19132,"type":"tcp"}}` |
+| nomad_group_restart_logic         | Restart Logic for the Group.                                  | `{"attempts":3,"delay":"30s","interval":"120s","mode":"fail"}` |
+| nomad_group_service_name_prefix   | Name of the Service for the Group.                            | `"minecraft"` |
+| nomad_group_service_provider      | Provider of the Service for the Group.                        | `"nomad"` |
+| nomad_group_tags                  | List of Tags for the Group.                                   | `["minecraft","minecraft-bedrock-edition"]` |
+| nomad_group_volumes               | Volumes for the Group.                                        | `{"data":{"destination":"/data","name":"minecraft_bedrock_data","read_only":false,"type":"host"}}` |
+| nomad_job_datacenters             | Eligible Datacenters for the Job.                             | `["*"]` |
+| nomad_job_name                    | Name for the Job.                                             | `"minecraft"` |
+| nomad_job_namespace               | Namespace for the Job.                                        | `"default"` |
+| nomad_job_priority                | Priority for the Job.                                         | `99` |
+| nomad_job_region                  | Region for the Job.                                           | `"global"` |
+| nomad_pack_verbose_output         | Toggle to enable verbose output.                              | `true` |
+| nomad_task_driver                 | Driver to use for the Task.                                   | `"docker"` |
+| nomad_task_image                  | Content Address to use for the Container Image for the Task.  | `{"digest":"sha256:e64c3e8bbcdf78445fb0534105d975e97a6ca75d538e18a4165042bfd93fd4cc","image":"minecraft-bedrock-server","namespace":"itzg","registry":"index.docker.io","tag":"latest"}` |
+| nomad_task_name                   | Name for the Task.                                            | `"minecraft"` |
+| nomad_task_resources              | Resource Limits for the Task.                                 | `{"cores":null,"cpu":4000,"memory":4096,"memory_max":5120}` |
+
 <!-- END_PACK_DOCS -->
 
 ### Outputs
