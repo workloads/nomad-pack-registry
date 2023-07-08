@@ -1,5 +1,6 @@
 ---
 
+# see https://terraform-docs.io/user-guide/configuration/content/
 content: |-
   {{ define "variables_section" }}
     {{- printf "\n#### %s\n\n" .title -}}

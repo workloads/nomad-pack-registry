@@ -35,7 +35,6 @@ This repository provides a workflow that is wrapped through a [Makefile](./Makef
 Running `make` without commands will print out the following help information:
 
 ```text
-
 🟢 NOMAD PACKS
 
 Target          Description                                   Usage
