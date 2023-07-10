@@ -6,7 +6,7 @@ BINARY_GLOW            = $(call check_for_binary,glow)
 BINARY_NOMAD     			?= nomad
 BINARY_NOMAD_PACK			?= nomad-pack
 DOCS_CONFIG            = .nomad-pack-docs.yml
-GLOW_WIDTH             = 160
+GLOW_WIDTH            ?= 160
 PACKS_DIR              = ./packs
 NEWMAN_REPORTERS      ?= "cli"
 NOMADVARS_SAMPLE_FILE	 = overrides.sample.hcl
@@ -40,6 +40,7 @@ endif
 # render a Nomad Pack
 define render_pack
 	$(call print_reference,$(pack))
+	$(call print_args,$(ARGS))
 
 	$(BINARY_NOMAD_PACK) \
 		render \
@@ -50,6 +51,8 @@ endef
 
 # run a Nomad Pack
 define run_pack
+	$(call print_args,$(ARGS))
+
 	$(if $(strip $(BINARY_GLOW)), \
 		$(BINARY_NOMAD_PACK)  \
 			run \
@@ -67,6 +70,8 @@ endef
 
 # stop a running Nomad Pack
 define stop_pack
+	$(call print_args,$(ARGS))
+
 	$(BINARY_NOMAD_PACK) \
 		stop \
 			"$(PACKS_DIR)/$(strip $(pack))" \
@@ -105,6 +110,8 @@ endef
 
 # create Nomad environment for testing
 define create_test_environment
+	$(call print_args,$(ARGS))
+
 	# create test directories if they do not exist
 	$(foreach TEST_DIRECTORY,$(TEST_DIRECTORIES),$(call safely_create_directory,$(TEST_DIRECTORY)))
 
@@ -143,6 +150,8 @@ endef
 
 # destroy a Nomad Pack
 define destroy_pack
+	$(call print_args,$(ARGS))
+
 	$(BINARY_NOMAD_PACK) \
 		destroy \
 			"$(PACKS_DIR)/$(strip $(pack))" \

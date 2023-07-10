@@ -109,11 +109,11 @@ make render pack=<my_pack> BINARY_NOMAD=/tmp/nomad
 make render pack=<my_pack> BINARY_NOMAD_PACK=/tmp/nomad-pack
 ```
 
-* The reporter for `newman` may be overridden by setting the `REPORTER` argument when running the [Makefile](./Makefile):
+* The reporter for `newman` may be overridden by setting the `NEWMAN_REPORTERS` argument when running the [Makefile](./Makefile):
 
 ```shell
 # override `newman` reporter
-make render pack=<my_pack> REPORTER="progress"
+make render pack=<my_pack> NEWMAN_REPORTERS="progress"
 ```
 
 ## Author Information
