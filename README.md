@@ -26,7 +26,7 @@
 Optional, and only needed for development and testing of Packs:
 
 - `terraform-docs` `0.16.0` or [newer](https://terraform-docs.io/user-guide/installation/)
-- `newman` `5.3.2` or [newer](https://learning.postman.com/docs/collections/using-newman-cli/installing-running-newman/)
+- `newman` `5.3.0` or [newer](https://learning.postman.com/docs/collections/using-newman-cli/installing-running-newman/)
 
 ## Usage
 
@@ -37,19 +37,19 @@ Running `make` without commands will print out the following help information:
 ```text
 🟢 NOMAD PACKS
 
-Target          Description                                   Usage
-env             create Nomad environment for testing          `make env pack=my_pack`
-render          render a Nomad Pack                           `make render pack=my_pack`
-run             run a Nomad Pack                              `make run pack=my_pack`
-rerun           destroy and run a Nomad Pack                  `make rerun pack=my_pack`
-stop            stop a running Nomad Pack                     `make stop pack=my_pack`
-test            test a running Nomad Pack                     `make test pack=my_pack`
-restart         restart a Task                                `make restart task=my_task`
-docs            generate documentation for all Nomad Packs    `make docs`
-help            display a list of Make Targets                `make help`
-registry        add Nomad Pack Registry to local environment  `make registry`
-_listincludes   list all included Makefiles and *.mk files    `make _listincludes`
-_selfcheck      lint Makefile                                 `make _selfcheck`
+env             create Nomad environment for testing            `make env pack=<pack>`
+render          render a Nomad Pack                             `make render pack=<pack>`
+run             run a Nomad Pack                                `make run pack=<pack>`
+rerun           destroy and run a Nomad Pack                    `make rerun pack=<pack>`
+rerun           destroy and run a Nomad Pack                    `make rerun pack=<pack>`
+stop            stop a running Nomad Pack                       `make stop pack=<pack>`
+test            test a running Nomad Pack                       `make test pack=<pack>`
+restart         restart a Task                                  `make restart task=<task>`
+docs            generate documentation for all Nomad Packs      `make docs`
+registry        add Nomad Pack Registry to local environment    `make registry`
+help            display a list of Make Targets                  `make help`
+_listincludes   list all included Makefiles and *.mk files      `make _listincludes`
+_selfcheck      lint Makefile                                   `make _selfcheck`
 ```
 
 ## Adding the Nomad Pack Registry
@@ -69,7 +69,7 @@ Nomad Packs are stored in the [`./packs`](./packs) directory and feature detaile
 A Nomad Pack may be run like so:
 
 ```shell
-make run pack=my_pack
+make run pack=<pack>
 ````
 
 ### Testing a Nomad Pack
@@ -96,24 +96,24 @@ export NO_COLOR=1 && make
 * For `nomad-pack` arguments that are not supported by the [Makefile](./Makefile), the `ARGS` variable may be used like so:
 
 ```shell
- make render pack=<my_pack> ARGS="--render-output-template"
+ make render pack=<pack> ARGS="--render-output-template"
 ```
 
 * The binaries for `nomad` and `nomad-pack` may be overridden by setting the `BINARY_NOMAD` and `BINARY_NOMAD_PACK` arguments when running the [Makefile](./Makefile):
 
 ```shell
 # override `nomad` binary
-make render pack=<my_pack> BINARY_NOMAD=/tmp/nomad
+make render pack=<pack> BINARY_NOMAD=/tmp/nomad
 
 # override `nomad-pack` binary
-make render pack=<my_pack> BINARY_NOMAD_PACK=/tmp/nomad-pack
+make render pack=<pack> BINARY_NOMAD_PACK=/tmp/nomad-pack
 ```
 
 * The reporter for `newman` may be overridden by setting the `NEWMAN_REPORTERS` argument when running the [Makefile](./Makefile):
 
 ```shell
 # override `newman` reporter
-make render pack=<my_pack> NEWMAN_REPORTERS="progress"
+make render pack=<pack> NEWMAN_REPORTERS="progress"
 ```
 
 ## Author Information

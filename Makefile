@@ -3,13 +3,13 @@
 # configuration
 ARGS                  :=
 BINARY_GLOW            = $(call check_for_binary,glow)
-BINARY_NOMAD     			?= nomad
-BINARY_NOMAD_PACK			?= nomad-pack
+BINARY_NOMAD          ?= nomad
+BINARY_NOMAD_PACK     ?= nomad-pack
 DOCS_CONFIG            = .nomad-pack-docs.yml
-GLOW_WIDTH            ?= 160
+GLOW_WIDTH             = 160
 PACKS_DIR              = ./packs
 NEWMAN_REPORTERS      ?= "cli"
-NOMADVARS_SAMPLE_FILE	 = overrides.sample.hcl
+NOMADVARS_SAMPLE_FILE  = overrides.sample.hcl
 PACKS                  = $(shell ls $(PACKS_DIR))
 reporter              ?= $(NEWMAN_REPORTERS)
 SCREEN_SESSION         = nomad_pack_test_environment
@@ -22,7 +22,6 @@ ifneq ($(reporter),)
 endif
 
 include ../tooling/make/configs/shared.mk
-
 include ../tooling/make/functions/shared.mk
 
 # conditionally load Pack-specific configuration if the
@@ -39,8 +38,9 @@ endif
 
 # render a Nomad Pack
 define render_pack
+	$(if $(pack),,$(call missing_argument,render,pack=<pack>))
+
 	$(call print_reference,$(pack))
-	$(call print_args,$(ARGS))
 
 	$(BINARY_NOMAD_PACK) \
 		render \
@@ -51,7 +51,7 @@ endef
 
 # run a Nomad Pack
 define run_pack
-	$(call print_args,$(ARGS))
+	$(if $(pack),,$(call missing_argument,run,pack=<pack>))
 
 	$(if $(strip $(BINARY_GLOW)), \
 		$(BINARY_NOMAD_PACK)  \
@@ -70,7 +70,7 @@ endef
 
 # stop a running Nomad Pack
 define stop_pack
-	$(call print_args,$(ARGS))
+	$(if $(pack),,$(call missing_argument,stop,pack=<pack>))
 
 	$(BINARY_NOMAD_PACK) \
 		stop \
@@ -110,7 +110,7 @@ endef
 
 # create Nomad environment for testing
 define create_test_environment
-	$(call print_args,$(ARGS))
+	$(if $(pack),,$(call missing_argument,test,pack=<pack>))
 
 	# create test directories if they do not exist
 	$(foreach TEST_DIRECTORY,$(TEST_DIRECTORIES),$(call safely_create_directory,$(TEST_DIRECTORY)))
@@ -150,7 +150,7 @@ endef
 
 # destroy a Nomad Pack
 define destroy_pack
-	$(call print_args,$(ARGS))
+	$(if $(pack),,$(call missing_argument,render,pack=<pack>))
 
 	$(BINARY_NOMAD_PACK) \
 		destroy \
@@ -161,6 +161,8 @@ endef
 
 # restart a Nomad Task
 define restart_task
+	$(if $(task),,$(call missing_argument,restart,task=task))
+
 	$(BINARY_NOMAD) \
 		job \
 			restart \
@@ -171,26 +173,29 @@ endef
 include ../tooling/make/targets/shared.mk
 
 .SILENT .PHONY: env
-env: # create Nomad environment for testing [Usage: `make env pack=my_pack`]
-	$(if $(pack),,$(call missing_argument,test,pack=my_pack))
+env: # create Nomad environment for testing [Usage: `make env pack=<pack>`]
+	$(if $(pack),,$(call missing_argument,test,pack=<pack>))
 
 	$(call create_test_environment,$(pack))
 
 .SILENT .PHONY: render
-render: # render a Nomad Pack [Usage: `make render pack=my_pack`]
-	$(if $(pack),,$(call missing_argument,test,pack=my_pack))
+render: # render a Nomad Pack [Usage: `make render pack=<pack>`]
+	$(if $(pack),,$(call missing_argument,test,pack=<pack>))
 
 	$(call render_pack,$(pack))
 
 .SILENT .PHONY: run
-run: # run a Nomad Pack [Usage: `make run pack=my_pack`]
-	$(if $(pack),,$(call missing_argument,test,pack=my_pack))
+run: # run a Nomad Pack [Usage: `make run pack=<pack>`]
+	$(if $(pack),,$(call missing_argument,test,pack=<pack>))
 
 	$(call run_pack,$(pack))
 
 .SILENT .PHONY: rerun
-rerun: # destroy and run a Nomad Pack [Usage: `make rerun pack=my_pack`]
-	$(if $(pack),,$(call missing_argument,test,pack=my_pack))
+rerun: # destroy and run a Nomad Pack [Usage: `make rerun pack=<pack>`]
+
+.SILENT .PHONY: rerun
+rerun: # destroy and run a Nomad Pack [Usage: `make rerun pack=<pack>`]
+	$(if $(pack),,$(call missing_argument,test,pack=<pack>))
 
 	$(call stop_pack,$(pack))
 
@@ -199,20 +204,20 @@ rerun: # destroy and run a Nomad Pack [Usage: `make rerun pack=my_pack`]
 	$(call run_pack,$(pack))
 
 .SILENT .PHONY: stop
-stop: # stop a running Nomad Pack [Usage: `make stop pack=my_pack`]
-	$(if $(pack),,$(call missing_argument,test,pack=my_pack))
+stop: # stop a running Nomad Pack [Usage: `make stop pack=<pack>`]
+	$(if $(pack),,$(call missing_argument,test,pack=<pack>))
 
 	$(call stop_pack, $(pack))
 
 .SILENT .PHONY: test
-test: # test a running Nomad Pack [Usage: `make test pack=my_pack`]
-	$(if $(pack),,$(call missing_argument,test,pack=my_pack))
+test: # test a running Nomad Pack [Usage: `make test pack=<pack>`]
+	$(if $(pack),,$(call missing_argument,test,pack=<pack>))
 
 	$(call test_pack, $(pack))
 
 .SILENT .PHONY: restart
-restart: # restart a Task [Usage: `make restart task=my_task`]
-	$(if $(pack),,$(call missing_argument,test,pack=my_pack))
+restart: # restart a Task [Usage: `make restart task=<task>`]
+	$(if $(pack),,$(call missing_argument,test,pack=<pack>))
 
 	$(call restart_task,$(task))
 
