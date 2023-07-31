@@ -3,13 +3,13 @@
 # configuration
 ARGS                  :=
 BINARY_GLOW            = $(call check_for_binary,glow)
-BINARY_NOMAD     			?= nomad
-BINARY_NOMAD_PACK			?= nomad-pack
+BINARY_NOMAD          ?= nomad
+BINARY_NOMAD_PACK     ?= nomad-pack
 DOCS_CONFIG            = .nomad-pack-docs.yml
 GLOW_WIDTH             = 160
 PACKS_DIR              = ./packs
 NEWMAN_REPORTERS      ?= "cli"
-NOMADVARS_SAMPLE_FILE	 = overrides.sample.hcl
+NOMADVARS_SAMPLE_FILE  = overrides.sample.hcl
 PACKS                  = $(shell ls $(PACKS_DIR))
 reporter              ?= $(NEWMAN_REPORTERS)
 SCREEN_SESSION         = nomad_pack_test_environment
