@@ -1,6 +1,6 @@
-#######################
-# Basic Configuration #
-#######################
+#######################################
+## Application-specific Configuration #
+#######################################
 
 variable "app_dd_site" {
   type        = string
@@ -271,10 +271,6 @@ variable "app_dd_observability_pipelines_worker_traces_url" {
   description = "URL endpoint for the Observability Pipelines Worker to send Traces to."
   default     = ""
 }
-
-##########################
-# Advanced Configuration #
-##########################
 
 variable "app_dd_confd_path" {
   type        = string
@@ -1285,9 +1281,9 @@ variable "app_dd_otlp_config_debug_verbosity" {
   default     = "normal"
 }
 
-#####################################
-## Pack-specifc Agent Configuration #
-#####################################
+###############################
+## Pack-specifc Configuration #
+###############################
 
 # Tags that are attached in-app to every metric, event, log, trace, and service check emitted by this Agent.
 # see https://docs.datadoghq.com/tagging/
@@ -1303,15 +1299,15 @@ variable "dd_tags" {
   ]
 }
 
-variable "include_nomad_tags" {
+variable "include_dd_extra_tags" {
   type        = bool
   description = "Toggle to include Nomad-specific Tags as part of the `DD_EXTRA_TAGS` environment variable."
   default     = true
 }
 
-variable "nomad_tags" {
+variable "dd_extra_tags" {
   type        = list(string)
-  description = "List of Nomad-specific Host Tags."
+  description = "List of Nomad-specific Tags."
 
   default = [
     "nomad-dc:$${NOMAD_DC}",
@@ -1324,31 +1320,64 @@ variable "nomad_tags" {
   ]
 }
 
+variable "nomad_pack_verbose_output" {
+  type        = bool
+  description = "Toggle to enable verbose output."
+  default     = true
+}
+
+#####################################
+## Nomad Job-specific Configuration #
+#####################################
+
 # see https://developer.hashicorp.com/nomad/docs/concepts/architecture#datacenters
-variable "datacenters" {
+variable "nomad_job_datacenters" {
   type        = list(string)
-  description = "Eligible Datacenters for the Task."
+  description = "Eligible Datacenters for the Job."
 
   default = [
     "*"
   ]
 }
 
-variable "driver" {
+variable "nomad_job_name" {
   type        = string
-  description = "Driver to use for the Job."
-  default     = "raw_exec"
+  description = "Name for the Job."
+
+  # value will be truncated to 63 characters when necessary
+  default = "datadog_agent"
+}
+
+# see https://developer.hashicorp.com/nomad/docs/job-specification/job#namespace
+variable "nomad_job_namespace" {
+  type        = string
+  description = "Namespace for the Job."
+  default     = "default"
+}
+
+# see https://developer.hashicorp.com/nomad/docs/job-specification/job#priority
+variable "nomad_job_priority" {
+  type        = number
+  description = "Priority for the Job."
+  default     = 50
+}
+
+# see https://developer.hashicorp.com/nomad/docs/concepts/architecture#regions
+variable "nomad_job_region" {
+  type        = string
+  description = "Region for the Job."
+  default     = "global"
 }
 
 # see https://developer.hashicorp.com/nomad/docs/job-specification/ephemeral_disk
-variable "ephemeral_disk" {
+variable "nomad_group_ephemeral_disk" {
   type = object({
     migrate = bool
     size    = number
     sticky  = bool
   })
 
-  description = "Ephemeral Disk Configuration for the Application."
+  description = "Ephemeral Disk Configuration for the Group."
 
   default = {
     # make best-effort attempt to migrate data to a different node if no placement is possible on the original node.
@@ -1362,45 +1391,20 @@ variable "ephemeral_disk" {
   }
 }
 
-variable "group_name" {
+variable "nomad_group_name" {
   type        = string
   description = "Name for the Group."
   default     = "datadog_agent"
 }
 
-variable "job_name" {
-  type        = string
-  description = "Name for the Job."
-
-  # value will be truncated to 63 characters when necessary
-  default = "datadog_agent"
-}
-
-variable "job_tags" {
-  type        = list(string)
-  description = "List of Tags for the Job."
-
-  default = [
-    "datadog",
-    "datadog-agent",
-  ]
-}
-
-# see https://developer.hashicorp.com/nomad/docs/job-specification/job#namespace
-variable "namespace" {
-  type        = string
-  description = "Namespace for the Job."
-  default     = "default"
-}
-
 # see https://developer.hashicorp.com/nomad/docs/job-specification/network#network-modes
-variable "network_mode" {
+variable "nomad_group_network_mode" {
   type        = string
-  description = "Network Mode for the Job."
+  description = "Network Mode for the Group."
   default     = "host"
 }
 
-variable "ports" {
+variable "nomad_group_ports" {
   type = map(object({
     name           = string
     path           = string
@@ -1412,7 +1416,7 @@ variable "ports" {
     check_timeout  = string
   }))
 
-  description = "Port Configuration for the Application."
+  description = "Port Configuration for the Group."
 
   default = {
     # port for Go-Expvar Server
@@ -1527,22 +1531,73 @@ variable "ports" {
   }
 }
 
-# see https://developer.hashicorp.com/nomad/docs/job-specification/job#priority
-variable "priority" {
-  type        = number
-  description = "Priority for the Job."
-  default     = 50
+variable "nomad_group_restart_logic" {
+  type = object({
+    attempts = number
+    interval = string
+    delay    = string
+    mode     = string
+  })
+
+  description = "Restart Logic for the Group."
+
+  default = {
+    attempts = 3
+    interval = "120s"
+    delay    = "30s"
+    mode     = "fail"
+  }
 }
 
-# see https://developer.hashicorp.com/nomad/docs/concepts/architecture#regions
-variable "region" {
+variable "nomad_group_service_name_prefix" {
   type        = string
-  description = "Region for the Job."
-  default     = "global"
+  description = "Name of the Service for the Group."
+  default     = "datadog_agent"
+}
+
+variable "nomad_group_service_provider" {
+  type        = string
+  description = "Provider of the Service for the Group."
+  default     = "nomad"
+}
+
+variable "nomad_group_tags" {
+  type        = list(string)
+  description = "List of Tags for the Group."
+
+  default = [
+    "datadog",
+    "datadog-agent",
+  ]
+}
+
+variable "nomad_group_volumes" {
+  type = map(object({
+    name        = string
+    type        = string
+    destination = string
+    read_only   = bool
+  }))
+
+  description = "Volumes for the Group."
+
+  default = {}
+}
+
+variable "nomad_task_driver" {
+  type        = string
+  description = "Driver to use for the Task."
+  default     = "raw_exec"
+}
+
+variable "nomad_task_name" {
+  type        = string
+  description = "Name for the Task."
+  default     = "datadog_agent"
 }
 
 # see https://developer.hashicorp.com/nomad/docs/job-specification/resources
-variable "resources" {
+variable "nomad_task_resources" {
   type = object({
     cpu        = number
     cores      = number
@@ -1550,7 +1605,7 @@ variable "resources" {
     memory_max = number
   })
 
-  description = "Resource Limits for the Application."
+  description = "Resource Limits for the Task."
 
   default = {
     # Tasks can ask for `cpu` or `cores`, not both.
@@ -1570,59 +1625,4 @@ variable "resources" {
     # and https://developer.hashicorp.com/nomad/docs/drivers/docker#memory
     memory_max = 1024
   }
-}
-
-variable "service_name_prefix" {
-  type        = string
-  description = "Name for the Service."
-  default     = "datadog_agent"
-}
-
-variable "service_provider" {
-  type        = string
-  description = "Provider for the Service."
-  default     = "nomad"
-}
-
-variable "restart_logic" {
-  type = object({
-    attempts = number
-    interval = string
-    delay    = string
-    mode     = string
-  })
-
-  description = "Restart Logic for the Application."
-
-  default = {
-    attempts = 3
-    interval = "120s"
-    delay    = "30s"
-    mode     = "fail"
-  }
-}
-
-variable "task_name" {
-  type        = string
-  description = "Name for the Task."
-  default     = "datadog_agent"
-}
-
-variable "verbose_output" {
-  type        = bool
-  description = "Toggle to enable verbose output."
-  default     = true
-}
-
-variable "volumes" {
-  type = map(object({
-    name        = string
-    type        = string
-    destination = string
-    read_only   = bool
-  }))
-
-  description = "Volumes for the Application."
-
-  default = {}
 }

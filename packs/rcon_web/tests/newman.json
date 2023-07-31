@@ -88,6 +88,10 @@
 							"  pm.expect(res.UI.Label).to.be.an('object').and.not.be.empty;",
 							"});",
 							"",
+							"// set Collection Variable `app_host` for downstream use",
+							"pm.collectionVariables.set('app_host', res.BindAddr);",
+							"pm.log('main', 'Collection Variable `app_host` = `' + pm.collectionVariables.get('app_host') + '`');",
+							"",
 							"postman.setNextRequest('nomad-jobs');"
 						],
 						"type": "text/javascript"
@@ -621,10 +625,6 @@
 			"type": "string"
 		},
 		{
-			"key": "job_name",
-			"value": ""
-		},
-		{
 			"key": "namespace",
 			"value": "default",
 			"type": "string"
@@ -654,6 +654,10 @@
 		},
 		{
 			"key": "app_host",
+			"value": ""
+		},
+		{
+			"key": "job_name",
 			"value": ""
 		}
 	]

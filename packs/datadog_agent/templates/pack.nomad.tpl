@@ -1,26 +1,27 @@
-[[- $ports := .my.ports ]]
+[[- $ports := .my.nomad_group_ports ]]
 
 # see https://developer.hashicorp.com/nomad/docs/job-specification/job
-job "[[ .my.job_name ]]" {
-  region      = "[[ .my.region ]]"
-  datacenters = [[ .my.datacenters | toJson ]]
+job "[[ .my.nomad_job_name ]]" {
+  region      = "[[ .my.nomad_job_region ]]"
+  datacenters = [[ .my.nomad_job_datacenters | toJson ]]
   type        = "system"
-  namespace   = "[[ .my.namespace ]]"
-  priority    = [[ .my.priority ]]
+  namespace   = "[[ .my.nomad_job_namespace ]]"
+  priority    = [[ .my.nomad_job_priority ]]
 
   # see https://developer.hashicorp.com/nomad/docs/job-specification/group
-  group "[[ .my.group_name ]]" {
+  group "[[ .my.nomad_group_name ]]" {
     # see https://developer.hashicorp.com/nomad/docs/job-specification/ephemeral_disk
     ephemeral_disk {
-      migrate = [[ .my.ephemeral_disk.migrate ]]
-      size    = [[ .my.ephemeral_disk.size ]]
-      sticky  = [[ .my.ephemeral_disk.sticky ]]
+      [[- $ephemeral_disk := .my.nomad_group_ephemeral_disk ]]
+      migrate = [[ $ephemeral_disk.migrate ]]
+      size    = [[ $ephemeral_disk.size ]]
+      sticky  = [[ $ephemeral_disk.sticky ]]
     }
 
     # see https://developer.hashicorp.com/nomad/docs/job-specification/network
     network {
       # see https://developer.hashicorp.com/nomad/docs/job-specification/network#network-modes
-      mode = "[[ .my.network_mode ]]"
+      mode = "[[ .my.nomad_group_network_mode ]]"
 
       [[/* iterate over `$ports` to create Port Mappings */]]
       [[- range $name, $config := $ports ]]
@@ -34,9 +35,9 @@ job "[[ .my.job_name ]]" {
       [[ end ]]
     }
 
-    [[- $job_tags := .my.job_tags -]]
-    [[- $service_name := .my.service_name_prefix -]]
-    [[- $service_provider := .my.service_provider -]]
+    [[- $job_tags := .my.nomad_group_tags -]]
+    [[- $service_name := .my.nomad_group_service_name_prefix -]]
+    [[- $service_provider := .my.nomad_group_service_provider -]]
     [[/* iterate over `$ports` to map Services */]]
     [[ range $name, $port := $ports ]]
     # see https://developer.hashicorp.com/nomad/docs/job-specification/service
@@ -65,15 +66,16 @@ job "[[ .my.job_name ]]" {
 
     # see https://developer.hashicorp.com/nomad/docs/job-specification/restart
     restart {
-      attempts = [[ .my.restart_logic.attempts ]]
-      interval = "[[ .my.restart_logic.interval ]]"
-      delay    = "[[ .my.restart_logic.delay ]]"
-      mode     = "[[ .my.restart_logic.mode ]]"
+      [[- $restart_logic := .my.nomad_group_restart_logic ]]
+      attempts = [[ $restart_logic.attempts ]]
+      interval = "[[ $restart_logic.interval ]]"
+      delay    = "[[ $restart_logic.delay ]]"
+      mode     = "[[ $restart_logic.mode ]]"
     }
 
     # see https://developer.hashicorp.com/nomad/docs/job-specification/volume
     [[/* iterate over `var.volumes` to create Volumes */]]
-    [[- range $index, $mount := .my.volumes ]]
+    [[- range $index, $mount := .my.nomad_group_volumes ]]
     volume "[[ $mount.name ]]" {
       source    = "[[ $mount.name ]]"
       type      = "[[ $mount.type ]]"
@@ -82,9 +84,9 @@ job "[[ .my.job_name ]]" {
     [[ end ]]
 
     # see https://developer.hashicorp.com/nomad/docs/job-specification/task
-    task "[[ .my.task_name ]]" {
+    task "[[ .my.nomad_task_name ]]" {
       # see https://developer.hashicorp.com/nomad/docs/drivers
-      driver = "[[ .my.driver ]]"
+      driver = "[[ .my.nomad_task_driver ]]"
 
       # see https://developer.hashicorp.com/nomad/docs/drivers/raw_exec
       # and https://developer.hashicorp.com/nomad/docs/drivers/exec
@@ -106,7 +108,7 @@ job "[[ .my.job_name ]]" {
         # render template with sensitive data
         # see https://app.datadoghq.com/account/settings
         data = <<DATA
-          {{- with nomadVar "nomad/jobs/[[ .my.job_name ]]" -}}
+          {{- with nomadVar "nomad/jobs/[[ .my.nomad_job_name ]]" -}}
           DD_API_KEY = "{{ .api_key }}"
           {{- end -}}
         DATA
@@ -119,7 +121,7 @@ job "[[ .my.job_name ]]" {
 
       # see https://developer.hashicorp.com/nomad/docs/job-specification/volume_mount
       [[/* iterate over `var.volumes` to create Volume Mounts */]]
-      [[- range $index, $mount := .my.volumes ]]
+      [[- range $index, $mount := .my.nomad_group_volumes ]]
       volume_mount {
           volume      = "[[ $mount.name ]]"
           destination = "[[ $mount.destination ]]"
@@ -129,12 +131,13 @@ job "[[ .my.job_name ]]" {
 
       # see https://developer.hashicorp.com/nomad/docs/job-specification/resources
       resources {
-        cpu        = [[ .my.resources.cpu ]]
-        cores      = [[ .my.resources.cores | default "null" ]]
-        memory     = [[ .my.resources.memory ]]
+        [[- $resources := .my.nomad_task_resources ]]
+        cpu        = [[ $resources.cpu ]]
+        cores      = [[ $resources.cores | default "null" ]]
+        memory     = [[ $resources.memory ]]
 
         # TODO: add support for memory oversubscription
-        # memory_max = [[ .my.resources.memory_max ]]
+        # memory_max = [[ $resources.memory_max ]]
       }
     }
   }

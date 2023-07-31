@@ -1,3 +1,7 @@
+#######################################
+## Application-specific Configuration #
+#######################################
+
 # this section contains a non-exhaustive selection of Minecraft Server configuration options
 # see https://minecraft.fandom.com/wiki/Server.properties#Bedrock_Edition_3 for all available options.
 
@@ -170,37 +174,74 @@ variable "app_view_distance" {
   default     = 32
 }
 
-variable "count" {
-  type        = number
-  description = "Count of Deployments for the Job."
-  default     = 1
+###############################
+## Pack-specifc Configuration #
+###############################
+
+variable "nomad_pack_verbose_output" {
+  type        = bool
+  description = "Toggle to enable verbose output."
+  default     = true
 }
 
+#####################################
+## Nomad Job-specific Configuration #
+#####################################
+
 # see https://developer.hashicorp.com/nomad/docs/concepts/architecture#datacenters
-variable "datacenters" {
+variable "nomad_job_datacenters" {
   type        = list(string)
-  description = "Eligible Datacenters for the Task."
+  description = "Eligible Datacenters for the Job."
 
   default = [
     "*"
   ]
 }
 
-variable "driver" {
+variable "nomad_job_name" {
   type        = string
-  description = "Driver to use for the Job."
-  default     = "docker"
+  description = "Name for the Job."
+
+  # value will be truncated to 63 characters when necessary
+  default = "minecraft"
+}
+
+# see https://developer.hashicorp.com/nomad/docs/job-specification/job#namespace
+variable "nomad_job_namespace" {
+  type        = string
+  description = "Namespace for the Job."
+  default     = "default"
+}
+
+# see https://developer.hashicorp.com/nomad/docs/job-specification/job#priority
+variable "nomad_job_priority" {
+  type        = number
+  description = "Priority for the Job."
+  default     = 99
+}
+
+# see https://developer.hashicorp.com/nomad/docs/concepts/architecture#regions
+variable "nomad_job_region" {
+  type        = string
+  description = "Region for the Job."
+  default     = "global"
+}
+
+variable "nomad_group_count" {
+  type        = number
+  description = "Count of Deployments for the Group."
+  default     = 1
 }
 
 # see https://developer.hashicorp.com/nomad/docs/job-specification/ephemeral_disk
-variable "ephemeral_disk" {
+variable "nomad_group_ephemeral_disk" {
   type = object({
     migrate = bool
     size    = number
     sticky  = bool
   })
 
-  description = "Ephemeral Disk Configuration for the Application."
+  description = "Ephemeral Disk Configuration for the Group."
 
   default = {
     # make best-effort attempt to migrate data to a different node if no placement is possible on the original node.
@@ -214,13 +255,113 @@ variable "ephemeral_disk" {
   }
 }
 
-variable "group_name" {
+variable "nomad_group_name" {
   type        = string
   description = "Name for the Group."
   default     = "minecraft"
 }
 
-variable "image" {
+# see https://developer.hashicorp.com/nomad/docs/job-specification/network#network-modes
+variable "nomad_group_network_mode" {
+  type        = string
+  description = "Network Mode for the Group."
+  default     = "host"
+}
+
+variable "nomad_group_ports" {
+  type = map(object({
+    name           = string
+    path           = string
+    port           = number
+    type           = string
+    host_network   = string
+    check_interval = string
+    check_timeout  = string
+  }))
+
+  description = "Port Configuration for the Group."
+
+  default = {
+    # port for Minecraft server
+    main = {
+      name           = "minecraft_main"
+      path           = null
+      port           = 19132
+      type           = "tcp"
+      host_network   = null
+      check_interval = "30s"
+      check_timeout  = "15s"
+    },
+  }
+}
+
+variable "nomad_group_restart_logic" {
+  type = object({
+    attempts = number
+    interval = string
+    delay    = string
+    mode     = string
+  })
+
+  description = "Restart Logic for the Group."
+
+  default = {
+    attempts = 3
+    interval = "120s"
+    delay    = "30s"
+    mode     = "fail"
+  }
+}
+
+variable "nomad_group_service_name_prefix" {
+  type        = string
+  description = "Name of the Service for the Group."
+  default     = "minecraft"
+}
+
+variable "nomad_group_service_provider" {
+  type        = string
+  description = "Provider of the Service for the Group."
+  default     = "nomad"
+}
+
+variable "nomad_group_tags" {
+  type        = list(string)
+  description = "List of Tags for the Group."
+
+  default = [
+    "minecraft",
+    "minecraft-bedrock-edition"
+  ]
+}
+
+variable "nomad_group_volumes" {
+  type = map(object({
+    name        = string
+    type        = string
+    destination = string
+    read_only   = bool
+  }))
+
+  description = "Volumes for the Group."
+
+  default = {
+    data = {
+      name        = "minecraft_bedrock_data",
+      type        = "host"
+      destination = "/data"
+      read_only   = false
+    },
+  }
+}
+
+variable "nomad_task_driver" {
+  type        = string
+  description = "Driver to use for the Task."
+  default     = "docker"
+}
+
+variable "nomad_task_image" {
   type = object({
     registry  = string
     namespace = string
@@ -229,7 +370,7 @@ variable "image" {
     digest    = string
   })
 
-  description = "Content Address to use for the Container Image."
+  description = "Content Address to use for the Container Image for the Task."
 
   # see https://hub.docker.com/r/itzg/minecraft-bedrock-server/tags
   default = {
@@ -250,81 +391,14 @@ variable "image" {
   }
 }
 
-variable "job_name" {
+variable "nomad_task_name" {
   type        = string
-  description = "Name for the Job."
-
-  # value will be truncated to 63 characters when necessary
-  default = "minecraft"
-}
-
-variable "job_tags" {
-  type        = list(string)
-  description = "List of Tags for the Job."
-
-  default = [
-    "minecraft",
-    "minecraft-bedrock-edition"
-  ]
-}
-
-# see https://developer.hashicorp.com/nomad/docs/job-specification/job#namespace
-variable "namespace" {
-  type        = string
-  description = "Namespace for the Job."
-  default     = "default"
-}
-
-# see https://developer.hashicorp.com/nomad/docs/job-specification/network#network-modes
-variable "network_mode" {
-  type        = string
-  description = "Network Mode for the Job."
-  default     = "host"
-}
-
-variable "ports" {
-  type = map(object({
-    name           = string
-    path           = string
-    port           = number
-    type           = string
-    host_network   = string
-    check_interval = string
-    check_timeout  = string
-  }))
-
-  description = "Port Configuration for the Application."
-
-  default = {
-    # port for Minecraft server
-    main = {
-      name           = "minecraft_main"
-      path           = null
-      port           = 19132
-      type           = "tcp"
-      host_network   = null
-      check_interval = "30s"
-      check_timeout  = "15s"
-    },
-  }
-}
-
-# see https://developer.hashicorp.com/nomad/docs/job-specification/job#priority
-variable "priority" {
-  type        = number
-  description = "Priority for the Job."
-  default     = 99
-}
-
-# see https://developer.hashicorp.com/nomad/docs/concepts/architecture#regions
-variable "region" {
-  type        = string
-  description = "Region for the Job."
-  default     = "global"
+  description = "Name for the Task."
+  default     = "minecraft"
 }
 
 # see https://developer.hashicorp.com/nomad/docs/job-specification/resources
-variable "resources" {
+variable "nomad_task_resources" {
   type = object({
     cpu        = number
     cores      = number
@@ -332,7 +406,7 @@ variable "resources" {
     memory_max = number
   })
 
-  description = "Resource Limits for the Application."
+  description = "Resource Limits for the Task."
 
   default = {
     # Tasks can ask for `cpu` or `cores`, not both.
@@ -355,67 +429,5 @@ variable "resources" {
     # see https://developer.hashicorp.com/nomad/docs/job-specification/resources#memory-oversubscription
     # and https://developer.hashicorp.com/nomad/docs/drivers/docker#memory
     memory_max = 5120
-  }
-}
-
-variable "service_name_prefix" {
-  type        = string
-  description = "Name for the Service."
-  default     = "minecraft"
-}
-
-variable "service_provider" {
-  type        = string
-  description = "Provider for the Service."
-  default     = "nomad"
-}
-
-variable "restart_logic" {
-  type = object({
-    attempts = number
-    interval = string
-    delay    = string
-    mode     = string
-  })
-
-  description = "Restart Logic for the Application."
-
-  default = {
-    attempts = 3
-    interval = "120s"
-    delay    = "30s"
-    mode     = "fail"
-  }
-}
-
-variable "task_name" {
-  type        = string
-  description = "Name for the Task."
-  default     = "minecraft"
-}
-
-variable "verbose_output" {
-  type        = bool
-  description = "Toggle to enable verbose output."
-  default     = true
-}
-
-variable "volumes" {
-  type = map(object({
-    name        = string
-    type        = string
-    destination = string
-    read_only   = bool
-  }))
-
-  description = "Volumes for the Application."
-
-  default = {
-    data = {
-      name        = "minecraft_bedrock_data",
-      type        = "host"
-      destination = "/data"
-      read_only   = false
-    },
   }
 }
