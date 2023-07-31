@@ -22,7 +22,6 @@ ifneq ($(reporter),)
 endif
 
 include ../tooling/make/configs/shared.mk
-
 include ../tooling/make/functions/shared.mk
 
 # conditionally load Pack-specific configuration if the
@@ -162,6 +161,8 @@ endef
 
 # restart a Nomad Task
 define restart_task
+	$(if $(task),,$(call missing_argument,restart,task=task))
+
 	$(BINARY_NOMAD) \
 		job \
 			restart \
@@ -190,11 +191,11 @@ run: # run a Nomad Pack [Usage: `make run pack=<pack>`]
 	$(call run_pack,$(pack))
 
 .SILENT .PHONY: rerun
-rerun: # destroy and run a Nomad Pack [Usage: `make rerun pack=my_pack`]
 rerun: # destroy and run a Nomad Pack [Usage: `make rerun pack=<pack>`]
 
 .SILENT .PHONY: rerun
 rerun: # destroy and run a Nomad Pack [Usage: `make rerun pack=<pack>`]
+	$(if $(pack),,$(call missing_argument,test,pack=<pack>))
 
 	$(call stop_pack,$(pack))
 
@@ -204,16 +205,19 @@ rerun: # destroy and run a Nomad Pack [Usage: `make rerun pack=<pack>`]
 
 .SILENT .PHONY: stop
 stop: # stop a running Nomad Pack [Usage: `make stop pack=<pack>`]
+	$(if $(pack),,$(call missing_argument,test,pack=<pack>))
 
 	$(call stop_pack, $(pack))
 
 .SILENT .PHONY: test
 test: # test a running Nomad Pack [Usage: `make test pack=<pack>`]
+	$(if $(pack),,$(call missing_argument,test,pack=<pack>))
 
 	$(call test_pack, $(pack))
 
 .SILENT .PHONY: restart
 restart: # restart a Task [Usage: `make restart task=<task>`]
+	$(if $(pack),,$(call missing_argument,test,pack=<pack>))
 
 	$(call restart_task,$(task))
 
