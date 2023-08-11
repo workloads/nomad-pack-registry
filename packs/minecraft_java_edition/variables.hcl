@@ -509,10 +509,10 @@ variable "nomad_task_image" {
     image = "minecraft-server"
 
     # Tag of the Image
-    tag = "2023.6.4-java20-alpine"
+    tag = "2023.8.1-java20-alpine"
 
     # Digest of the Tag of the Image
-    digest = "sha256:722dde03948a7979681221b31b99d08608e082e8d76c9b65b5dbb20791278da6"
+    digest = "sha256:ae25ab3832a61f37632be99fdb22f61cfe2ccca61bed7834040676c68d10087f"
   }
 }
 
