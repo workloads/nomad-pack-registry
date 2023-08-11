@@ -236,16 +236,16 @@ variable "app_spawn_protection" {
   default     = 0
 }
 
-variable "app_tz" {
-  type        = string
-  description = "Timezone."
-  default     = "Europe/Amsterdam"
-}
-
 variable "app_type" {
   type        = string
   description = "Server Type (e.g.: `vanilla`, `fabric`, etc.)."
   default     = "vanilla"
+}
+
+variable "app_tz" {
+  type        = string
+  description = "Timezone."
+  default     = "Europe/Amsterdam"
 }
 
 variable "app_use_aikar_flags" {
