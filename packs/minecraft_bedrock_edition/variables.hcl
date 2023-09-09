@@ -384,10 +384,10 @@ variable "nomad_task_image" {
     image = "minecraft-bedrock-server"
 
     # Tag of the Image
-    tag = "latest"
+    tag = "2023.8.1"
 
     # Digest of the Tag of the Image
-    digest = "sha256:e64c3e8bbcdf78445fb0534105d975e97a6ca75d538e18a4165042bfd93fd4cc"
+    digest = "sha256:e2019e959daa70dffd1468aaa1348bc906170709bf2c790bee302fc1efedbde7"
   }
 }
 

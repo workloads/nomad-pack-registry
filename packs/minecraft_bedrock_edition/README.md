@@ -103,7 +103,7 @@ This section describes Nomad-specific configuration.
 | nomad_job_region                  | Region for the Job.                                           | `"global"` |
 | nomad_pack_verbose_output         | Toggle to enable verbose output.                              | `true` |
 | nomad_task_driver                 | Driver to use for the Task.                                   | `"docker"` |
-| nomad_task_image                  | Content Address to use for the Container Image for the Task.  | `{"digest":"sha256:e64c3e8bbcdf78445fb0534105d975e97a6ca75d538e18a4165042bfd93fd4cc","image":"minecraft-bedrock-server","namespace":"itzg","registry":"index.docker.io","tag":"latest"}` |
+| nomad_task_image                  | Content Address to use for the Container Image for the Task.  | `{"digest":"sha256:e2019e959daa70dffd1468aaa1348bc906170709bf2c790bee302fc1efedbde7","image":"minecraft-bedrock-server","namespace":"itzg","registry":"index.docker.io","tag":"2023.8.1"}` |
 | nomad_task_name                   | Name for the Task.                                            | `"minecraft"` |
 | nomad_task_resources              | Resource Limits for the Task.                                 | `{"cores":null,"cpu":4000,"memory":4096,"memory_max":5120}` |
 
