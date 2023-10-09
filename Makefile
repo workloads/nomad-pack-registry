@@ -7,10 +7,10 @@ BINARY_NOMAD          ?= nomad
 BINARY_NOMAD_PACK     ?= nomad-pack
 DOCS_CONFIG            = .nomad-pack-docs.yml
 GLOW_WIDTH             = 160
-PACKS_DIR              = ./packs
+DIR_PACKS              = ./packs
 NEWMAN_REPORTERS      ?= "cli"
 NOMADVARS_SAMPLE_FILE  = overrides.sample.hcl
-PACKS                  = $(shell ls $(PACKS_DIR))
+PACKS                  = $(shell ls $(DIR_PACKS))
 reporter              ?= $(NEWMAN_REPORTERS)
 SCREEN_SESSION         = nomad_pack_test_environment
 SLEEP_NOMAD_STARTUP    = 5
@@ -27,11 +27,11 @@ include ../tooling/make/functions/shared.mk
 # conditionally load Pack-specific configuration if the
 # target is `env` and the `pack` argument is not empty
 ifeq ($(and $(pack),$(MAKECMDGOALS)),env)
-	include $(PACKS_DIR)/$(strip $(pack))/tests/config.mk
+	include $(DIR_PACKS)/$(strip $(pack))/tests/config.mk
 
 # conditionally load Git-ignored Pack-specific configuration
-ifneq ($(wildcard $(PACKS_DIR)/$(strip $(pack))/tests/gitignored_config.mk),)
-	include $(PACKS_DIR)/$(strip $(pack))/tests/gitignored_config.mk
+ifneq ($(wildcard $(DIR_PACKS)/$(strip $(pack))/tests/gitignored_config.mk),)
+	include $(DIR_PACKS)/$(strip $(pack))/tests/gitignored_config.mk
 endif
 
 endif
@@ -45,7 +45,7 @@ define render_pack
 	$(BINARY_NOMAD_PACK) \
 		render \
 			$(ARGS) \
-			"$(PACKS_DIR)/$(strip $(pack))" \
+			"$(DIR_PACKS)/$(strip $(pack))" \
 	;
 endef
 
@@ -57,14 +57,14 @@ define run_pack
 		$(BINARY_NOMAD_PACK)  \
 			run \
 				$(ARGS) \
-				"$(PACKS_DIR)/$(strip $(pack))" \
+				"$(DIR_PACKS)/$(strip $(pack))" \
 		| \
 		glow \
 			--width $(GLOW_WIDTH), \
 		$(BINARY_NOMAD_PACK) \
 			run \
 				$(ARGS) \
-				"$(PACKS_DIR)/$(strip $(pack))" \
+				"$(DIR_PACKS)/$(strip $(pack))" \
 	)
 endef
 
@@ -74,7 +74,7 @@ define stop_pack
 
 	$(BINARY_NOMAD_PACK) \
 		stop \
-			"$(PACKS_DIR)/$(strip $(pack))" \
+			"$(DIR_PACKS)/$(strip $(pack))" \
 			$(ARGS) \
 	;
 endef
@@ -82,7 +82,7 @@ endef
 # test a running Nomad Pack using Newman
 define test_pack
 	newman \
-		run "$(PACKS_DIR)/$(strip $(pack))/tests/newman.json" \
+		run "$(DIR_PACKS)/$(strip $(pack))/tests/newman.json" \
 		--reporters "$(NEWMAN_REPORTERS)" \
 	&& \
 	echo
@@ -90,7 +90,7 @@ endef
 
 # force-create (or update) a Nomad Variable
 define put_nomad_variables
-	export VARIABLES_FILE="$(PACKS_DIR)/$(strip $(pack))/tests/gitignored_spec.nv.hcl"; \
+	export VARIABLES_FILE="$(DIR_PACKS)/$(strip $(pack))/tests/gitignored_spec.nv.hcl"; \
 	\
 	if [ -e "$${VARIABLES_FILE}" ]; then \
 		echo "[3/4] Loading Variable Definitions found at \`$(STYLE_GROUP_CODE)$${VARIABLES_FILE}$(STYLE_RESET)\`\n" \
@@ -154,7 +154,7 @@ define destroy_pack
 
 	$(BINARY_NOMAD_PACK) \
 		destroy \
-			"$(PACKS_DIR)/$(strip $(pack))" \
+			"$(DIR_PACKS)/$(strip $(pack))" \
 			$(ARGS) \
 	;
 endef
@@ -224,7 +224,7 @@ restart: # restart a Task [Usage: `make restart task=<task>`]
 .SILENT .PHONY: docs
 docs: # generate documentation for all Nomad Packs [Usage: `make docs`]
 	# see https://www.gnu.org/software/make/manual/html_node/Foreach-Function.html
-	$(foreach PACK,$(PACKS),$(call render_documentation,$(PACKS_DIR)/$(strip $(PACK)),variables.hcl,$(DOCS_CONFIG),$(NOMADVARS_SAMPLE_FILE)))
+	$(foreach PACK,$(PACKS),$(call render_documentation,$(DIR_PACKS)/$(strip $(PACK)),variables.hcl,$(DOCS_CONFIG),$(NOMADVARS_SAMPLE_FILE)))
 
 .SILENT .PHONY: registry
 registry: # add Nomad Pack Registry to local environment [Usage: `make registry`]
