@@ -50,52 +50,65 @@ nomad-pack run minecraft_java_edition --registry=workloads
 
 This section describes Application-specific configuration.
 
-| Name                               | Description                                                                        | Default |
-| ---------------------------------- | ---------------------------------------------------------------------------------- | ------- |
-| app_allow_flight                   | Toggle to enable PC flight.                                                        | `true` |
-| app_allow_nether                   | Toggle to enable The Nether.                                                       | `false` |
-| app_announce_player_achievements   | Toggle to enable Player Achievement Announcements.                                 | `false` |
-| app_console                        | Toggle to enable Console.                                                          | `true` |
-| app_data                           | Directory for Application Data.                                                    | `"/data"` |
-| app_difficulty                     | Difficulty Level (e.g.: `peaceful`, `easy`, `normal`, `hard`).                     | `"peaceful"` |
-| app_disable_healthcheck            | Toggle to disable Container Health Check.                                          | `false` |
-| app_enable_command_block           | Toggle to enable Command Blocks.                                                   | `true` |
-| app_enable_query                   | Toggle to enable Gamespy Query Protocol.                                           | `false` |
-| app_enable_rcon                    | Toggle to enable RCON interface.                                                   | `true` |
-| app_enable_rolling_logs            | Toggle to enable Log Rolling.                                                      | `true` |
-| app_eula                           | Toggle to accept End-User License Agreement.                                       | `true` |
-| app_generate_structures            | Toggle to pre-generate Structures (e.g.: Villages, Outposts).                      | `true` |
-| app_gui                            | Toggle to enable GUI.                                                              | `true` |
-| app_hardcore                       | Toggle to enable Hardcore Mode.                                                    | `false` |
-| app_icon                           | Server Icon.                                                                       | `"https://assets.workloads.io/minecraft/server-icons/command-block.png"` |
-| app_level_type                     | Level Type (e.g.: `normal`, `flat`).                                               | `"normal"` |
-| app_max_build_height               | Maximum allowed Building Height (in blocks).                                       | `256` |
-| app_max_memory                     | Maximum allowed Memory.                                                            | `"4G"` |
-| app_max_players                    | Maximum Player Count.                                                              | `20` |
-| app_max_tick_time                  | Maximum time a Tick may take before Watchdog responds (in msec).                   | `60000` |
-| app_max_world_size                 | Maximum Radius of World (in blocks).                                               | `10000` |
-| app_memory                         | Initial Memory.                                                                    | `"3G"` |
-| app_mode                           | Game Mode.                                                                         | `"creative"` |
-| app_mods_file                      | Path to file with Mod URLs (e.g.: `/extras/mods.txt`)                              | n/a |
-| app_motd                           | Message of the Day.                                                                | `"This Server is running on §2§lHashiCorp Nomad§r!"` |
-| app_online_mode                    | Toggle to enable Account Authentication (with Minecraft.net / Microsoft Account).  | `false` |
-| app_override_icon                  | Toggle to allow overriding Server Icon.                                            | `true` |
-| app_pvp                            | Toggle to enable PvP Damage.                                                       | `false` |
-| app_rcon_password                  | RCON Interface Password.                                                           | `"AW96B6"` |
-| app_remove_old_mods                | Toggle to enable removal of old Mods.                                              | `true` |
-| app_seed                           | Level Seed.                                                                        | `"5379859465535818918"` |
-| app_server_name                    | Server Name.                                                                       | `"Minecraft Java Edition Server"` |
-| app_snooper_enabled                | Toggle to enable sending updates to `snoop.minecraft.net`.                         | `false` |
-| app_spawn_animals                  | Toggle to enable Animals to spawn.                                                 | `true` |
-| app_spawn_monsters                 | Toggle to enable Monsters to spawn.                                                | `false` |
-| app_spawn_npcs                     | Toggle to enable NPCs to spawn.                                                    | `true` |
-| app_spawn_protection               | Sets area that non-ops cannot alter (in blocks).                                   | n/a |
-| app_type                           | Server Type (e.g.: `vanilla`, `fabric`, etc.).                                     | `"vanilla"` |
-| app_tz                             | Timezone.                                                                          | `"Europe/Amsterdam"` |
-| app_use_aikar_flags                | Toggle to enable optimized JVM flags for GC tuning.                                | `true` |
-| app_version                        | Minecraft Version.                                                                 | `"1.20"` |
-| app_view_distance                  | Amount of World Data to send to define viewing distance (in blocks).               | `32` |
-| app_world                          | URL to Minecraft World ZIP archive.                                                | n/a |
+| Name                               | Description                                                                                   | Default |
+| ---------------------------------- | --------------------------------------------------------------------------------------------- | ------- |
+| app_allow_flight                   | Toggle to enable PC flight.                                                                   | `true` |
+| app_allow_nether                   | Toggle to enable The Nether.                                                                  | `false` |
+| app_announce_player_achievements   | Toggle to enable Player Achievement Announcements.                                            | `false` |
+| app_console                        | Toggle to enable Console.                                                                     | `true` |
+| app_data                           | Directory for Application Data.                                                               | `"/data"` |
+| app_difficulty                     | Difficulty Level (e.g.: `peaceful`, `easy`, `normal`, `hard`).                                | `"peaceful"` |
+| app_disable_healthcheck            | Toggle to disable Container Health Check.                                                     | `false` |
+| app_enable_command_block           | Toggle to enable Command Blocks.                                                              | `true` |
+| app_enable_query                   | Toggle to enable Gamespy Query Protocol.                                                      | `false` |
+| app_enable_rcon                    | Toggle to enable RCON interface.                                                              | `true` |
+| app_enable_rolling_logs            | Toggle to enable Log Rolling.                                                                 | `true` |
+| app_eula                           | Toggle to accept End-User License Agreement.                                                  | `true` |
+| app_force_redownload               | Toggle to force redownloading of Server (JAR) File.                                           | `false` |
+| app_force_world_copy               | Toggle to force copying of World Data.                                                        | `false` |
+| app_generate_structures            | Toggle to pre-generate Structures (e.g.: Villages, Outposts).                                 | `true` |
+| app_gui                            | Toggle to enable GUI.                                                                         | `true` |
+| app_hardcore                       | Toggle to enable Hardcore Mode.                                                               | `false` |
+| app_icon                           | Server Icon.                                                                                  | `"https://assets.workloads.io/minecraft/server-icons/command-block.png"` |
+| app_level_type                     | Level Type (e.g.: `normal`, `flat`).                                                          | `"normal"` |
+| app_log_timestamp                  | Togggle to include Timestamp in Log Messages.                                                 | `true` |
+| app_max_build_height               | Maximum allowed Building Height (in blocks).                                                  | `256` |
+| app_max_memory                     | Maximum allowed Memory.                                                                       | `"4G"` |
+| app_max_players                    | Maximum Player Count.                                                                         | `20` |
+| app_max_tick_time                  | Maximum time a Tick may take before Watchdog responds (in msec).                              | `60000` |
+| app_max_world_size                 | Maximum Radius of World (in blocks).                                                          | `10000` |
+| app_memory                         | Initial Memory.                                                                               | `"3G"` |
+| app_mode                           | Game Mode.                                                                                    | `"creative"` |
+| app_mods_file                      | Path to file with Mod URLs (e.g.: `/extras/mods.txt`)                                         | n/a |
+| app_motd                           | Message of the Day.                                                                           | `"This Server is running on §2§lHashiCorp Nomad§r!"` |
+| app_online_mode                    | Toggle to enable Account Authentication (with Minecraft.net / Microsoft Account).             | `false` |
+| app_override_icon                  | Toggle to allow overriding Server Icon.                                                       | `true` |
+| app_plugins_file                   | Path to file with Plugin URLs (e.g.: `/extras/plugins.txt`)                                   | n/a |
+| app_pvp                            | Toggle to enable PvP Damage.                                                                  | `false` |
+| app_rcon_cmds_connect              | RCON Commands to run on (any) Client Connect.                                                 | n/a |
+| app_rcon_cmds_disconnect           | RCON Commands to run on (any) Client Disconnect.                                              | n/a |
+| app_rcon_cmds_first_connect        | RCON Commands to run on first Client Connect.                                                 | n/a |
+| app_rcon_cmds_last_disconnect      | RCON Commands to run on last Client Disconnect.                                               | n/a |
+| app_rcon_cmds_startup              | RCON Commands to run on Server start up.                                                      | n/a |
+| app_rcon_password                  | RCON Interface Password.                                                                      | `"AW96B6"` |
+| app_remove_old_mods                | Toggle to enable removal of old Mod Data Files.                                               | `true` |
+| app_resource_pack                  | URL to Resource Pack (in ZIP format).                                                         | n/a |
+| app_resource_pack_sha1             | SHA1 Checksum for Resource Pack.                                                              | n/a |
+| app_seed                           | Level Seed.                                                                                   | `"5379859465535818918"` |
+| app_server_name                    | Server Name.                                                                                  | `"Minecraft Java Edition Server"` |
+| app_snooper_enabled                | Toggle to enable sending updates to `snoop.minecraft.net`.                                    | `false` |
+| app_spawn_animals                  | Toggle to enable Animals to spawn.                                                            | `true` |
+| app_spawn_monsters                 | Toggle to enable Monsters to spawn.                                                           | `false` |
+| app_spawn_npcs                     | Toggle to enable NPCs to spawn.                                                               | `true` |
+| app_spawn_protection               | Sets area that non-ops cannot alter (in blocks).                                              | n/a |
+| app_stop_duration                  | Time (in seconds) the Minecraft Process Wrapper will wait for processes to gradually finish.  | `60` |
+| app_stop_server_announce_delay     | Time (in seconds) Players are allowed to finish activities until Server shuts down.           | `30` |
+| app_type                           | Server Type (e.g.: `vanilla`, `fabric`, etc.).                                                | `"vanilla"` |
+| app_tz                             | Timezone.                                                                                     | `"Europe/Amsterdam"` |
+| app_use_aikar_flags                | Toggle to enable optimized JVM flags for GC tuning.                                           | `true` |
+| app_version                        | Minecraft Version.                                                                            | `"1.20"` |
+| app_view_distance                  | Amount of World Data to send to define viewing distance (in blocks).                          | `32` |
+| app_world                          | URL to Minecraft World ZIP archive.                                                           | n/a |
 
 #### Nomad
 

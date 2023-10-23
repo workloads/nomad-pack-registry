@@ -70,6 +70,20 @@ variable "app_eula" {
   default     = true
 }
 
+variable "app_force_redownload" {
+  type        = bool
+  description = "Toggle to force redownloading of Server (JAR) File."
+  default     = false
+}
+
+variable "app_force_world_copy" {
+  type        = bool
+  description = "Toggle to force copying of World Data."
+
+  # setting this to `true` is a destructive action that will overwrite existing World Data
+  default     = false
+}
+
 variable "app_generate_structures" {
   type        = bool
   description = "Toggle to pre-generate Structures (e.g.: Villages, Outposts)."
@@ -98,6 +112,12 @@ variable "app_level_type" {
   type        = string
   description = "Level Type (e.g.: `normal`, `flat`)."
   default     = "normal"
+}
+
+variable "app_log_timestamp" {
+  type        = bool
+  description = "Togggle to include Timestamp in Log Messages."
+  default     = true
 }
 
 variable "app_max_build_height" {
@@ -142,6 +162,7 @@ variable "app_mode" {
   default     = "creative"
 }
 
+# see https://docker-minecraft-server.readthedocs.io/en/latest/mods-and-plugins/#modplugin-url-listing-file
 variable "app_mods_file" {
   type        = string
   description = "Path to file with Mod URLs (e.g.: `/extras/mods.txt`)"
@@ -151,6 +172,8 @@ variable "app_mods_file" {
 variable "app_motd" {
   type        = string
   description = "Message of the Day."
+
+  # this value supports Formatting codes, see https://minecraft.wiki/w/Formatting_codes
   default     = "This Server is running on §2§lHashiCorp Nomad§r!"
 }
 
@@ -166,6 +189,13 @@ variable "app_override_icon" {
   default     = true
 }
 
+# see https://docker-minecraft-server.readthedocs.io/en/latest/mods-and-plugins/#modplugin-url-listing-file
+variable "app_plugins_file" {
+  type        = string
+  description = "Path to file with Plugin URLs (e.g.: `/extras/plugins.txt`)"
+  default     = ""
+}
+
 variable "app_pvp" {
   type        = bool
   description = "Toggle to enable PvP Damage."
@@ -178,9 +208,65 @@ variable "app_rcon_password" {
   default     = "AW96B6"
 }
 
+# see https://docker-minecraft-server.readthedocs.io/en/latest/configuration/server-properties/#custom-server-resource-pack
+variable "app_resource_pack" {
+  type        = string
+  description = "URL to Resource Pack (in ZIP format)."
+  default     = ""
+}
+
+# see https://docker-minecraft-server.readthedocs.io/en/latest/configuration/server-properties/#custom-server-resource-pack
+variable "app_resource_pack_sha1" {
+  type        = string
+  description = "SHA1 Checksum for Resource Pack."
+  default     = ""
+}
+
+# see https://docker-minecraft-server.readthedocs.io/en/latest/configuration/auto-rcon-commands/#auto-execute-rcon-commands
+variable "app_rcon_cmds_connect" {
+  type        = list(string)
+  description = "RCON Commands to run on Client Connect."
+  default     = []
+}
+
+# see https://docker-minecraft-server.readthedocs.io/en/latest/configuration/auto-rcon-commands/#auto-execute-rcon-commands
+variable "app_rcon_cmds_connect" {
+  type        = list(string)
+  description = "RCON Commands to run on (any) Client Connect."
+  default     = []
+}
+
+# see https://docker-minecraft-server.readthedocs.io/en/latest/configuration/auto-rcon-commands/#auto-execute-rcon-commands
+variable "app_rcon_cmds_first_connect" {
+  type        = list(string)
+  description = "RCON Commands to run on first Client Connect."
+  default     = []
+}
+
+# see https://docker-minecraft-server.readthedocs.io/en/latest/configuration/auto-rcon-commands/#auto-execute-rcon-commands
+variable "app_rcon_cmds_disconnect" {
+  type        = list(string)
+  description = "RCON Commands to run on (any) Client Disconnect."
+  default     = []
+}
+
+# see https://docker-minecraft-server.readthedocs.io/en/latest/configuration/auto-rcon-commands/#auto-execute-rcon-commands
+variable "app_rcon_cmds_last_disconnect" {
+  type        = list(string)
+  description = "RCON Commands to run on last Client Disconnect."
+  default     = []
+}
+
+# see https://docker-minecraft-server.readthedocs.io/en/latest/configuration/auto-rcon-commands/#auto-execute-rcon-commands
+variable "app_rcon_cmds_startup" {
+  type        = list(string)
+  description = "RCON Commands to run on Server start up."
+  default     = []
+}
+
 variable "app_remove_old_mods" {
   type        = bool
-  description = "Toggle to enable removal of old Mods."
+  description = "Toggle to enable removal of old Mod Data Files."
   default     = true
 }
 
@@ -234,6 +320,20 @@ variable "app_spawn_protection" {
   type        = number
   description = "Sets area that non-ops cannot alter (in blocks)."
   default     = 0
+}
+
+# see https://docker-minecraft-server.readthedocs.io/en/latest/configuration/misc-options/#stop-duration
+variable "app_stop_duration" {
+  type        = number
+  description = "Time (in seconds) the Minecraft Process Wrapper will wait for processes to gradually finish."
+  default     = 60
+}
+
+# see https://docker-minecraft-server.readthedocs.io/en/latest/configuration/misc-options/#server-shutdown-options
+variable "app_stop_server_announce_delay" {
+  type        = number
+  description = "Time (in seconds) Players are allowed to finish activities until Server shuts down."
+  default     = 30
 }
 
 variable "app_type" {
