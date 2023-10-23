@@ -354,7 +354,7 @@ variable "app_use_aikar_flags" {
   default     = true
 }
 
-# see https://minecraft.fandom.com/wiki/Category:Java_Edition_versions
+# see https://minecraft.wiki/w/Category:Java_Edition_versions
 variable "app_version" {
   type        = string
   description = "Minecraft Version."
