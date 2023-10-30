@@ -1,5 +1,5 @@
 [[- if .my.nomad_pack_verbose_output ]]
-# Job: _[[ .my.nomad_job_name ]]_ (`v[[ .nomad_pack.pack.version ]]`)
+# Job: _[[ var "nomad_job_name" . ]]_ (`v[[ meta "pack.version" . ]]`)
 
   Region:    `[[ .my.nomad_job_region ]]`
   DC(s):     `[[ .my.nomad_job_datacenters | toJson ]]`

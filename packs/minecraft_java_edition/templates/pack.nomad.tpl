@@ -1,6 +1,6 @@
 [[/* remove `rcon` from `$ports` if `var "app_enable_rcon" .` is false */]]
 [[- $ports := var "nomad_group_ports" . ]]
-[[- if (ne (var "app_enable_rcon" . ) true) ]]
+[[- if not (var "app_enable_rcon" . ) ]]
 [[ unset $ports "rcon" ]]
 [[- end ]]
 

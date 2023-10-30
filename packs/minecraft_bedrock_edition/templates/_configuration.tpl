@@ -1,6 +1,6 @@
 [[/* format all `app_` variables in the best-possible way */]]
 [[- define "configuration" ]]
-  [[- range $name, $value := .my -]]
+  [[- range $name, $value := vars . -]]
     [[ if and ($name | hasPrefix "app_") (printf "%v" $value) ]]
       [[- $clean_name := $name | trimPrefix "app_" | upper ]]
       [[- if (eq "slice" (kindOf $value)) ]]

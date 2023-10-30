@@ -1,5 +1,5 @@
 [[- if var "nomad_pack_verbose_output" . ]]
-# Job: _[[ var "nomad_job_name" . ]]_ (`v[[ var "nomad_pack.pack.version" . ]]`)
+# Job: _[[ var "nomad_job_name" . ]]_ (`v[[ meta "pack.version" . ]]`)
 
   Region:    `[[ var "nomad_job_region" . ]]`
   DC(s):     `[[ var "nomad_job_datacenters" . | toJson ]]`
@@ -25,7 +25,7 @@
 
   [[- /* remove `rcon` from `$ports` if `var "app_enable_rcon" ` is false */]]
   [[- $ports := var "nomad_group_ports" . ]]
-  [[- if (ne (var "app_enable_rcon" . ) true) ]]
+  [[- if not (var "app_enable_rcon" . ) ]]
   [[ unset $ports "rcon" ]]
   [[- end ]]
   [[- range $name, $config := $ports ]]
