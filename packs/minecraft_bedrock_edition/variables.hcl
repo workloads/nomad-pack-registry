@@ -3,7 +3,7 @@
 #######################################
 
 # this section contains a non-exhaustive selection of Minecraft Server configuration options
-# see https://minecraft.fandom.com/wiki/Server.properties#Bedrock_Edition_3 for all available options.
+# see https://minecraft.wiki/w/Server.properties#Bedrock_Edition_3 for all available options.
 
 variable "app_allow_cheats" {
   type        = bool
