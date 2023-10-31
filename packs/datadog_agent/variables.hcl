@@ -545,7 +545,7 @@ variable "app_dd_apm_max_cpu_percent" {
 
 # see https://docs.datadoghq.com/tracing/setup_overview/configure_data_security/#replace-rules-for-tag-filtering
 variable "app_dd_apm_replace_tags" {
-  type        = list(object({
+  type = list(object({
     name    = string
     pattern = string
     repl    = string
@@ -675,7 +675,7 @@ variable "app_dd_process_config_custom_sensitive_words" {
   type        = list(string)
   description = "List of Strings of sensitive words to merge with Datadog defaults."
 
-  default     = [
+  default = [
     "access_key",
     "secret_access_key",
     "*token",

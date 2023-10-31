@@ -81,7 +81,7 @@ variable "app_force_world_copy" {
   description = "Toggle to force copying of World Data."
 
   # setting this to `true` is a destructive action that will overwrite existing World Data
-  default     = false
+  default = false
 }
 
 variable "app_generate_structures" {
@@ -174,7 +174,7 @@ variable "app_motd" {
   description = "Message of the Day."
 
   # this value supports Formatting codes, see https://minecraft.wiki/w/Formatting_codes
-  default     = "This Server is running on §2§lHashiCorp Nomad§r!"
+  default = "This Server is running on §2§lHashiCorp Nomad§r!"
 }
 
 variable "app_online_mode" {
