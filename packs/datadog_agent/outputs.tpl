@@ -44,11 +44,11 @@
 
 ## URLs:
 
-  Datadog Interface:     [[ .my.app_dd_url ]]
-  Infrastructure Map:    [[ .my.app_dd_url ]]/infrastructure/map?fillby=avg%%3Adatadog.agent.running&filter=[[ first .my.dd_tags | replace ":" "%%3A" ]]
+  Datadog Interface:     [[ var "app_dd_url" . ]]
+  Infrastructure Map:    [[ var "app_dd_url" . ]]/infrastructure/map?fillby=avg%%3Adatadog.agent.running&filter=[[ first var "dd_tags" . | replace ":" "%%3A" ]]
 
-  [[- if .my.nomad_group_ports.gui ]]
-  Datadog Agent Manager: [[ .my.nomad_group_ports.gui.protocol ]]://[[ .my.app_dd_bind_host ]]:[[ .my.nomad_group_ports.gui.port ]][[ .my.nomad_group_ports.gui.path ]]
+  [[- if var "nomad_group_ports.gui" . ]]
+  Datadog Agent Manager: [[ var "nomad_group_ports.gui.protocol" . ]]://[[ var "app_dd_bind_host" . ]]:[[ var "nomad_group_ports.gui.port" . ]][[ var "nomad_group_ports.gui.path" . ]]
   [[- end ]]
 
 [[ end -]]
