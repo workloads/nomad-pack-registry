@@ -23,7 +23,6 @@ endif
 
 include ../tooling/make/configs/shared.mk
 include ../tooling/make/functions/shared.mk
-include ../tooling/make/functions/nomad.mk
 
 # conditionally load Pack-specific configuration if the
 # target is `env` and the `pack` argument is not empty
