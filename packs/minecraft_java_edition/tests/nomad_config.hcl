@@ -55,7 +55,7 @@ plugin "docker" {
     extra_labels = [
       "nomad_job_name",
       "job_id",
-      "task_name"
+      "task_name",
     ]
 
     # see https://developer.hashicorp.com/nomad/docs/drivers/docker#gc
