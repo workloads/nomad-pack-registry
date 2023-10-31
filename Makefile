@@ -23,6 +23,7 @@ endif
 
 include ../tooling/make/configs/shared.mk
 include ../tooling/make/functions/shared.mk
+include ../tooling/make/functions/nomad.mk
 
 # conditionally load Pack-specific configuration if the
 # target is `env` and the `pack` argument is not empty
@@ -113,6 +114,7 @@ define create_test_environment
 	$(if $(pack),,$(call missing_argument,test,pack=<pack>))
 
 	# create test directories if they do not exist
+	# see https://www.gnu.org/software/make/manual/html_node/Foreach-Function.html
 	$(foreach TEST_DIRECTORY,$(TEST_DIRECTORIES),$(call safely_create_directory,$(TEST_DIRECTORY)))
 
 	echo
@@ -220,6 +222,11 @@ restart: # restart a Task [Usage: `make restart task=<task>`]
 	$(if $(pack),,$(call missing_argument,test,pack=<pack>))
 
 	$(call restart_task,$(task))
+
+.SILENT .PHONY: format
+format: # format HCL files for all Nomad Packs [Usage: `make format`]
+	# see https://www.gnu.org/software/make/manual/html_node/Foreach-Function.html
+	$(foreach PACK,$(PACKS),$(call format_nomad_pack,$(PACK)))
 
 .SILENT .PHONY: docs
 docs: # generate documentation for all Nomad Packs [Usage: `make docs`]
