@@ -37,6 +37,12 @@ endif
 
 endif
 
+# format a Nomad Pack's files ending in `.hcl`
+define format_nomad_pack
+	# see https://www.gnu.org/software/make/manual/html_node/Foreach-Function.html
+	$(foreach FILE,$(shell find $(DIR_PACKS)/$(1) -type f -name "*.hcl"),$(call format_hcl_files,$(FILE)))
+endef
+
 # render a Nomad Pack
 define render_pack
 	$(if $(pack),,$(call missing_argument,render,pack=<pack>))
