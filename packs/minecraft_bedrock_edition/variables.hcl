@@ -86,7 +86,7 @@ variable "app_level_type" {
   description = "Level Type."
 
   # options: `DEFAULT`, `FLAT`, `NORMAL`
-  default     = "DEFAULT"
+  default = "DEFAULT"
 }
 
 variable "app_max_players" {

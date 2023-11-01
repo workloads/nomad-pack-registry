@@ -1,31 +1,31 @@
-[[- if .my.nomad_pack_verbose_output ]]
-# Job: _[[ .my.nomad_job_name ]]_ (`v[[ .nomad_pack.pack.version ]]`)
+[[- if var "nomad_pack_verbose_output" . ]]
+# Job: _[[ var "nomad_job_name" . ]]_ (`v[[ meta "pack.version" . ]]`)
 
-  Region:    `[[ .my.nomad_job_region ]]`
-  DC(s):     `[[ .my.nomad_job_datacenters | toJson ]]`
-  Namespace: `[[ .my.nomad_job_namespace ]]`
-  Name:      `[[ .my.nomad_job_name ]]`
-  Count:     `[[ .my.nomad_group_count ]]`
+  Region:    `[[ var "nomad_job_region" . ]]`
+  DC(s):     `[[ var "nomad_job_datacenters" . | toJson ]]`
+  Namespace: `[[ var "nomad_job_namespace" . ]]`
+  Name:      `[[ var "nomad_job_name" . ]]`
+  Count:     `[[ var "nomad_group_count" . ]]`
 
 ## Image
 
-  Registry:  `[[ .my.nomad_task_image.registry ]]`
-  Namespace: `[[ .my.nomad_task_image.namespace ]]`
-  Image:     `[[ .my.nomad_task_image.image ]]:[[ .my.nomad_task_image.tag ]]`
-  Digest:    `[[ .my.nomad_task_image.digest ]]`
+  Registry:  `[[ var "nomad_task_image.registry" . ]]`
+  Namespace: `[[ var "nomad_task_image.namespace" . ]]`
+  Image:     `[[ var "nomad_task_image.image" . ]]:[[ var "nomad_task_image.tag" . ]]`
+  Digest:    `[[ var "nomad_task_image.digest" . ]]`
 
   [[- /* pretty-print Image information */]]
-  [[- if eq .my.nomad_task_image.registry "index.docker.io" ]]
-  URL:       https://hub.docker.com/layers/[[ .my.nomad_task_image.namespace ]]/[[ .my.nomad_task_image.image ]]/[[ .my.nomad_task_image.tag ]]/images/[[ .my.nomad_task_image.digest | replace ":" "-" ]]
+  [[- if eq (var "nomad_task_image.registry" . ) "index.docker.io" ]]
+  URL:       https://hub.docker.com/layers/[[ var "nomad_task_image.namespace" . ]]/[[ var "nomad_task_image.image" . ]]/[[ var "nomad_task_image.tag" . ]]/images/[[ var "nomad_task_image.digest" . | replace ":" "-" ]]
   [[ else ]]
-  URL:       https://[[ .my.nomad_task_image.registry ]]/[[ .my.nomad_task_image.namespace ]]/[[ .my.nomad_task_image.image ]]:[[ .my.nomad_task_image.tag ]]
+  URL:       https://[[ var "nomad_task_image.registry" . ]]/[[ var "nomad_task_image.namespace" . ]]/[[ var "nomad_task_image.image" . ]]:[[ var "nomad_task_image.tag" . ]]
   [[ end ]]
 
 ## Ports
 
-  [[- /* remove `rcon` from `$ports` if `.my.app_enable_rcon` is false */]]
-  [[- $ports := .my.nomad_group_ports ]]
-  [[- if (ne .my.app_enable_rcon true) ]]
+  [[- /* remove `rcon` from `$ports` if `var "app_enable_rcon" .` is false */]]
+  [[- $ports := var "nomad_group_ports" . ]]
+  [[- if not (var "app_enable_rcon" . ) ]]
   [[ unset $ports "rcon" ]]
   [[- end ]]
   [[- range $name, $config := $ports ]]
@@ -34,24 +34,24 @@
 
 ## Resources
 
-  CPU:    [[ .my.nomad_task_resources.cpu ]] MHz
-  Memory: [[ .my.nomad_task_resources.memory ]] MB
+  CPU:    [[ var "nomad_task_resources.cpu" . ]] MHz
+  Memory: [[ var "nomad_task_resources.memory" . ]] MB
 
-[[- if .my.nomad_group_volumes ]]
+[[- if var "nomad_group_volumes" . ]]
 ## Volumes
 
-  [[- range $name, $mounts := .my.nomad_group_volumes ]]
+  [[- range $name, $mounts := var "nomad_group_volumes" . ]]
   - `[[ $mounts.name ]]` = `[[ $mounts.destination | toPrettyJson ]]` (type: `[[ $mounts.type ]]`[[ if $mounts.read_only ]], read-only[[ end ]])
   [[- end ]]
 [[ end ]]
 
 ## Service
 
-  Service Provider: `[[ .my.service_provider ]]`
-  Service Name:     `[[ .my.nomad_job_name | replace "_" "-" | trunc 63 | quote ]]`
+  Service Provider: `[[ var "service_provider" . ]]`
+  Service Name:     `[[ var "nomad_job_name" . | replace "_" "-" | trunc 63 | quote ]]`
 
   Service Tags:
-    [[- range $name := .my.nomad_group_tags ]]
+    [[- range $name := var "nomad_group_tags" . ]]
     - `[[ $name ]]`
     [[- end ]]
 
