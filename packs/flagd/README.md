@@ -107,6 +107,8 @@ nomad \
       "flags=$(curl https://raw.githubusercontent.com/open-feature/flagd/main/samples/example_flags.flagd.json)"
 ```
 
+The above example will force-write the content of [example_flags.flagd.json](https://raw.githubusercontent.com/open-feature/flagd/main/samples/example_flags.flagd.json) to the Nomad Variable `flags`, which is accessible to a Nomad Job named `flagd`.
+
 ## Author Information
 
 This repository is maintained by the contributors listed on [GitHub](https://github.com/workloads/nomad-pack-registry/graphs/contributors).
