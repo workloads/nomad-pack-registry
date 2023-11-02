@@ -51,10 +51,4 @@
     - `[[ $name ]]`
     [[- end ]]
 
-## Application Configuration
-
-```env
-This Pack does not have any application-specific configuration.
-```
-
 [[ end -]]

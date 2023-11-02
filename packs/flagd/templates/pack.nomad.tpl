@@ -112,11 +112,6 @@ job "[[ var "nomad_job_name" . ]]" {
         ]
       }
 
-      # see https://developer.hashicorp.com/nomad/docs/job-specification/env
-      env {
-        # The flagd Pack does not currently use any environment variables
-      }
-
       # see https://developer.hashicorp.com/nomad/docs/job-specification/template
       template {
         change_mode = "noop"
