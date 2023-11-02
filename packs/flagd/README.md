@@ -49,9 +49,8 @@ nomad-pack run flagd --registry=workloads
 
 This section describes Application-specific configuration.
 
-| Name             | Description           | Default |
-| ---------------- | --------------------- | ------- |
-| app_source_uri   | Source URI to serve.  | `"http:https://raw.githubusercontent.com/open-feature/flagd/main/samples/example_flags.flagd.json"` |
+| Name | Description | Default |
+| -- | - | ------- |
 
 #### Nomad
 
@@ -63,24 +62,24 @@ This section describes Nomad-specific configuration.
 | nomad_group_ephemeral_disk        | Ephemeral Disk Configuration for the Group.                   | `{"migrate":true,"size":128,"sticky":true}` |
 | nomad_group_name                  | Name for the Group.                                           | `"flagd"` |
 | nomad_group_network_mode          | Network Mode for the Group.                                   | `"host"` |
-| nomad_group_ports                 | Port Configuration for the Group.                             | `{"health":{"check_interval":"30s","check_timeout":"15s","host_network":null,"name":"flagd_health","path":"/healthz","port":8014,"type":"http"},"main":{"check_interval":"30s","check_timeout":"15s","host_network":null,"name":"flagd_main","path":"/","port":8013,"type":"http"}}` |
+| nomad_group_ports                 | Port Configuration for the Group.                             | `{"health":{"check_interval":"30s","check_timeout":"15s","host_network":null,"method":"GET","name":"health","omit_check":false,"path":"/healthz","port":8014,"type":"http"},"main":{"check_interval":"30s","check_timeout":"15s","host_network":null,"method":"POST","name":"main","omit_check":true,"path":"/","port":8013,"type":"http"}}` |
 | nomad_group_restart_logic         | Restart Logic for the Group.                                  | `{"attempts":3,"delay":"30s","interval":"120s","mode":"fail"}` |
 | nomad_group_service_name_prefix   | Name of the Service for the Group.                            | `"flagd"` |
 | nomad_group_service_provider      | Provider of the Service for the Group.                        | `"nomad"` |
 | nomad_group_tags                  | List of Tags for the Group.                                   | `["flagd"]` |
-| nomad_group_volumes               | Volumes for the Group.                                        | `{"flagd_config":{"destination":"/etc/flagd","name":"flagd_config","read_only":false,"type":"host"}}` |
+| nomad_group_volumes               | Volumes for the Group.                                        | `{}` |
 | nomad_job_datacenters             | Eligible Datacenters for the Job.                             | `["*"]` |
 | nomad_job_name                    | Name for the Job.                                             | `"flagd"` |
 | nomad_job_namespace               | Namespace for the Job.                                        | `"default"` |
 | nomad_job_priority                | Priority for the Job.                                         | `10` |
 | nomad_job_region                  | Region for the Job.                                           | `"global"` |
 | nomad_pack_verbose_output         | Toggle to enable verbose output.                              | `true` |
-| nomad_task_args                   | Arguments to pass to the Task.                                | `["--config","/nomad/local/flagd.yml"]` |
+| nomad_task_args                   | Arguments to pass to the Task.                                | n/a |
 | nomad_task_command                | Command to pass to the Task.                                  | `"start"` |
 | nomad_task_driver                 | Driver to use for the Task.                                   | `"docker"` |
 | nomad_task_image                  | Content Address to use for the Container Image for the Task.  | `{"digest":"sha256:bc771a0e42089111784f06168238304212c9f22c9b472934de5d4bd742a09a81","image":"flagd","namespace":"open-feature","registry":"ghcr.io","tag":"v0.6.7"}` |
 | nomad_task_name                   | Name for the Task.                                            | `"flagd"` |
-| nomad_task_resources              | Resource Limits for the Task.                                 | `{"cores":null,"cpu":512,"memory":64,"memory_max":512}` |
+| nomad_task_resources              | Resource Limits for the Task.                                 | `{"cores":null,"cpu":500,"memory":64,"memory_max":512}` |
 
 <!-- END_PACK_DOCS -->
 
@@ -94,7 +93,19 @@ For outputs, see [./outputs.tpl](./outputs.tpl).
 
 ## Notes
 
-- By default, this Pack deploys a flagd instance with persistent storage. This requires one [Nomad Volume](https://developer.hashicorp.com/nomad/docs/job-specification/volume) to be configured. See the [test configuration](./tests/nomad_config.hcl) for an example.
+* flagd requires a feature flag definition to complete start-up.
+  This value is provided via the Nomad Variable `flags`, which is stored at `nomad/jobs/flagd`.
+
+* For testing purposes, a sample feature flag definition may be inserted like so:
+
+```shell
+nomad \
+  var \
+    put \
+      -force \
+      "nomad/jobs/flagd" \
+      "flags=$(curl https://raw.githubusercontent.com/open-feature/flagd/main/samples/example_flags.flagd.json)"
+```
 
 ## Author Information
 

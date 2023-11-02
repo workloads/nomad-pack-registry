@@ -20,12 +20,6 @@ acl {
 client {
   enabled = true
 
-  # see https://developer.hashicorp.com/nomad/docs/configuration/client#host_volume
-  host_volume "flagd_config" {
-    path      = "/tmp/flagd_config"
-    read_only = false
-  }
-
   # see https://developer.hashicorp.com/nomad/docs/configuration/client#network_interface
   network_interface = "{{ GetDefaultInterfaces | attr \"name\" }}"
 

@@ -2,14 +2,7 @@
 ## Application-specific Configuration #
 #######################################
 
-# see https://flagd.dev/reference/sync-configuration/#uri-patterns
-variable "app_source_uri" {
-  type        = string
-  description = "Source URI to serve."
-  default     = "http:https://raw.githubusercontent.com/open-feature/flagd/main/samples/example_flags.flagd.json"
-
-  # TODO: add validation and split on `:`; allowed values are `kubernetes`, `file`, `http`, and `grcp`
-}
+# This Pack does not have any application-specific configuration.
 
 ###############################
 ## Pack-specifc Configuration #
@@ -107,13 +100,15 @@ variable "nomad_group_network_mode" {
 
 variable "nomad_group_ports" {
   type = map(object({
+    check_interval = string
+    check_timeout  = string
+    host_network   = string
+    method         = string
     name           = string
+    omit_check     = bool
     path           = string
     port           = number
     type           = string
-    host_network   = string
-    check_interval = string
-    check_timeout  = string
   }))
 
   description = "Port Configuration for the Group."
@@ -121,25 +116,29 @@ variable "nomad_group_ports" {
   default = {
     # port for flagd API
     main = {
-      name           = "flagd_main"
+      check_interval = "30s"
+      check_timeout  = "15s"
+      host_network   = null
+      method         = "POST"
+      name           = "main"
+      omit_check     = true
       path           = "/"
       port           = 8013
       type           = "http"
-      host_network   = null
-      check_interval = "30s"
-      check_timeout  = "15s"
     },
 
     # port for flagd Healthchecks
     # see https://flagd.dev/reference/monitoring/?h=health#http
     health = {
-      name           = "flagd_health"
+      check_interval = "30s"
+      check_timeout  = "15s"
+      host_network   = null
+      method         = "GET"
+      name           = "health"
+      omit_check     = false
       path           = "/healthz"
       port           = 8014
       type           = "http"
-      host_network   = null
-      check_interval = "30s"
-      check_timeout  = "15s"
     },
   }
 }
@@ -193,14 +192,7 @@ variable "nomad_group_volumes" {
 
   description = "Volumes for the Group."
 
-  default = {
-    flagd_config = {
-      name        = "flagd_config",
-      type        = "host"
-      destination = "/etc/flagd"
-      read_only   = false
-    },
-  }
+  default = {}
 }
 
 # see https://developer.hashicorp.com/nomad/docs/drivers/docker#args
@@ -208,10 +200,8 @@ variable "nomad_task_args" {
   type        = list(string)
   description = "Arguments to pass to the Task."
 
-  default = [
-    "--config",
-    "/nomad/local/flagd.yml",
-  ]
+  # see https://flagd.dev/reference/flagd-cli/flagd_start/
+  default = []
 }
 
 # see https://developer.hashicorp.com/nomad/docs/drivers/docker#args
@@ -279,7 +269,7 @@ variable "nomad_task_resources" {
   default = {
     # Tasks can ask for `cpu` or `cores`, not both.
     # value in MHz
-    cpu = 512
+    cpu = 500
 
     # Tasks can ask for `cpu` or `cores`, not both.
     # see https://developer.hashicorp.com/nomad/docs/job-specification/resources#cores

@@ -1,4 +1,6 @@
 [[- $ports := var "nomad_group_ports" . ]]
+[[- $flag_definition := ( list "--uri" "file:${NOMAD_TASK_DIR}/flags.flagd.json" ) ]]
+[[- $nomad_task_args := ( $flag_definition | concat ( var "nomad_task_args" . ) ) | toJson ]]
 
 # see https://developer.hashicorp.com/nomad/docs/job-specification/job
 job "[[ var "nomad_job_name" . ]]" {
@@ -46,19 +48,22 @@ job "[[ var "nomad_job_name" . ]]" {
     service {
       name     = "[[ $service_name | replace "_" "-" | trunc 20 ]]-[[ $name | replace "_" "-" | trunc 43 ]]"
       tags     = [[ $job_tags | toJson ]]
-      port     = [[ $port.port ]]
+      port     = "[[ $port.name ]]"
       provider = "[[ $service_provider ]]"
 
+      [[ if eq $port.omit_check false ]]
       # see https://developer.hashicorp.com/nomad/docs/job-specification/check
       check {
         name     = "[[ $name ]]"
         type     = "[[ $port.type ]]"
         [[- if eq $port.type "http" ]]
+        method   = "[[ $port.method ]]"
         path     = "[[ $port.path ]]"
         [[- end ]]
         interval = "[[ $port.check_interval ]]"
         timeout  = "[[ $port.check_timeout ]]"
       }
+      [[- end ]]
     }
     [[ end ]]
 
@@ -96,7 +101,7 @@ job "[[ var "nomad_job_name" . ]]" {
         command = "[[ var "nomad_task_command" . ]]"
 
         # see https://developer.hashicorp.com/nomad/docs/drivers/docker#args
-        args = [[ var "nomad_task_args" . | toJson ]]
+        args = [[ $nomad_task_args ]]
 
         # see https://developer.hashicorp.com/nomad/docs/drivers/docker#ports
         # and https://developer.hashicorp.com/nomad/plugins/drivers/podman#ports
@@ -109,7 +114,21 @@ job "[[ var "nomad_job_name" . ]]" {
 
       # see https://developer.hashicorp.com/nomad/docs/job-specification/env
       env {
-        [[- template "configuration" . ]]
+        # The flagd Pack does not currently use any environment variables
+      }
+
+      # see https://developer.hashicorp.com/nomad/docs/job-specification/template
+      template {
+        change_mode = "noop"
+
+        data = <<DATA
+        {{- with nomadVar "nomad/jobs/[[ var "nomad_job_name" . ]]" -}}
+        {{ .flags }}
+        {{- end -}}
+        DATA
+
+        destination          = "${NOMAD_TASK_DIR}/flags.flagd.json"
+        error_on_missing_key = true
       }
 
       # see https://developer.hashicorp.com/nomad/docs/job-specification/volume_mount

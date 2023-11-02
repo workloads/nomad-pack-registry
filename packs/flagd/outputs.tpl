@@ -44,7 +44,7 @@
 
 ## Service
 
-  Service Provider: `[[ var "service_provider" . ]]`
+  Service Provider: `[[ var "nomad_group_service_provider" . ]]`
   Service Name:     `[[ var "nomad_job_name" . | replace "_" "-" | trunc 63 | quote ]]`
 
   Service Tags:
@@ -55,7 +55,7 @@
 ## Application Configuration
 
 ```env
-[[- template "configuration" . ]]
+This Pack does not have any application-specific configuration.
 ```
 
 [[ end -]]
