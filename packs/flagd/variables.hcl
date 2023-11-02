@@ -77,7 +77,7 @@ variable "nomad_group_ephemeral_disk" {
     migrate = false
 
     # size of the ephemeral disk in MB
-    size = 16
+    size = 128
 
     sticky = false
   }
@@ -112,7 +112,7 @@ variable "nomad_group_ports" {
   description = "Port Configuration for the Group."
 
   default = {
-    # port for flagd API
+    # port for flagd
     main = {
       check_interval = "30s"
       check_timeout  = "15s"
@@ -125,7 +125,7 @@ variable "nomad_group_ports" {
       type           = "http"
     },
 
-    # port for flagd Healthchecks
+    # port for flagd healthcheck
     # see https://flagd.dev/reference/monitoring/?h=health#http
     health = {
       check_interval = "30s"
