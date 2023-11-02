@@ -74,14 +74,12 @@ variable "nomad_group_ephemeral_disk" {
   description = "Ephemeral Disk Configuration for the Group."
 
   default = {
-    # make best-effort attempt to migrate data to a different node if no placement is possible on the original node.
-    migrate = true
+    migrate = false
 
     # size of the ephemeral disk in MB
-    size = 128
+    size = 16
 
-    # make best-effort attempt to place an updated allocation on the same node.
-    sticky = true
+    sticky = false
   }
 }
 
