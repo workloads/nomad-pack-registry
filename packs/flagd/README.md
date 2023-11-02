@@ -59,7 +59,7 @@ This section describes Nomad-specific configuration.
 | Name                              | Description                                                   | Default |
 | --------------------------------- | ------------------------------------------------------------- | ------- |
 | nomad_group_count                 | Count of Deployments for the Group.                           | `1` |
-| nomad_group_ephemeral_disk        | Ephemeral Disk Configuration for the Group.                   | `{"migrate":true,"size":128,"sticky":true}` |
+| nomad_group_ephemeral_disk        | Ephemeral Disk Configuration for the Group.                   | `{"migrate":false,"size":16,"sticky":false}` |
 | nomad_group_name                  | Name for the Group.                                           | `"flagd"` |
 | nomad_group_network_mode          | Network Mode for the Group.                                   | `"host"` |
 | nomad_group_ports                 | Port Configuration for the Group.                             | `{"health":{"check_interval":"30s","check_timeout":"15s","host_network":null,"method":"GET","name":"health","omit_check":false,"path":"/healthz","port":8014,"type":"http"},"main":{"check_interval":"30s","check_timeout":"15s","host_network":null,"method":"POST","name":"main","omit_check":true,"path":"/","port":8013,"type":"http"}}` |

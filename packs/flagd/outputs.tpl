@@ -23,7 +23,6 @@
 
 ## Ports
 
-  [[- /* remove `rcon` from `$ports` if `var "app_enable_rcon" .` is false */]]
   [[- $ports := var "nomad_group_ports" . ]]
   [[- range $name, $config := $ports ]]
   - `[[ $name ]]`: `[[ $config.port ]]` (type: `[[ $config.type ]]` [[ if and (eq $config.type "http") (eq $config.protocol "https") ]]protocol: `https`[[ end ]])
