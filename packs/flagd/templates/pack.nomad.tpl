@@ -48,7 +48,7 @@ job "[[ var "nomad_job_name" . ]]" {
     service {
       name     = "[[ $service_name | replace "_" "-" | trunc 20 ]]-[[ $name | replace "_" "-" | trunc 43 ]]"
       tags     = [[ $job_tags | toJson ]]
-      port     = "[[ $port.name ]]"
+      port     = "[[ $name ]]"
       provider = "[[ $service_provider ]]"
 
       [[ if eq $port.omit_check false ]]
