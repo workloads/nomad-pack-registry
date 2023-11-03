@@ -46,7 +46,7 @@
 ## URLs:
 
   Datadog Interface:     [[ var "app_dd_url" . ]]
-  Infrastructure Map:    [[ var "app_dd_url" . ]]/infrastructure/map?fillby=avg%%3Adatadog.agent.running&filter=[[ first var "dd_tags" . | replace ":" "%%3A" ]]
+  Infrastructure Map:    [[ var "app_dd_url" . ]]/infrastructure/map?fillby=avg%%3Adatadog.agent.running&filter=[[ first ( var "dd_tags" . ) | replace ":" "%%3A" ]]
 
   [[- if var "nomad_group_ports.gui" . ]]
   Datadog Agent Manager: [[ var "nomad_group_ports.gui.protocol" . ]]://[[ var "app_dd_bind_host" . ]]:[[ var "nomad_group_ports.gui.port" . ]][[ var "nomad_group_ports.gui.path" . ]]
