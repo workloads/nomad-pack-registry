@@ -247,6 +247,7 @@ This section describes Nomad-specific configuration.
 
 | Name                              | Description                                  | Default |
 | --------------------------------- | -------------------------------------------- | ------- |
+| nomad_group_count                 | Count of Deployments for the Group.          | `1` |
 | nomad_group_ephemeral_disk        | Ephemeral Disk Configuration for the Group.  | `{"migrate":true,"size":128,"sticky":false}` |
 | nomad_group_name                  | Name for the Group.                          | `"datadog_agent"` |
 | nomad_group_network_mode          | Network Mode for the Group.                  | `"host"` |

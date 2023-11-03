@@ -1362,6 +1362,12 @@ variable "nomad_job_priority" {
   default     = 50
 }
 
+variable "nomad_group_count" {
+  type        = number
+  description = "Count of Deployments for the Group."
+  default     = 1
+}
+
 # see https://developer.hashicorp.com/nomad/docs/concepts/architecture#regions
 variable "nomad_job_region" {
   type        = string
