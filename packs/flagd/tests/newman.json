@@ -206,7 +206,7 @@
               "// define test data, taking care to map it as closely to Nomad Job configuration syntax as possible",
               "const config = {",
               "  EphemeralDisk: {",
-              "    Sticky: true,",
+              "    Sticky: false,",
               "    SizeMB: 128",
               "  },",
               "",
