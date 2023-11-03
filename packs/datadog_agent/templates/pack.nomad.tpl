@@ -44,23 +44,22 @@ job "[[ var "nomad_job_name" . ]]" {
     service {
       name     = "[[ $service_name | replace "_" "-" | trunc 20 ]]-[[ $name | replace "_" "-" | trunc 43 ]]"
       tags     = [[ $job_tags | toJson ]]
-      port     = [[ $port.port ]]
+      port     = "[[ $name ]]"
       provider = "[[ $service_provider ]]"
 
-      [[- /* specifically ignore IPC, GUI, and DogStatsD ports, as the check require unsupported strategies */]]
-      [[ if not (or (eq $port.port 5001) (eq $port.port 5002) (eq $port.port 8125)) ]]
+      [[ if eq $port.omit_check false ]]
       # see https://developer.hashicorp.com/nomad/docs/job-specification/check
       check {
-        name            = "[[ $name ]]"
-        type            = "[[ $port.type ]]"
+        name     = "[[ $name ]]"
+        type     = "[[ $port.type ]]"
         [[- if eq $port.type "http" ]]
-        path            = "[[ $port.path ]]"
-        protocol        = "[[ $port.protocol ]]"
+        method   = "[[ $port.method ]]"
+        path     = "[[ $port.path ]]"
         [[- end ]]
-        interval        = "[[ $port.check_interval ]]"
-        timeout         = "[[ $port.check_timeout ]]"
+        interval = "[[ $port.check_interval ]]"
+        timeout  = "[[ $port.check_timeout ]]"
       }
-      [[ end ]]
+      [[- end ]]
     }
     [[ end ]]
 

@@ -226,7 +226,7 @@ variable "nomad_group_ports" {
   default = {
     # port for web UI
     main = {
-      name           = "rcon_web_main"
+      name           = "main"
       path           = "/"
       port           = 4326
       type           = "http"
@@ -237,7 +237,7 @@ variable "nomad_group_ports" {
 
     # port for WebSocket Interface
     websocket = {
-      name           = "rcon_web_websocket"
+      name           = "websocket"
       path           = null
       port           = 4327
       type           = "tcp"

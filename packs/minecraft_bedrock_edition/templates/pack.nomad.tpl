@@ -46,19 +46,22 @@ job "[[ var "nomad_job_name" . ]]" {
     service {
       name     = "[[ $service_name | replace "_" "-" | trunc 20 ]]-[[ $name | replace "_" "-" | trunc 43 ]]"
       tags     = [[ $job_tags | toJson ]]
-      port     = [[ $port.port ]]
+      port     = "[[ $name ]]"
       provider = "[[ $service_provider ]]"
 
+      [[ if eq $port.omit_check false ]]
       # see https://developer.hashicorp.com/nomad/docs/job-specification/check
       check {
         name     = "[[ $name ]]"
         type     = "[[ $port.type ]]"
         [[- if eq $port.type "http" ]]
+        method   = "[[ $port.method ]]"
         path     = "[[ $port.path ]]"
         [[- end ]]
         interval = "[[ $port.check_interval ]]"
         timeout  = "[[ $port.check_timeout ]]"
       }
+      [[- end ]]
     }
     [[ end ]]
 

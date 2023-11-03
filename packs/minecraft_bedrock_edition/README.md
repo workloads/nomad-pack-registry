@@ -90,7 +90,7 @@ This section describes Nomad-specific configuration.
 | nomad_group_ephemeral_disk        | Ephemeral Disk Configuration for the Group.                   | `{"migrate":true,"size":1024,"sticky":true}` |
 | nomad_group_name                  | Name for the Group.                                           | `"minecraft"` |
 | nomad_group_network_mode          | Network Mode for the Group.                                   | `"host"` |
-| nomad_group_ports                 | Port Configuration for the Group.                             | `{"main":{"check_interval":"30s","check_timeout":"15s","host_network":null,"name":"minecraft_main","path":null,"port":19132,"type":"tcp"}}` |
+| nomad_group_ports                 | Port Configuration for the Group.                             | `{"main":{"check_interval":"30s","check_timeout":"15s","host_network":null,"method":null,"omit_check":false,"path":null,"port":19132,"type":"tcp"}}` |
 | nomad_group_restart_logic         | Restart Logic for the Group.                                  | `{"attempts":3,"delay":"30s","interval":"120s","mode":"fail"}` |
 | nomad_group_service_name_prefix   | Name of the Service for the Group.                            | `"minecraft"` |
 | nomad_group_service_provider      | Provider of the Service for the Group.                        | `"nomad"` |

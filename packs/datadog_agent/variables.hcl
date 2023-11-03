@@ -1406,14 +1406,14 @@ variable "nomad_group_network_mode" {
 
 variable "nomad_group_ports" {
   type = map(object({
-    name           = string
-    path           = string
-    port           = number
-    protocol       = string
-    type           = string
-    host_network   = string
     check_interval = string
     check_timeout  = string
+    host_network   = string
+    method         = string
+    omit_check     = bool
+    path           = string
+    port           = number
+    type           = string
   }))
 
   description = "Port Configuration for the Group."
@@ -1422,111 +1422,120 @@ variable "nomad_group_ports" {
     # port for Go-Expvar Server
     # see https://docs.datadoghq.com/integrations/go_expvar/?tab=host
     expvar = {
-      name           = "datadog_agent_expvar"
+      check_interval = "30s"
+      check_timeout  = "15s"
+      host_network   = null
+      method         = null
+      omit_check     = false
       path           = null
       port           = 5000
       protocol       = "tcp"
       type           = "tcp"
-      host_network   = null
-      check_interval = "30s"
-      check_timeout  = "15s"
     },
 
     # port for the IPC API
     ipc = {
-      name           = "datadog_agent_ipc"
+      check_interval = "30s"
+      check_timeout  = "15s"
+      host_network   = null
+      method         = null
+      omit_check     = true
       path           = "/agent/status"
       port           = 5001
       protocol       = "https"
       type           = "http"
-      host_network   = null
-      check_interval = "30s"
-      check_timeout  = "15s"
     },
 
     # port for the Agent Browser UI
     # see https://docs.datadoghq.com/agent/basic_agent_usage/
     gui = {
-      name           = "datadog_agent_gui"
+      check_interval = "30s"
+      check_timeout  = "15s"
+      host_network   = null
+      method         = null
+      omit_check     = true
       path           = "/"
       port           = 5002
       protocol       = "http"
       type           = "http"
-      host_network   = null
-      check_interval = "30s"
-      check_timeout  = "15s"
     },
 
     # port for the APM Expvar Server
     apm_expvar = {
-      name           = "datadog_agent_apm_expvar"
+      check_interval = "30s"
+      check_timeout  = "15s"
+      host_network   = null
+      method         = null
+      omit_check     = false
       path           = null
       port           = 5012
       protocol       = "tcp"
       type           = "tcp"
-      host_network   = null
-      check_interval = "30s"
-      check_timeout  = "15s"
     },
 
     # port for the Agent Healthcheck
     healthcheck = {
-      name           = "datadog_agent_healthcheck"
+      check_interval = "30s"
+      check_timeout  = "15s"
+      host_network   = null
+      method         = null
+      omit_check     = false
       path           = "/healthcheck"
       port           = 5555
       protocol       = "http"
       type           = "http"
-      host_network   = null
-      check_interval = "30s"
-      check_timeout  = "15s"
     },
 
     # port for the debug endpoints for the Process Agent
     debug = {
-      name           = "datadog_agent_debug"
+      check_interval = "30s"
+      check_timeout  = "15s"
+      host_network   = null,
+      method         = null
+      omit_check     = false
       path           = null
       port           = 6062
       protocol       = "tcp"
       type           = "tcp"
-      host_network   = null,
-      check_interval = "30s"
-      check_timeout  = "15s"
     },
 
     # port for configuring runtime settings for the Process Agent
     config = {
-      name           = "datadog_agent_config"
+      check_interval = "30s"
+      check_timeout  = "15s"
+      host_network   = null
+      method         = null
+      omit_check     = false
       path           = null
       port           = 6162
       protocol       = "tcp"
       type           = "tcp"
-      host_network   = null
-      check_interval = "30s"
-      check_timeout  = "15s"
     },
 
     # port for DogStatsD
     dogstatsd = {
-      name           = "datadog_agent_dogstatsd"
+      check_interval = "30s"
+      check_timeout  = "15s"
+      host_network   = null
+      method         = null
+      omit_check     = true
       path           = null
       port           = 8125
       protocol       = "tcp"
       type           = "tcp"
-      host_network   = null
-      check_interval = "30s"
-      check_timeout  = "15s"
     },
 
     # port for the APM Receiver
     apm_receiver = {
-      name           = "datadog_agent_apm_receiver"
+      check_interval = "30s"
+      check_timeout  = "15s"
+      host_network   = null
+      method         = null
+      omit_check     = false
       path           = null
       port           = 8126
       protocol       = "tcp"
       type           = "tcp"
-      host_network   = null
-      check_interval = "30s"
-      check_timeout  = "15s"
     },
   }
 }

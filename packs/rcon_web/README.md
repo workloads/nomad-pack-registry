@@ -75,7 +75,7 @@ This section describes Nomad-specific configuration.
 | nomad_group_ephemeral_disk        | Ephemeral Disk Configuration for the Group.                   | `{"migrate":true,"size":128,"sticky":false}` |
 | nomad_group_name                  | Name for the Group.                                           | `"rcon"` |
 | nomad_group_network_mode          | Network Mode for the Group.                                   | `"host"` |
-| nomad_group_ports                 | Port Configuration for the Group.                             | `{"main":{"check_interval":"30s","check_timeout":"15s","host_network":null,"name":"rcon_web_main","path":"/","port":4326,"type":"http"},"websocket":{"check_interval":"30s","check_timeout":"15s","host_network":null,"name":"rcon_web_websocket","path":null,"port":4327,"type":"tcp"}}` |
+| nomad_group_ports                 | Port Configuration for the Group.                             | `{"main":{"check_interval":"30s","check_timeout":"15s","host_network":null,"name":"main","path":"/","port":4326,"type":"http"},"websocket":{"check_interval":"30s","check_timeout":"15s","host_network":null,"name":"websocket","path":null,"port":4327,"type":"tcp"}}` |
 | nomad_group_restart_logic         | Restart Logic for the Group.                                  | `{"attempts":3,"delay":"30s","interval":"120s","mode":"fail"}` |
 | nomad_group_service_name_prefix   | Name of the Service for the Group.                            | `"rcon_web"` |
 | nomad_group_service_provider      | Provider of the Service for the Group.                        | `"nomad"` |

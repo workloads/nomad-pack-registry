@@ -9,7 +9,8 @@
 
 ## Ports
 
-  [[- range $name, $config := var "nomad_group_ports" . ]]
+  [[- $ports := var "nomad_group_ports" . ]]
+  [[- range $name, $config := $ports ]]
   - `[[ $name ]]`: `[[ $config.port ]]` (type: `[[ $config.type ]]` [[ if and (eq $config.type "http") (eq $config.protocol "https") ]]protocol: `https`[[ end ]])
   [[- end ]]
 
