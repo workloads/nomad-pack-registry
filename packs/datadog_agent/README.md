@@ -12,7 +12,7 @@
       * [Application](#application)
       * [Nomad](#nomad)
     * [Outputs](#outputs)
-    * [Notes](#notes)
+  * [Notes](#notes)
   * [Author Information](#author-information)
   * [License](#license)
 <!-- TOC -->
@@ -276,7 +276,7 @@ For outputs, see [./outputs.tpl](./outputs.tpl).
 >
 > The outputs are only rendered if `nomad_pack_verbose_output` is set to `true`.
 
-### Notes
+## Notes
 
 * Datadog Agents require an API key to transmit data to a Datadog Intake Server.
   This value is provided via the Nomad Variable `api_key`, which is stored at `nomad/jobs/datadog_agent`.

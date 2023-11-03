@@ -90,9 +90,9 @@ variable "nomad_pack_verbose_output" {
   default     = true
 }
 
-############################
-## Nomad Job Configuration #
-############################
+#####################################
+## Nomad Job-specific Configuration #
+#####################################
 
 # see https://developer.hashicorp.com/nomad/docs/concepts/architecture#datacenters
 variable "nomad_job_datacenters" {
