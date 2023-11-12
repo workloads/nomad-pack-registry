@@ -506,6 +506,20 @@ variable "nomad_group_ports" {
       port           = 25575
       type           = "tcp"
     },
+
+    # port for Prometheus Exporter Interface
+    # requires https://modrinth.com/mod/fabricexporter to be loaded as part of the server's mods
+    prometheus = {
+      check_interval = "30s"
+      check_timeout  = "15s"
+      host_network   = null
+      method         = null
+      omit_check     = false
+      path           = "/"
+      port           = 25585
+      type           = "http"
+    },
+
   }
 }
 
