@@ -166,7 +166,7 @@ variable "app_mode" {
 variable "app_mods_file" {
   type        = string
   description = "Path to file with Mod URLs (e.g.: `/extras/mods.txt`)"
-  default     = ""
+  default     = "https://assets.workloads.io/minecraft/mods/base/mods.txt"
 }
 
 variable "app_motd" {
@@ -369,8 +369,8 @@ variable "app_view_distance" {
 
 variable "app_world" {
   type        = string
-  description = "URL to Minecraft World ZIP archive."
-  default     = ""
+  description = "World Data."
+  default     = "https://assets.workloads.io/minecraft/worlds/world-of-worlds.zip"
 }
 
 ###############################
