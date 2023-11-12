@@ -520,6 +520,18 @@ variable "nomad_group_ports" {
       type           = "http"
     },
 
+    # port for BlueMap Interface
+    # requires https://modrinth.com/plugin/bluemap to be loaded as part of the server's mods
+    bluemap = {
+      check_interval = "30s"
+      check_timeout  = "15s"
+      host_network   = null
+      method         = null
+      omit_check     = false
+      path           = "/"
+      port           = 25595
+      type           = "http"
+    },
   }
 }
 
