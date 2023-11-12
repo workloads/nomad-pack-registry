@@ -79,7 +79,7 @@ This section describes Application-specific configuration.
 | app_max_world_size                 | Maximum Radius of World (in blocks).                                                          | `10000` |
 | app_memory                         | Initial Memory.                                                                               | `"3G"` |
 | app_mode                           | Game Mode.                                                                                    | `"creative"` |
-| app_mods_file                      | Path to file with Mod URLs (e.g.: `/extras/mods.txt`)                                         | n/a |
+| app_mods_file                      | Path to file with Mod URLs (e.g.: `/extras/mods.txt`)                                         | `"https://assets.workloads.io/minecraft/mods/base/mods.txt"` |
 | app_motd                           | Message of the Day.                                                                           | `"This Server is running on §2§lHashiCorp Nomad§r!"` |
 | app_online_mode                    | Toggle to enable Account Authentication (with Minecraft.net / Microsoft Account).             | `false` |
 | app_override_icon                  | Toggle to allow overriding Server Icon.                                                       | `true` |
@@ -98,17 +98,17 @@ This section describes Application-specific configuration.
 | app_server_name                    | Server Name.                                                                                  | `"Minecraft Java Edition Server"` |
 | app_snooper_enabled                | Toggle to enable sending updates to `snoop.minecraft.net`.                                    | `false` |
 | app_spawn_animals                  | Toggle to enable Animals to spawn.                                                            | `true` |
-| app_spawn_monsters                 | Toggle to enable Monsters to spawn.                                                           | `false` |
+| app_spawn_monsters                 | Toggle to enable Monsters to spawn.                                                           | `true` |
 | app_spawn_npcs                     | Toggle to enable NPCs to spawn.                                                               | `true` |
 | app_spawn_protection               | Sets area that non-ops cannot alter (in blocks).                                              | n/a |
-| app_stop_duration                  | Time (in seconds) the Minecraft Process Wrapper will wait for processes to gradually finish.  | `60` |
-| app_stop_server_announce_delay     | Time (in seconds) Players are allowed to finish activities until Server shuts down.           | `30` |
-| app_type                           | Server Type (e.g.: `vanilla`, `fabric`, etc.).                                                | `"vanilla"` |
+| app_stop_duration                  | Time (in seconds) the Minecraft Process Wrapper will wait for processes to gradually finish.  | `120` |
+| app_stop_server_announce_delay     | Time (in seconds) Players are allowed to finish activities until Server shuts down.           | `60` |
+| app_type                           | Server Type (e.g.: `vanilla`, `fabric`, etc.).                                                | `"fabric"` |
 | app_tz                             | Timezone.                                                                                     | `"Europe/Amsterdam"` |
 | app_use_aikar_flags                | Toggle to enable optimized JVM flags for GC tuning.                                           | `true` |
-| app_version                        | Minecraft Version.                                                                            | `"1.20"` |
+| app_version                        | Minecraft Version.                                                                            | `"1.20.1"` |
 | app_view_distance                  | Amount of World Data to send to define viewing distance (in blocks).                          | `32` |
-| app_world                          | URL to Minecraft World ZIP archive.                                                           | n/a |
+| app_world                          | World Data.                                                                                   | `"https://assets.workloads.io/minecraft/worlds/world-of-worlds.zip"` |
 
 #### Nomad
 
@@ -120,7 +120,7 @@ This section describes Nomad-specific configuration.
 | nomad_group_ephemeral_disk        | Ephemeral Disk Configuration for the Group.                   | `{"migrate":true,"size":1024,"sticky":true}` |
 | nomad_group_name                  | Name for the Group.                                           | `"minecraft"` |
 | nomad_group_network_mode          | Network Mode for the Group.                                   | `"host"` |
-| nomad_group_ports                 | Port Configuration for the Group.                             | `{"main":{"check_interval":"30s","check_timeout":"15s","host_network":null,"method":null,"omit_check":false,"path":null,"port":25565,"type":"tcp"},"rcon":{"check_interval":"30s","check_timeout":"15s","host_network":null,"method":null,"omit_check":false,"path":null,"port":25575,"type":"tcp"}}` |
+| nomad_group_ports                 | Port Configuration for the Group.                             | `{"bluemap":{"check_interval":"30s","check_timeout":"15s","host_network":null,"method":null,"omit_check":false,"path":"/","port":25595,"type":"http"},"main":{"check_interval":"30s","check_timeout":"15s","host_network":null,"method":null,"omit_check":false,"path":null,"port":25565,"type":"tcp"},"prometheus":{"check_interval":"30s","check_timeout":"15s","host_network":null,"method":null,"omit_check":false,"path":"/","port":25585,"type":"http"},"rcon":{"check_interval":"30s","check_timeout":"15s","host_network":null,"method":null,"omit_check":false,"path":null,"port":25575,"type":"tcp"}}` |
 | nomad_group_restart_logic         | Restart Logic for the Group.                                  | `{"attempts":3,"delay":"30s","interval":"120s","mode":"fail"}` |
 | nomad_group_service_name_prefix   | Name of the Service for the Group.                            | `"minecraft"` |
 | nomad_group_service_provider      | Provider of the Service for the Group.                        | `"nomad"` |
