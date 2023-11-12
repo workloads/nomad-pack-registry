@@ -326,14 +326,14 @@ variable "app_spawn_protection" {
 variable "app_stop_duration" {
   type        = number
   description = "Time (in seconds) the Minecraft Process Wrapper will wait for processes to gradually finish."
-  default     = 60
+  default     = 120
 }
 
 # see https://docker-minecraft-server.readthedocs.io/en/latest/configuration/misc-options/#server-shutdown-options
 variable "app_stop_server_announce_delay" {
   type        = number
   description = "Time (in seconds) Players are allowed to finish activities until Server shuts down."
-  default     = 30
+  default     = 60
 }
 
 variable "app_type" {
