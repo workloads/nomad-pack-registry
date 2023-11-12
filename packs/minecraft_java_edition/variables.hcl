@@ -358,7 +358,7 @@ variable "app_use_aikar_flags" {
 variable "app_version" {
   type        = string
   description = "Minecraft Version."
-  default     = "1.20"
+  default     = "1.20.1"
 }
 
 variable "app_view_distance" {
