@@ -339,7 +339,7 @@ variable "app_stop_server_announce_delay" {
 variable "app_type" {
   type        = string
   description = "Server Type (e.g.: `vanilla`, `fabric`, etc.)."
-  default     = "vanilla"
+  default     = "fabric"
 }
 
 variable "app_tz" {
