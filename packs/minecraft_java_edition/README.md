@@ -149,7 +149,9 @@ For outputs, see [./outputs.tpl](./outputs.tpl).
 
 ## Notes
 
-- By default, this Pack deploys a Minecraft server with persistent storage. This requires three [Nomad Volumes](https://developer.hashicorp.com/nomad/docs/job-specification/volume) to be configured. See the [test configuration](./tests/nomad_config.hcl) for an example.
+- The Minecraft server requires access to (persistent) file-system storage. This requires three [Nomad Volumes](https://developer.hashicorp.com/nomad/docs/job-specification/volume) to be configured. See the [test configuration](./tests/nomad_config.hcl) for an example.
+
+- The default set of mods for the Minecraft Server (as defined in the `app_mods_file` variable) includes a [Prometheus](https://prometheus.io) exporter as well as a browser-based [in-game map](https://bluemap.bluecolored.de) interface.
 
 ## Author Information
 
