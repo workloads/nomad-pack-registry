@@ -307,7 +307,7 @@ variable "app_spawn_animals" {
 variable "app_spawn_monsters" {
   type        = bool
   description = "Toggle to enable Monsters to spawn."
-  default     = false
+  default     = true
 }
 
 variable "app_spawn_npcs" {
