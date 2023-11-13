@@ -9,8 +9,8 @@
   * [Table of Contents](#table-of-contents)
   * [Requirements](#requirements)
   * [Usage](#usage)
-      * [Application](#application)
-      * [Nomad](#nomad)
+    * [Application](#application)
+    * [Nomad](#nomad)
     * [Outputs](#outputs)
   * [Author Information](#author-information)
   * [License](#license)
@@ -44,7 +44,7 @@ nomad-pack run rcon_web --registry=workloads
 
 <!-- BEGIN_PACK_DOCS -->
 
-#### Application
+### Application
 
 This section describes Application-specific configuration.
 
@@ -64,7 +64,7 @@ This section describes Application-specific configuration.
 | app_rwa_username                   | Initial User Username.                                        | `"admin"` |
 | app_rwa_web_rcon                   | Toggle to enable Web RCON on Target Server.                   | `false` |
 
-#### Nomad
+### Nomad
 
 This section describes Nomad-specific configuration.
 

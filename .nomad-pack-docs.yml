@@ -3,7 +3,7 @@
 # see https://terraform-docs.io/user-guide/configuration/content/
 content: |-
   {{ define "variables_section" }}
-    {{- printf "\n#### %s\n\n" .title -}}
+    {{- printf "\n### %s\n\n" .title -}}
     {{- printf "This section describes %s-specific configuration.\n\n" .title -}}
 
     {{- /* range over length of characters of .Name and .Description */ -}}

@@ -9,8 +9,8 @@
   * [Table of Contents](#table-of-contents)
   * [Requirements](#requirements)
   * [Usage](#usage)
-      * [Application](#application)
-      * [Nomad](#nomad)
+    * [Application](#application)
+    * [Nomad](#nomad)
     * [Outputs](#outputs)
   * [Notes](#notes)
   * [Author Information](#author-information)
@@ -45,7 +45,7 @@ nomad-pack run datadog_agent --registry=workloads
 
 <!-- BEGIN_PACK_DOCS -->
 
-#### Application
+### Application
 
 This section describes Application-specific configuration.
 
@@ -241,7 +241,7 @@ This section describes Application-specific configuration.
 | app_dd_use_proxy_for_cloud_metadata                                   | Toggle to remove CSP IPs from the transport's `no_proxy` list.                                                         | `null` |
 | app_dd_windows_use_pythonpath                                         | Toggle to honour the value of the `PYTHONPATH` environment variable. Windows only.                                     | `false` |
 
-#### Nomad
+### Nomad
 
 This section describes Nomad-specific configuration.
 
