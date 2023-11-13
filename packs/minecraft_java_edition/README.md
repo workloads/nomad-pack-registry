@@ -64,6 +64,8 @@ This section describes Application-specific configuration.
 | app_enable_rcon                    | Toggle to enable RCON interface.                                                              | `true` |
 | app_enable_rolling_logs            | Toggle to enable Log Rolling.                                                                 | `true` |
 | app_eula                           | Toggle to accept End-User License Agreement.                                                  | `true` |
+| app_fabric_launcher_version        | Version of Fabric Launcher.                                                                   | `"0.11.2"` |
+| app_fabric_loader_version          | Version of Fabric Loader.                                                                     | `"0.14.24"` |
 | app_force_redownload               | Toggle to force redownloading of Server (JAR) File.                                           | `false` |
 | app_force_world_copy               | Toggle to force copying of World Data.                                                        | `false` |
 | app_generate_structures            | Toggle to pre-generate Structures (e.g.: Villages, Outposts).                                 | `true` |
