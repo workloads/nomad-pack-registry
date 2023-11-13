@@ -9,9 +9,8 @@
   * [Table of Contents](#table-of-contents)
   * [Requirements](#requirements)
   * [Usage](#usage)
-    * [Inputs](#inputs)
-      * [Application](#application)
-      * [Nomad](#nomad)
+    * [Application](#application)
+    * [Nomad](#nomad)
     * [Outputs](#outputs)
   * [Notes](#notes)
   * [Author Information](#author-information)
@@ -46,7 +45,7 @@ nomad-pack run minecraft_java_edition --registry=workloads
 
 <!-- BEGIN_PACK_DOCS -->
 
-#### Application
+### Application
 
 This section describes Application-specific configuration.
 
@@ -112,7 +111,7 @@ This section describes Application-specific configuration.
 | app_view_distance                  | Amount of World Data to send to define viewing distance (in blocks).                          | `32` |
 | app_world                          | World Data.                                                                                   | `"https://assets.workloads.io/minecraft/worlds/world-of-worlds.zip"` |
 
-#### Nomad
+### Nomad
 
 This section describes Nomad-specific configuration.
 

@@ -9,8 +9,8 @@
   * [Table of Contents](#table-of-contents)
   * [Requirements](#requirements)
   * [Usage](#usage)
-      * [Application](#application)
-      * [Nomad](#nomad)
+    * [Application](#application)
+    * [Nomad](#nomad)
     * [Outputs](#outputs)
   * [Notes](#notes)
   * [Author Information](#author-information)
@@ -45,7 +45,7 @@ nomad-pack run minecraft_bedrock_edition --registry=workloads
 
 <!-- BEGIN_PACK_DOCS -->
 
-#### Application
+### Application
 
 This section describes Application-specific configuration.
 
@@ -79,7 +79,7 @@ This section describes Application-specific configuration.
 | app_version                                    | Minecraft Version.                                                                   | `"1.20.1.02"` |
 | app_view_distance                              | Maximum allowed View Distance (in chunks).                                           | `32` |
 
-#### Nomad
+### Nomad
 
 This section describes Nomad-specific configuration.
 

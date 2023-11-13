@@ -9,8 +9,8 @@
   * [Table of Contents](#table-of-contents)
   * [Requirements](#requirements)
   * [Usage](#usage)
-      * [Application](#application)
-      * [Nomad](#nomad)
+    * [Application](#application)
+    * [Nomad](#nomad)
     * [Outputs](#outputs)
   * [Notes](#notes)
   * [Author Information](#author-information)
@@ -45,14 +45,14 @@ nomad-pack run flagd --registry=workloads
 
 <!-- BEGIN_PACK_DOCS -->
 
-#### Application
+### Application
 
 This section describes Application-specific configuration.
 
 | Name | Description | Default |
 | -- | - | ------- |
 
-#### Nomad
+### Nomad
 
 This section describes Nomad-specific configuration.
 
