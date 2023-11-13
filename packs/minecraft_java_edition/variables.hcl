@@ -166,7 +166,7 @@ variable "app_mode" {
 variable "app_mods_file" {
   type        = string
   description = "Path to file with Mod URLs (e.g.: `/extras/mods.txt`)"
-  default     = ""
+  default     = "https://assets.workloads.io/minecraft/mods/base/mods.txt"
 }
 
 variable "app_motd" {
@@ -276,8 +276,10 @@ variable "app_seed" {
 
   # see https://www.reddit.com/r/minecraftseeds/ for inspiration
 
+  default = ""
+
   # big cave system with ancient city
-  default = "5379859465535818918"
+  # default = "5379859465535818918"
 
   # cherry grove near spawn
   # default = "416514620"
@@ -307,7 +309,7 @@ variable "app_spawn_animals" {
 variable "app_spawn_monsters" {
   type        = bool
   description = "Toggle to enable Monsters to spawn."
-  default     = false
+  default     = true
 }
 
 variable "app_spawn_npcs" {
@@ -326,20 +328,36 @@ variable "app_spawn_protection" {
 variable "app_stop_duration" {
   type        = number
   description = "Time (in seconds) the Minecraft Process Wrapper will wait for processes to gradually finish."
-  default     = 60
+  default     = 120
 }
 
 # see https://docker-minecraft-server.readthedocs.io/en/latest/configuration/misc-options/#server-shutdown-options
 variable "app_stop_server_announce_delay" {
   type        = number
   description = "Time (in seconds) Players are allowed to finish activities until Server shuts down."
-  default     = 30
+  default     = 60
 }
 
+
+# see https://docker-minecraft-server.readthedocs.io/en/latest/types-and-platforms/server-types/fabric/
 variable "app_type" {
   type        = string
   description = "Server Type (e.g.: `vanilla`, `fabric`, etc.)."
-  default     = "vanilla"
+  default     = "fabric"
+}
+
+# see https://fabricmc.net/use/server/
+variable "app_fabric_launcher_version" {
+  type        = string
+  description = "Version of Fabric Launcher."
+  default     = "0.11.2"
+}
+
+# see https://fabricmc.net/use/server/
+variable "app_fabric_loader_version" {
+  type        = string
+  description = "Version of Fabric Loader."
+  default     = "0.14.24"
 }
 
 variable "app_tz" {
@@ -358,7 +376,7 @@ variable "app_use_aikar_flags" {
 variable "app_version" {
   type        = string
   description = "Minecraft Version."
-  default     = "1.20"
+  default     = "1.20.1"
 }
 
 variable "app_view_distance" {
@@ -369,8 +387,8 @@ variable "app_view_distance" {
 
 variable "app_world" {
   type        = string
-  description = "URL to Minecraft World ZIP archive."
-  default     = ""
+  description = "World Data."
+  default     = "https://assets.workloads.io/minecraft/worlds/world-of-worlds.zip"
 }
 
 ###############################
@@ -506,6 +524,32 @@ variable "nomad_group_ports" {
       port           = 25575
       type           = "tcp"
     },
+
+    # port for Prometheus Exporter Interface
+    # requires https://modrinth.com/mod/fabricexporter to be loaded as part of the server's mods
+    prometheus = {
+      check_interval = "30s"
+      check_timeout  = "15s"
+      host_network   = null
+      method         = null
+      omit_check     = false
+      path           = "/"
+      port           = 25585
+      type           = "http"
+    },
+
+    # port for BlueMap Interface
+    # requires https://modrinth.com/plugin/bluemap to be loaded as part of the server's mods
+    bluemap = {
+      check_interval = "30s"
+      check_timeout  = "15s"
+      host_network   = null
+      method         = null
+      omit_check     = false
+      path           = "/"
+      port           = 25595
+      type           = "http"
+    },
   }
 }
 
@@ -612,11 +656,11 @@ variable "nomad_task_image" {
     image = "minecraft-server"
 
     # Tag of the Image
-    # see https://hub.docker.com/r/itzg/minecraft-server/tags?name=java20-alpine
-    tag = "2023.10.1-java20-alpine"
+    # see https://hub.docker.com/r/itzg/minecraft-server/tags?name=java21-alpine
+    tag = "2023.11.0-java21-alpine"
 
     # Digest of the Tag of the Image
-    digest = "sha256:c89b72d8ec5e1b7316302ba19c4e5aae7cc8357863997124edb60293d87ae7b2"
+    digest = "sha256:9aa9149351649c7801f952f1cb3ea9b91529f8366cd6da135a9b54fbbbbdfde2"
   }
 }
 
