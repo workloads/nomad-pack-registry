@@ -638,11 +638,11 @@ variable "nomad_task_image" {
     image = "minecraft-server"
 
     # Tag of the Image
-    # see https://hub.docker.com/r/itzg/minecraft-server/tags?name=java20-alpine
-    tag = "2023.10.1-java20-alpine"
+    # see https://hub.docker.com/r/itzg/minecraft-server/tags?name=java21-alpine
+    tag = "2023.11.0-java21-alpine"
 
     # Digest of the Tag of the Image
-    digest = "sha256:c89b72d8ec5e1b7316302ba19c4e5aae7cc8357863997124edb60293d87ae7b2"
+    digest = "sha256:9aa9149351649c7801f952f1cb3ea9b91529f8366cd6da135a9b54fbbbbdfde2"
   }
 }
 
