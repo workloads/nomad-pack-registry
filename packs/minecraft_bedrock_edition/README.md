@@ -9,7 +9,6 @@
   * [Table of Contents](#table-of-contents)
   * [Requirements](#requirements)
   * [Usage](#usage)
-    * [Inputs](#inputs)
       * [Application](#application)
       * [Nomad](#nomad)
     * [Outputs](#outputs)
