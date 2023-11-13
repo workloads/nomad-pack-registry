@@ -338,10 +338,26 @@ variable "app_stop_server_announce_delay" {
   default     = 60
 }
 
+
+# see https://docker-minecraft-server.readthedocs.io/en/latest/types-and-platforms/server-types/fabric/
 variable "app_type" {
   type        = string
   description = "Server Type (e.g.: `vanilla`, `fabric`, etc.)."
   default     = "fabric"
+}
+
+# see https://fabricmc.net/use/server/
+variable "app_fabric_launcher_version" {
+  type        = string
+  description = "Version of Fabric Launcher."
+  default     = "0.11.2"
+}
+
+# see https://fabricmc.net/use/server/
+variable "app_fabric_loader_version" {
+  type        = string
+  description = "Version of Fabric Loader."
+  default     = "0.14.24"
 }
 
 variable "app_tz" {
