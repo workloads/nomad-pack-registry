@@ -276,8 +276,10 @@ variable "app_seed" {
 
   # see https://www.reddit.com/r/minecraftseeds/ for inspiration
 
+  default = ""
+
   # big cave system with ancient city
-  default = "5379859465535818918"
+  # default = "5379859465535818918"
 
   # cherry grove near spawn
   # default = "416514620"

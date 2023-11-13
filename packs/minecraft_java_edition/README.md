@@ -94,7 +94,7 @@ This section describes Application-specific configuration.
 | app_remove_old_mods                | Toggle to enable removal of old Mod Data Files.                                               | `true` |
 | app_resource_pack                  | URL to Resource Pack (in ZIP format).                                                         | n/a |
 | app_resource_pack_sha1             | SHA1 Checksum for Resource Pack.                                                              | n/a |
-| app_seed                           | Level Seed.                                                                                   | `"5379859465535818918"` |
+| app_seed                           | Level Seed.                                                                                   | n/a |
 | app_server_name                    | Server Name.                                                                                  | `"Minecraft Java Edition Server"` |
 | app_snooper_enabled                | Toggle to enable sending updates to `snoop.minecraft.net`.                                    | `false` |
 | app_spawn_animals                  | Toggle to enable Animals to spawn.                                                            | `true` |
