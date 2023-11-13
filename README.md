@@ -35,8 +35,6 @@ This repository provides a workflow that is wrapped through a [Makefile](./Makef
 Running `make` without commands will print out the following help information:
 
 ```text
-🟢 NOMAD PACKS
-
 env             create Nomad environment for testing            `make env pack=<pack>`
 render          render a Nomad Pack                             `make render pack=<pack>`
 run             run a Nomad Pack                                `make run pack=<pack>`
@@ -45,6 +43,7 @@ rerun           destroy and run a Nomad Pack                    `make rerun pack
 stop            stop a running Nomad Pack                       `make stop pack=<pack>`
 test            test a running Nomad Pack                       `make test pack=<pack>`
 restart         restart a Task                                  `make restart task=<task>`
+format          format HCL files for all Nomad Packs            `make format`
 docs            generate documentation for all Nomad Packs      `make docs`
 registry        add Nomad Pack Registry to local environment    `make registry`
 help            display a list of Make Targets                  `make help`
