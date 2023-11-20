@@ -83,6 +83,7 @@ This section describes Application-specific configuration.
 | app_mods_file                      | Path to file with Mod URLs (e.g.: `/extras/mods.txt`)                                         | `"https://assets.workloads.io/minecraft/mods/base/mods.txt"` |
 | app_motd                           | Message of the Day.                                                                           | `"This Server is running on §2§lHashiCorp Nomad§r!"` |
 | app_online_mode                    | Toggle to enable Account Authentication (with Minecraft.net / Microsoft Account).             | `false` |
+| app_op_permission_level            | Sets the default Permission Level for new Ops.                                                | `2` |
 | app_override_icon                  | Toggle to allow overriding Server Icon.                                                       | `true` |
 | app_plugins_file                   | Path to file with Plugin URLs (e.g.: `/extras/plugins.txt`)                                   | n/a |
 | app_pvp                            | Toggle to enable PvP Damage.                                                                  | `false` |

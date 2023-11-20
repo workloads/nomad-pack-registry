@@ -67,6 +67,7 @@ This section describes Application-specific configuration.
 | app_max_players                                | Maximum allowed Player Count.                                                        | `10` |
 | app_max_threads                                | Maximum amount of Threads to use.                                                    | n/a |
 | app_online_mode                                | Toggle to enable Account Authentication (with Minecraft.net / Microsoft Account).    | `false` |
+| app_op_permission_level                        | Sets the default Permission Level for new Ops.                                       | `2` |
 | app_player_idle_timeout                        | Idle Timeout (in minutes) after which a Player is kicked.                            | `15` |
 | app_player_movement_distance_threshold         | Minimum Distance (in blocks) a Player must move before their Movement is validated.  | `0.3` |
 | app_player_movement_duration_threshold_in_ms   | Minimum Duration (in msec) a Player must move before their Movement is validated.    | `500` |
