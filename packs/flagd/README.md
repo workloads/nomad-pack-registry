@@ -20,7 +20,7 @@
 ## Requirements
 
 - HashiCorp Nomad `1.5.0` or newer
-- HashiCorp nomad-pack `0.0.1` or newer
+- HashiCorp nomad-pack `0.1.0` or [newer](HashiCorp nomad-pack `0.1.0` or newer](https://releases.hashicorp.com/nomad-pack/)
 - Nomad Task Driver(s) for [`docker`](https://developer.hashicorp.com/nomad/docs/drivers/docker) or [`podman`](https://developer.hashicorp.com/nomad/plugins/drivers/podman)
 
 ## Usage
