@@ -98,7 +98,7 @@ endef
 define put_nomad_variables
 	export VARIABLES_FILE="$(DIR_PACKS)/$(strip $(pack))/tests/gitignored_spec.nv.hcl"; \
 	\
-	if [ -e "$${VARIABLES_FILE}" ]; then \
+	if [ -f "$${VARIABLES_FILE}" ]; then \
 		echo "[3/4] Loading Variable Definitions found at \`$(STYLE_GROUP_CODE)$${VARIABLES_FILE}$(STYLE_RESET)\`\n" \
 		&& \
 		$(BINARY_NOMAD) \
@@ -110,7 +110,8 @@ define put_nomad_variables
 					"@$${VARIABLES_FILE}" \
 		; \
 	else \
-		echo "[3/4] No Variable Definitions found at \`$(STYLE_GROUP_CODE)$${VARIABLES_FILE}$(STYLE_RESET)\`"; \
+		echo "[3/4] No Variable Definitions found at \`$(STYLE_GROUP_CODE)$${VARIABLES_FILE}$(STYLE_RESET)\`" \
+		; \
 	fi
 endef
 
@@ -146,7 +147,7 @@ define create_test_environment
 
 	# insert sleep to allow inspection of Variable lifecycle and bring Nomad session back to foreground
 	echo
-	echo "[4] Reattaching Screen Session \`$(STYLE_GROUP_CODE)$(SCREEN_SESSION)$(STYLE_RESET)\`"
+	echo "[4/4] Reattaching Screen Session \`$(STYLE_GROUP_CODE)$(SCREEN_SESSION)$(STYLE_RESET)\`"
 	sleep 2 \
 	;
 
