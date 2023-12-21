@@ -1,6 +1,6 @@
 # Nomad Pack Registry
 
-> This directory manages Nomad Packs for [@workloads](https://github.com/workloads).
+> This repository manages Nomad Packs for [@workloads](https://github.com/workloads).
 
 ## Table of Contents
 
@@ -8,6 +8,7 @@
 * [Nomad Pack Registry](#nomad-pack-registry)
   * [Table of Contents](#table-of-contents)
   * [Requirements](#requirements)
+    * [Development](#development)
   * [Usage](#usage)
   * [Adding the Nomad Pack Registry](#adding-the-nomad-pack-registry)
   * [Running a Nomad Pack](#running-a-nomad-pack)
@@ -19,13 +20,15 @@
 
 ## Requirements
 
-- HashiCorp Nomad `1.5.0` or [newer](https://developer.hashicorp.com/nomad/downloads)
-- HashiCorp Nomad Pack `0.0.1` or [newer](https://releases.hashicorp.com/nomad-pack/)
-- a check-out of [@workloads/tooling](https://github.com/workloads/tooling)
+- HashiCorp Nomad `1.5.x` or [newer](https://developer.hashicorp.com/nomad/downloads)
+- HashiCorp Nomad Pack `0.1.x` or [newer](https://releases.hashicorp.com/nomad-pack/)
+- a copy of [@workloads/tooling](https://github.com/workloads/tooling)
 
-Optional, and only needed for development and testing of Packs:
+### Development
 
-- `terraform-docs` `0.16.0` or [newer](https://terraform-docs.io/user-guide/installation/)
+For development and testing of this repository:
+
+- `terraform-docs` `0.17.0` or [newer](https://terraform-docs.io/user-guide/installation/)
 - `newman` `5.3.0` or [newer](https://learning.postman.com/docs/collections/using-newman-cli/installing-running-newman/)
 
 ## Usage
