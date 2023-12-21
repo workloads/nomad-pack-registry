@@ -13,14 +13,14 @@
     * [Nomad](#nomad)
     * [Outputs](#outputs)
   * [Notes](#notes)
-  * [Author Information](#author-information)
+  * [Contributors](#contributors)
   * [License](#license)
 <!-- TOC -->
 
 ## Requirements
 
-- HashiCorp Nomad `1.5.0` or newer
-- HashiCorp nomad-pack `0.1.0` or [newer](HashiCorp nomad-pack `0.1.0` or newer](https://releases.hashicorp.com/nomad-pack/)
+- HashiCorp Nomad `1.7.x` or [newer](https://developer.hashicorp.com/nomad/install)
+- HashiCorp Nomad Pack `0.1.0` or [newer](https://releases.hashicorp.com/nomad-pack/)
 - Nomad Task Driver(s) for [`docker`](https://developer.hashicorp.com/nomad/docs/drivers/docker) or [`podman`](https://developer.hashicorp.com/nomad/plugins/drivers/podman)
 
 ## Usage
@@ -109,16 +109,14 @@ nomad \
 
 The above example will force-write the content of [example_flags.flagd.json](https://raw.githubusercontent.com/open-feature/flagd/main/samples/example_flags.flagd.json) to the Nomad Variable `flags`, which is accessible to a Nomad Job named `flagd`.
 
-## Author Information
+## Contributors
 
-This repository is maintained by the contributors listed on [GitHub](https://github.com/workloads/nomad-pack-registry/graphs/contributors).
+For a list of current (and past) contributors to this repository, see [GitHub](https://github.com/workloads/nomad-pack-registry/graphs/contributors).
 
 ## License
 
 Licensed under the Apache License, Version 2.0 (the "License").
 
-You may obtain a copy of the License at [apache.org/licenses/LICENSE-2.0](http://www.apache.org/licenses/LICENSE-2.0).
-
-Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an _"AS IS"_ basis, without WARRANTIES or conditions of any kind, either express or implied.
+You may download a copy of the License at [apache.org/licenses/LICENSE-2.0](http://www.apache.org/licenses/LICENSE-2.0).
 
 See the License for the specific language governing permissions and limitations under the License.

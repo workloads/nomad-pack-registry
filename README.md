@@ -14,13 +14,13 @@
   * [Running a Nomad Pack](#running-a-nomad-pack)
     * [Testing a Nomad Pack](#testing-a-nomad-pack)
   * [Notes](#notes)
-  * [Author Information](#author-information)
+  * [Contributors](#contributors)
   * [License](#license)
 <!-- TOC -->
 
 ## Requirements
 
-- HashiCorp Nomad `1.5.x` or [newer](https://developer.hashicorp.com/nomad/downloads)
+- HashiCorp Nomad `1.7.x` or [newer](https://developer.hashicorp.com/nomad/downloads)
 - HashiCorp Nomad Pack `0.1.x` or [newer](https://releases.hashicorp.com/nomad-pack/)
 - a copy of [@workloads/tooling](https://github.com/workloads/tooling)
 
@@ -33,7 +33,7 @@ For development and testing of this repository:
 
 ## Usage
 
-This repository provides a workflow that is wrapped through a [Makefile](./Makefile).
+This repository provides a [Makefile](./Makefile)-based workflow.
 
 Running `make` without commands will print out the following help information:
 
@@ -118,16 +118,14 @@ make render pack=<pack> BINARY_NOMAD_PACK=/tmp/nomad-pack
 make render pack=<pack> NEWMAN_REPORTERS="progress"
 ```
 
-## Author Information
+## Contributors
 
-This repository is maintained by the contributors listed on [GitHub](https://github.com/workloads/nomad-pack-registry/graphs/contributors).
+For a list of current (and past) contributors to this repository, see [GitHub](https://github.com/workloads/nomad-pack-registry/graphs/contributors).
 
 ## License
 
 Licensed under the Apache License, Version 2.0 (the "License").
 
-You may obtain a copy of the License at [apache.org/licenses/LICENSE-2.0](http://www.apache.org/licenses/LICENSE-2.0).
-
-Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an _"AS IS"_ basis, without WARRANTIES or conditions of any kind, either express or implied.
+You may download a copy of the License at [apache.org/licenses/LICENSE-2.0](http://www.apache.org/licenses/LICENSE-2.0).
 
 See the License for the specific language governing permissions and limitations under the License.
