@@ -20,16 +20,16 @@
 
 ## Requirements
 
-- HashiCorp Nomad `1.7.x` or [newer](https://developer.hashicorp.com/nomad/downloads)
-- HashiCorp Nomad Pack `0.1.x` or [newer](https://releases.hashicorp.com/nomad-pack/)
-- a copy of [@workloads/tooling](https://github.com/workloads/tooling)
+* HashiCorp Nomad `1.7.x` or [newer](https://developer.hashicorp.com/nomad/downloads)
+* HashiCorp Nomad Pack `0.1.x` or [newer](https://releases.hashicorp.com/nomad-pack/)
+* a copy of [@workloads/tooling](https://github.com/workloads/tooling)
 
 ### Development
 
 For development and testing of this repository:
 
-- `terraform-docs` `0.17.0` or [newer](https://terraform-docs.io/user-guide/installation/)
-- `newman` `5.3.0` or [newer](https://learning.postman.com/docs/collections/using-newman-cli/installing-running-newman/)
+* `terraform-docs` `0.17.0` or [newer](https://terraform-docs.io/user-guide/installation/)
+* `newman` `5.3.0` or [newer](https://learning.postman.com/docs/collections/using-newman-cli/installing-running-newman/)
 
 ## Usage
 
@@ -80,8 +80,8 @@ The Nomad Packs in this Registry provide a test harness that may be used to veri
 
 The harness is exposed through the `make env` and `make test` targets:
 
-- `make env` starts a Nomad environment, using the configuration stored inside the Pack's `./tests/nomad_config.hcl` file.
-- `make test` runs a [Postman Collection](https://learning.postman.com/docs/collections/collections-overview/), using the requests stored inside the Pack's `./tests/newman.json` file.
+* `make env` starts a Nomad environment, using the configuration stored inside the Pack's `./tests/nomad_config.hcl` file.
+* `make test` runs a [Postman Collection](https://learning.postman.com/docs/collections/collections-overview/), using the requests stored inside the Pack's `./tests/newman.json` file.
 
 The `make env` command automatically creates any directories and variables that are set in `./tests/test.mk`.
 
