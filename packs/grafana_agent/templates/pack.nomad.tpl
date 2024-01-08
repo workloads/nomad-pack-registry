@@ -104,7 +104,8 @@ job "[[ var "nomad_job_name" . ]]" {
         data = [[ "<<EOH" ]]
           [[ fileContents (var "grafana_agent_configuration" .) ]]
         [[ "EOH" ]]
-       [[/* data = file("[[var "grafana_agent_configuration" .]]") */]]
+
+        [[/* data = file("[[var "grafana_agent_configuration" .]]") */]]
         destination          = "${NOMAD_TASK_DIR}/grafana-cloud-agent.river"
       }
 
