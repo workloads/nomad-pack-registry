@@ -70,7 +70,7 @@ job "[[ var "nomad_job_name" . ]]" {
     task "[[ var "nomad_task_name" . ]]" {
       # see https://developer.hashicorp.com/nomad/docs/drivers
       driver = "[[ var "nomad_task_driver" . ]]"
-      
+
       # we're hardcoding an environment variable here to make sure the agent is in Flow Mode; TODO: make this configurable
       env {
         AGENT_MODE = "flow"
@@ -97,7 +97,7 @@ job "[[ var "nomad_job_name" . ]]" {
 
       # see https://developer.hashicorp.com/nomad/docs/job-specification/template
       template {
-        change_mode = "signal"
+        change_mode   = "signal"
         change_signal = "SIGHUP"
 
         data = [[ "<<EOH" ]]

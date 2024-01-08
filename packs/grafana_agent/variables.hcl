@@ -8,7 +8,7 @@ variable "grafana_agent_configuration" {
   default = "./config/grafana-agent.river"
 }
 ###############################
-## Pack-specifc Configuration #
+## Pack-specific Configuration #
 ###############################
 
 variable "nomad_pack_verbose_output" {

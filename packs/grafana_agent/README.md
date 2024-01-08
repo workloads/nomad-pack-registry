@@ -1,6 +1,6 @@
 # Nomad Pack: Grafana Agent
 
-![Nomad Pack: Grafana Agent](https://github.com/grafana/agent/blob/main/docs/sources/assets/logo_and_name.png)
+![Nomad Pack: Grafana Agent](https://assets.workloads.io/nomad-pack-registry/grafana_agent.png)
 
 ## Table of Contents
 
