@@ -96,12 +96,13 @@ job "[[ var "nomad_job_name" . ]]" {
       }
 
       # see https://developer.hashicorp.com/nomad/docs/job-specification/template
+      # TODO: make this configurable
       template {
         change_mode   = "signal"
         change_signal = "SIGHUP"
 
         data = [[ "<<EOH" ]]
-          [[fileContents (var "grafana_agent_configuration" .)]]
+          [[ fileContents (var "grafana_agent_configuration" .) ]]
         [[ "EOH" ]]
        [[/* data = file("[[var "grafana_agent_configuration" .]]") */]]
         destination          = "${NOMAD_TASK_DIR}/grafana-cloud-agent.river"
