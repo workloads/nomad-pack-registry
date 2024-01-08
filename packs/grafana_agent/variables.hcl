@@ -173,7 +173,7 @@ variable "nomad_task_args" {
   type        = list(string)
   description = "Arguments to pass to the Task."
 
-  default = [ "run", "--server.http.listen-addr=0.0.0.0:12345", "$${NOMAD_ALLOC_DIR}/grafana-cloud-agent.river"]
+  default = [ "run", "--server.http.listen-addr=0.0.0.0:12345", "$${NOMAD_TASK_DIR}/grafana-cloud-agent.river"]
 }
 
 variable "nomad_task_driver" {
