@@ -183,6 +183,15 @@ variable "app_online_mode" {
   default     = false
 }
 
+# see https://minecraft.wiki/w/Permission_level
+variable "app_op_permission_level" {
+  type        = number
+  description = "Sets the default Permission Level for new Ops."
+
+  # 1 = moderator, 2 = gamemaster, 3 = administrator, 4 = owner
+  default = 2
+}
+
 variable "app_override_icon" {
   type        = bool
   description = "Toggle to allow overriding Server Icon."
@@ -388,6 +397,8 @@ variable "app_view_distance" {
 variable "app_world" {
   type        = string
   description = "World Data."
+
+  # see https://www.planetminecraft.com/project/world-of-worlds-3137794/
   default     = "https://assets.workloads.io/minecraft/worlds/world-of-worlds.zip"
 }
 

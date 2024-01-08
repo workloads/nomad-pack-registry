@@ -1,6 +1,6 @@
 # Nomad Pack Registry
 
-> This directory manages Nomad Packs for [@workloads](https://github.com/workloads).
+> This repository manages Nomad Packs for [@workloads](https://github.com/workloads).
 
 ## Table of Contents
 
@@ -8,29 +8,32 @@
 * [Nomad Pack Registry](#nomad-pack-registry)
   * [Table of Contents](#table-of-contents)
   * [Requirements](#requirements)
+    * [Development](#development)
   * [Usage](#usage)
   * [Adding the Nomad Pack Registry](#adding-the-nomad-pack-registry)
   * [Running a Nomad Pack](#running-a-nomad-pack)
     * [Testing a Nomad Pack](#testing-a-nomad-pack)
   * [Notes](#notes)
-  * [Author Information](#author-information)
+  * [Contributors](#contributors)
   * [License](#license)
 <!-- TOC -->
 
 ## Requirements
 
-- HashiCorp Nomad `1.5.0` or [newer](https://developer.hashicorp.com/nomad/downloads)
-- HashiCorp Nomad Pack `0.0.1` or [newer](https://releases.hashicorp.com/nomad-pack/)
-- a check-out of [@workloads/tooling](https://github.com/workloads/tooling)
+* HashiCorp Nomad `1.7.x` or [newer](https://developer.hashicorp.com/nomad/downloads)
+* HashiCorp Nomad Pack `0.1.x` or [newer](https://releases.hashicorp.com/nomad-pack/)
+* a copy of [@workloads/tooling](https://github.com/workloads/tooling)
 
-Optional, and only needed for development and testing of Packs:
+### Development
 
-- `terraform-docs` `0.16.0` or [newer](https://terraform-docs.io/user-guide/installation/)
-- `newman` `5.3.0` or [newer](https://learning.postman.com/docs/collections/using-newman-cli/installing-running-newman/)
+For development and testing of this repository:
+
+* `terraform-docs` `0.17.0` or [newer](https://terraform-docs.io/user-guide/installation/)
+* `newman` `5.3.0` or [newer](https://learning.postman.com/docs/collections/using-newman-cli/installing-running-newman/)
 
 ## Usage
 
-This repository provides a workflow that is wrapped through a [Makefile](./Makefile).
+This repository provides a [Makefile](./Makefile)-based workflow.
 
 Running `make` without commands will print out the following help information:
 
@@ -77,8 +80,8 @@ The Nomad Packs in this Registry provide a test harness that may be used to veri
 
 The harness is exposed through the `make env` and `make test` targets:
 
-- `make env` starts a Nomad environment, using the configuration stored inside the Pack's `./tests/nomad_config.hcl` file.
-- `make test` runs a [Postman Collection](https://learning.postman.com/docs/collections/collections-overview/), using the requests stored inside the Pack's `./tests/newman.json` file.
+* `make env` starts a Nomad environment, using the configuration stored inside the Pack's `./tests/nomad_config.hcl` file.
+* `make test` runs a [Postman Collection](https://learning.postman.com/docs/collections/collections-overview/), using the requests stored inside the Pack's `./tests/newman.json` file.
 
 The `make env` command automatically creates any directories and variables that are set in `./tests/test.mk`.
 
@@ -115,16 +118,14 @@ make render pack=<pack> BINARY_NOMAD_PACK=/tmp/nomad-pack
 make render pack=<pack> NEWMAN_REPORTERS="progress"
 ```
 
-## Author Information
+## Contributors
 
-This repository is maintained by the contributors listed on [GitHub](https://github.com/workloads/nomad-pack-registry/graphs/contributors).
+For a list of current (and past) contributors to this repository, see [GitHub](https://github.com/workloads/nomad-pack-registry/graphs/contributors).
 
 ## License
 
 Licensed under the Apache License, Version 2.0 (the "License").
 
-You may obtain a copy of the License at [apache.org/licenses/LICENSE-2.0](http://www.apache.org/licenses/LICENSE-2.0).
-
-Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an _"AS IS"_ basis, without WARRANTIES or conditions of any kind, either express or implied.
+You may download a copy of the License at [apache.org/licenses/LICENSE-2.0](http://www.apache.org/licenses/LICENSE-2.0).
 
 See the License for the specific language governing permissions and limitations under the License.
