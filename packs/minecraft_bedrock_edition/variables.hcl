@@ -107,6 +107,15 @@ variable "app_online_mode" {
   default     = false
 }
 
+# see https://minecraft.wiki/w/Permission_level
+variable "app_op_permission_level" {
+  type        = number
+  description = "Sets the default Permission Level for new Ops."
+
+  # 1 = moderator, 2 = gamemaster, 3 = administrator, 4 = owner
+ default = 2
+}
+
 variable "app_player_idle_timeout" {
   type        = number
   description = "Idle Timeout (in minutes) after which a Player is kicked."
