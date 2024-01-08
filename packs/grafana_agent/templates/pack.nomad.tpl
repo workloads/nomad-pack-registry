@@ -78,9 +78,10 @@ job "[[ var "nomad_job_name" . ]]" {
 
       # see https://developer.hashicorp.com/nomad/docs/drivers/docker
       # and https://developer.hashicorp.com/nomad/plugins/drivers/podman
+      [[/* @[[ $image.digest ]] */]]
       config {
         [[- $image := var "nomad_task_image" . ]]
-        image = "[[ $image.registry ]]/[[ $image.namespace ]]/[[ $image.image ]]:[[ $image.tag ]]@[[ $image.digest ]]"
+        image = "[[ $image.registry ]]/[[ $image.namespace ]]/[[ $image.image ]]:[[ $image.tag ]]"
 
         # see https://developer.hashicorp.com/nomad/docs/drivers/docker#args
         args = [[ var "nomad_task_args" . | toStringList]]
@@ -99,8 +100,10 @@ job "[[ var "nomad_job_name" . ]]" {
         change_mode = "signal"
         change_signal = "SIGHUP"
 
-        [[/*data = [[fileContents (var "grafana_agent_configuration" .)]] */]]
-        data = file("[[var "grafana_agent_configuration" .]]")
+        data = [[ "<<EOH" ]]
+          [[fileContents (var "grafana_agent_configuration" .)]]
+        [[ "EOH" ]]
+       [[/* data = file("[[var "grafana_agent_configuration" .]]") */]]
         destination          = "${NOMAD_TASK_DIR}/grafana-cloud-agent.river"
       }
 
