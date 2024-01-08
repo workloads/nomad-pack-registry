@@ -49,7 +49,7 @@ variable "app_difficulty" {
 
 variable "app_eula" {
   type        = bool
-  description = "Toggle to accept End-User License Agreement."
+  description = "Toggle to accept End User License Agreement."
   default     = true
 }
 
@@ -184,7 +184,7 @@ variable "app_view_distance" {
 }
 
 ###############################
-## Pack-specifc Configuration #
+## Pack-specific Configuration #
 ###############################
 
 variable "nomad_pack_verbose_output" {

@@ -1,5 +1,4 @@
 # minimally viable configuration for a Nomad Server that can run `datadog_agent`
-# requires `docker` to be installed and running on the host machine
 
 # see https://developer.hashicorp.com/nomad/docs/configuration#data_dir
 data_dir = "/tmp/"

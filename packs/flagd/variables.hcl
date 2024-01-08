@@ -5,7 +5,7 @@
 # This Pack does not have any application-specific configuration.
 
 ###############################
-## Pack-specifc Configuration #
+## Pack-specific Configuration #
 ###############################
 
 variable "nomad_pack_verbose_output" {
