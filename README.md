@@ -7,6 +7,7 @@
 <!-- TOC -->
 * [Nomad Pack Registry](#nomad-pack-registry)
   * [Table of Contents](#table-of-contents)
+  * [Available Packs](#available-packs)
   * [Requirements](#requirements)
     * [Development](#development)
   * [Usage](#usage)
@@ -17,6 +18,18 @@
   * [Contributors](#contributors)
   * [License](#license)
 <!-- TOC -->
+
+## Available Packs
+
+| Pack Name                                                        | Description                          | Task Driver(s)                       |
+|------------------------------------------------------------------|--------------------------------------|--------------------------------------|
+| [`boundary_worker`](./packs/boundary_worker)                     | HCP Boundary Workers                 | `exec`[^exec], `raw_exec`[^raw_exec] |
+| [`datadog_agent`](./packs/datadog_agent)                         | Datadog Agents                       | `raw_exec`[^raw_exec]                |
+| [`flagd`](./packs/flagd)                                         | OpenFeature `flagd` (Docker, Podman) | `docker`[^docker], `podman`[^podman] |
+| [`hello_world`](./packs/hello_world)                             | Nomad feature-testing                | `exec`[^exec], `raw_exec`[^raw_exec] |
+| [`minecraft_bedrock_edition`](./packs/minecraft_bedrock_edition) | Minecraft (Bedrock Edition)          | `docker`[^docker], `podman`[^podman] |
+| [`minecraft_java_edition`](./packs/minecraft_java_edition)       | Minecraft (Java Edition)             | `docker`[^docker], `podman`[^podman] |
+| [`rcon_web`](./packs/rcon_web)                                   | RCON Web (for Minecraft etc.)        | `docker`[^docker], `podman`[^podman] |
 
 ## Requirements
 
@@ -41,7 +54,6 @@ Running `make` without commands will print out the following help information:
 env             create Nomad environment for testing            `make env pack=<pack>`
 render          render a Nomad Pack                             `make render pack=<pack>`
 run             run a Nomad Pack                                `make run pack=<pack>`
-rerun           destroy and run a Nomad Pack                    `make rerun pack=<pack>`
 rerun           destroy and run a Nomad Pack                    `make rerun pack=<pack>`
 stop            stop a running Nomad Pack                       `make stop pack=<pack>`
 test            test a running Nomad Pack                       `make test pack=<pack>`
@@ -129,3 +141,8 @@ Licensed under the Apache License, Version 2.0 (the "License").
 You may download a copy of the License at [apache.org/licenses/LICENSE-2.0](http://www.apache.org/licenses/LICENSE-2.0).
 
 See the License for the specific language governing permissions and limitations under the License.
+
+[^exec]: [`exec`](https://developer.hashicorp.com/nomad/docs/drivers/exec)
+[^docker]: [`docker`](https://developer.hashicorp.com/nomad/docs/drivers/docker)
+[^podman]: [`podman`](https://developer.hashicorp.com/nomad/docs/drivers/podman)
+[^raw_exec]: [`raw_exec`](https://developer.hashicorp.com/nomad/docs/drivers/raw_exec)

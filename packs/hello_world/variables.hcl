@@ -138,7 +138,7 @@ variable "nomad_group_restart_logic" {
 variable "nomad_group_service_name_prefix" {
   type        = string
   description = "Name of the Service for the Group."
-  default     = "datadog_agent"
+  default     = "hello_world"
 }
 
 variable "nomad_group_service_provider" {
@@ -207,7 +207,6 @@ variable "nomad_task_resources" {
 
     # value in MB
     # see https://developer.hashicorp.com/nomad/docs/job-specification/resources#memory-oversubscription
-    # and https://developer.hashicorp.com/nomad/docs/drivers/docker#memory
     memory_max = 1024
   }
 }

@@ -64,7 +64,7 @@ This section describes Nomad-specific configuration.
 | nomad_group_network_mode          | Network Mode for the Group.                  | `"host"` |
 | nomad_group_ports                 | Port Configuration for the Group.            | `{}` |
 | nomad_group_restart_logic         | Restart Logic for the Group.                 | `{"attempts":3,"delay":"30s","interval":"120s","mode":"fail"}` |
-| nomad_group_service_name_prefix   | Name of the Service for the Group.           | `"datadog_agent"` |
+| nomad_group_service_name_prefix   | Name of the Service for the Group.           | `"hello_world"` |
 | nomad_group_service_provider      | Provider of the Service for the Group.       | `"nomad"` |
 | nomad_group_tags                  | List of Tags for the Group.                  | `["hello_world"]` |
 | nomad_group_volumes               | Volumes for the Group.                       | `{}` |
@@ -77,7 +77,6 @@ This section describes Nomad-specific configuration.
 | nomad_task_driver                 | Driver to use for the Task.                  | `"raw_exec"` |
 | nomad_task_name                   | Name for the Task.                           | `"hello_world"` |
 | nomad_task_resources              | Resource Limits for the Task.                | `{"cores":null,"cpu":500,"memory":512,"memory_max":1024}` |
-
 <!-- END_PACK_DOCS -->
 
 ### Outputs

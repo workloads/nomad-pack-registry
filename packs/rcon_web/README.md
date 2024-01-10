@@ -90,7 +90,6 @@ This section describes Nomad-specific configuration.
 | nomad_task_image                  | Content Address to use for the Container Image for the Task.  | `{"digest":"sha256:a9fc0b4116a7034c4849a4160d139a589bbf9211df64b48cc404e74c3e7bb730","image":"rcon","namespace":"itzg","registry":"index.docker.io","tag":"latest"}` |
 | nomad_task_name                   | Name for the Task.                                            | `"rcon_web"` |
 | nomad_task_resources              | Resource Limits for the Task.                                 | `{"cores":null,"cpu":500,"memory":512,"memory_max":1024}` |
-
 <!-- END_PACK_DOCS -->
 
 ### Outputs

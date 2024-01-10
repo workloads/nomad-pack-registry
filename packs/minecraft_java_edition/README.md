@@ -62,10 +62,10 @@ This section describes Application-specific configuration.
 | app_enable_query                   | Toggle to enable Gamespy Query Protocol.                                                      | `false` |
 | app_enable_rcon                    | Toggle to enable RCON interface.                                                              | `true` |
 | app_enable_rolling_logs            | Toggle to enable Log Rolling.                                                                 | `true` |
-| app_eula                           | Toggle to accept End-User License Agreement.                                                  | `true` |
+| app_eula                           | Toggle to accept End User License Agreement.                                                  | `true` |
 | app_fabric_launcher_version        | Version of Fabric Launcher.                                                                   | `"0.11.2"` |
 | app_fabric_loader_version          | Version of Fabric Loader.                                                                     | `"0.14.24"` |
-| app_force_redownload               | Toggle to force redownloading of Server (JAR) File.                                           | `false` |
+| app_force_redownload               | Toggle to force re-downloading of Server (JAR) File.                                          | `false` |
 | app_force_world_copy               | Toggle to force copying of World Data.                                                        | `false` |
 | app_generate_structures            | Toggle to pre-generate Structures (e.g.: Villages, Outposts).                                 | `true` |
 | app_gui                            | Toggle to enable GUI.                                                                         | `true` |
@@ -138,7 +138,6 @@ This section describes Nomad-specific configuration.
 | nomad_task_image                  | Content Address to use for the Container Image for the Task.  | `{"digest":"sha256:9aa9149351649c7801f952f1cb3ea9b91529f8366cd6da135a9b54fbbbbdfde2","image":"minecraft-server","namespace":"itzg","registry":"index.docker.io","tag":"2023.11.0-java21-alpine"}` |
 | nomad_task_name                   | Name for the Task.                                            | `"minecraft"` |
 | nomad_task_resources              | Resource Limits for the Task.                                 | `{"cores":null,"cpu":4000,"memory":4096,"memory_max":5120}` |
-
 <!-- END_PACK_DOCS -->
 
 ### Outputs

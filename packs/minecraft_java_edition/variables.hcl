@@ -66,13 +66,13 @@ variable "app_enable_rolling_logs" {
 
 variable "app_eula" {
   type        = bool
-  description = "Toggle to accept End-User License Agreement."
+  description = "Toggle to accept End User License Agreement."
   default     = true
 }
 
 variable "app_force_redownload" {
   type        = bool
-  description = "Toggle to force redownloading of Server (JAR) File."
+  description = "Toggle to force re-downloading of Server (JAR) File."
   default     = false
 }
 
@@ -403,7 +403,7 @@ variable "app_world" {
 }
 
 ###############################
-## Pack-specifc Configuration #
+## Pack-specific Configuration #
 ###############################
 
 variable "nomad_pack_verbose_output" {
