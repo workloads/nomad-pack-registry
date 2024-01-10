@@ -266,7 +266,6 @@ This section describes Nomad-specific configuration.
 | nomad_task_driver                 | Driver to use for the Task.                  | `"raw_exec"` |
 | nomad_task_name                   | Name for the Task.                           | `"datadog_agent"` |
 | nomad_task_resources              | Resource Limits for the Task.                | `{"cores":null,"cpu":500,"memory":512,"memory_max":1024}` |
-
 <!-- END_PACK_DOCS -->
 
 ### Outputs
@@ -284,7 +283,7 @@ For outputs, see [./outputs.tpl](./outputs.tpl).
 
 * The `dd_tags` variable is pre-configured to map Nomad Runtime Environment variables to common Datadog variables.
 
-* Setting the `app_include_nomad_tags` variable to `true` will transmit Nomad-specifc tags (e.g.: Job, Task, Allocation data) as part of the Datadog Agent's payload.
+* Setting the `app_include_nomad_tags` variable to `true` will transmit Nomad-specific tags (e.g.: Job, Task, Allocation data) as part of the Datadog Agent's payload.
 
 ## Contributors
 

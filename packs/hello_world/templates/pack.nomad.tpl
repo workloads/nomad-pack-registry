@@ -99,9 +99,9 @@ job "[[ var "nomad_job_name" . ]]" {
 
       # and https://developer.hashicorp.com/nomad/docs/drivers/exec
       config {
-        # see https://docs.datadoghq.com/agent/guide/agent-commands/?tab=agentv6v7
         command = "ping"
-        args    = [
+
+        args = [
           "127.0.0.1"
         ]
       }

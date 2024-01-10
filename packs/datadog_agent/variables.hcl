@@ -461,7 +461,7 @@ variable "app_dd_logs_config_batch_wait" {
   default     = 5
 }
 
-# valid values are OS-specifc. Defaults for Windows and macOS are `200`, all other OS default to `500`.
+# valid values are OS-specific. Defaults for Windows and macOS are `200`, all other OS default to `500`.
 variable "app_dd_logs_config_open_files_limit" {
   type        = number
   description = "Maximum number of files that can be tailed in parallel."
@@ -1282,7 +1282,7 @@ variable "app_dd_otlp_config_debug_verbosity" {
 }
 
 ###############################
-## Pack-specifc Configuration #
+## Pack-specific Configuration #
 ###############################
 
 # Tags that are attached in-app to every metric, event, log, trace, and service check emitted by this Agent.
@@ -1637,7 +1637,6 @@ variable "nomad_task_resources" {
 
     # value in MB
     # see https://developer.hashicorp.com/nomad/docs/job-specification/resources#memory-oversubscription
-    # and https://developer.hashicorp.com/nomad/docs/drivers/docker#memory
     memory_max = 1024
   }
 }

@@ -81,7 +81,7 @@ variable "app_rwa_web_rcon" {
 }
 
 ###############################
-## Pack-specifc Configuration #
+## Pack-specific Configuration #
 ###############################
 
 variable "nomad_pack_verbose_output" {
