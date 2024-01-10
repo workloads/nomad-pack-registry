@@ -42,7 +42,6 @@ env             create Nomad environment for testing            `make env pack=<
 render          render a Nomad Pack                             `make render pack=<pack>`
 run             run a Nomad Pack                                `make run pack=<pack>`
 rerun           destroy and run a Nomad Pack                    `make rerun pack=<pack>`
-rerun           destroy and run a Nomad Pack                    `make rerun pack=<pack>`
 stop            stop a running Nomad Pack                       `make stop pack=<pack>`
 test            test a running Nomad Pack                       `make test pack=<pack>`
 restart         restart a Task                                  `make restart task=<task>`

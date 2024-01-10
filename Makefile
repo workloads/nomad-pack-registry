@@ -200,9 +200,6 @@ run: # run a Nomad Pack [Usage: `make run pack=<pack>`]
 
 .SILENT .PHONY: rerun
 rerun: # destroy and run a Nomad Pack [Usage: `make rerun pack=<pack>`]
-
-.SILENT .PHONY: rerun
-rerun: # destroy and run a Nomad Pack [Usage: `make rerun pack=<pack>`]
 	$(if $(pack),,$(call missing_argument,test,pack=<pack>))
 
 	$(call stop_pack,$(pack))
