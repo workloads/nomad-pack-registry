@@ -58,7 +58,7 @@ This section describes Application-specific configuration.
 | app_correct_player_movement                    | Toggle to enable server-side Movement Validation.                                    | `false` |
 | app_default_player_permission_level            | Default Permission for new Players.                                                  | `"member"` |
 | app_difficulty                                 | Difficulty Level.                                                                    | `"peaceful"` |
-| app_eula                                       | Toggle to accept End-User License Agreement.                                         | `true` |
+| app_eula                                       | Toggle to accept End User License Agreement.                                         | `true` |
 | app_force_gamemode                             | Toggle to force Players to always join in the default Game Mode.                     | `false` |
 | app_gamemode                                   | Game Mode.                                                                           | `"creative"` |
 | app_level_name                                 | Name of Level to load.                                                               | n/a |
@@ -106,7 +106,6 @@ This section describes Nomad-specific configuration.
 | nomad_task_image                  | Content Address to use for the Container Image for the Task.  | `{"digest":"sha256:e2019e959daa70dffd1468aaa1348bc906170709bf2c790bee302fc1efedbde7","image":"minecraft-bedrock-server","namespace":"itzg","registry":"index.docker.io","tag":"2023.8.1"}` |
 | nomad_task_name                   | Name for the Task.                                            | `"minecraft"` |
 | nomad_task_resources              | Resource Limits for the Task.                                 | `{"cores":null,"cpu":4000,"memory":4096,"memory_max":5120}` |
-
 <!-- END_PACK_DOCS -->
 
 ### Outputs

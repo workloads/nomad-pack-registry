@@ -266,7 +266,6 @@ This section describes Nomad-specific configuration.
 | nomad_task_driver                 | Driver to use for the Task.                  | `"raw_exec"` |
 | nomad_task_name                   | Name for the Task.                           | `"datadog_agent"` |
 | nomad_task_resources              | Resource Limits for the Task.                | `{"cores":null,"cpu":500,"memory":512,"memory_max":1024}` |
-
 <!-- END_PACK_DOCS -->
 
 ### Outputs

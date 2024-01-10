@@ -1637,7 +1637,6 @@ variable "nomad_task_resources" {
 
     # value in MB
     # see https://developer.hashicorp.com/nomad/docs/job-specification/resources#memory-oversubscription
-    # and https://developer.hashicorp.com/nomad/docs/drivers/docker#memory
     memory_max = 1024
   }
 }

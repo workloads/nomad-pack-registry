@@ -80,7 +80,6 @@ This section describes Nomad-specific configuration.
 | nomad_task_image                  | Content Address to use for the Container Image for the Task.  | `{"digest":"sha256:bc771a0e42089111784f06168238304212c9f22c9b472934de5d4bd742a09a81","image":"flagd","namespace":"open-feature","registry":"ghcr.io","tag":"v0.6.7"}` |
 | nomad_task_name                   | Name for the Task.                                            | `"flagd"` |
 | nomad_task_resources              | Resource Limits for the Task.                                 | `{"cores":null,"cpu":500,"memory":64,"memory_max":512}` |
-
 <!-- END_PACK_DOCS -->
 
 ### Outputs
