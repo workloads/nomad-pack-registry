@@ -67,7 +67,6 @@ task "register_worker" {
 
   # see https://developer.hashicorp.com/nomad/docs/job-specification/resources
   resources {
-    [[- $resources := var "nomad_task_resources" . ]]
     cpu    = 100
     memory = 128
   }

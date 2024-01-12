@@ -4,7 +4,7 @@
 WAIT_DURATION="$${WAIT_DURATION:-30}"
 
 sleep_and_wait() {
-  while true; do sleep $${WAIT_DURATION}; done
+  while true; do sleep ${WAIT_DURATION}; done
 }
 
 # TODO: change to `NOMAD_ALLOC_SECRETS_DIR` once available cross-task
