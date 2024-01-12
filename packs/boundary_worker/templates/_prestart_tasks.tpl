@@ -51,10 +51,6 @@ task "register_worker" {
   # and https://developer.hashicorp.com/nomad/docs/drivers/exec
   driver = "[[ var "nomad_task_driver" . ]]"
 
-  config {
-    command = "${NOMAD_ALLOC_DIR}/register_worker.sh"
-  }
-
   [[ template "environment_variables" . ]]
 
   template {
@@ -63,6 +59,10 @@ task "register_worker" {
     data = [[ "<<DATA" ]]
       [[ template "boundary_worker_registration" . ]]
     [[ "DATA" ]]
+  }
+
+  config {
+    command = "${NOMAD_ALLOC_DIR}/register_worker.sh"
   }
 
   # see https://developer.hashicorp.com/nomad/docs/job-specification/resources
