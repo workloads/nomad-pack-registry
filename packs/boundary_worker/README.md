@@ -13,7 +13,6 @@
     * [Nomad](#nomad)
     * [Outputs](#outputs)
   * [Notes](#notes)
-    * [Using the Boundary CLI](#using-the-boundary-cli)
     * [Resource Sizing](#resource-sizing)
   * [Author Information](#author-information)
   * [License](#license)
@@ -25,7 +24,6 @@
 - HashiCorp Nomad Pack `0.1.0` or [newer](https://releases.hashicorp.com/nomad-pack/)
 - Nomad Task Driver(s) for [`raw_exec`](https://developer.hashicorp.com/nomad/docs/drivers/raw_exec)
 - HCP Boundary Cluster ID, see [Notes](#notes)
-- Boundary Controller Token, see [Notes](#notes)
 
 ## Usage
 
@@ -99,53 +97,6 @@ For outputs, see [./outputs.tpl](./outputs.tpl).
 > The outputs are only rendered if `nomad_pack_verbose_output` is set to `true`.
 
 ## Notes
-
-To use a controller-led activation flow](https://developer.hashicorp.com/boundary/docs/configuration/worker/pki-worker#controller-led-authorization-flow), Workers require access to a Controller-provided registration token.
-
-The token may be generated via the Boundary CLI, or via an API client such as Terraform.
-
-### Using the Boundary CLI
-
-To generate a token with the Boundary CLI, the following commands may be used.
-
-```shell
-# set environment variables
-export BOUNDARY_ADDR="https://<HCP Boundary Cluster ID>.boundary.hashicorp.cloud"
-export BOUNDARY_AUTH_METHOD_ID="<Boundary Auth Method ID>"
-
-# authenticate to Boundary Controller
-boundary authenticate \
-  password -login-name="cluster-admin"
-
-# generate Boundary Controller Token and format output
-boundary \
-  workers \
-    create controller-led \
-    -format json \
-  | \
-  jq \
-    --raw-output ".item.controller_generated_activation_token"
-```
-
-Once generated, the token (and, if using HCP Boundary, a Cluster ID) must be made available to the executing environment via [Nomad Variables](https://developer.hashicorp.com/nomad/docs/concepts/variables).
-
-To do this, create a file called `boundary_worker.nv.hcl` with the following content:
-
-```hcl
-items {
-  hcp_boundary_cluster_id               = "<HCP Boundary Cluster ID>"
-  controller_generated_activation_token = "<Controller Token as generated above>"
-}
-```
-
-Then, submit the file to Nomad:
-
-```shell
-nomad \
-  var \
-    -in "hcl" \
-    "nomad/jobs/boundary_worker" "@boundary_worker.nv.hcl"
-```
 
 ### Resource Sizing
 
