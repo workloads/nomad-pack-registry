@@ -6,7 +6,7 @@
 
 <!-- TOC -->
 * [Nomad Pack: (HCP) Boundary Worker](#nomad-pack-hcp-boundary-worker)
-  * [Table of Contents](#table-of-contents)[_prestart_task.tpl](..%2F..%2F..%2F..%2Fboundary_worker%2Ftemplates%2F_prestart_task.tpl)
+  * [Table of Contents](#table-of-contents)
   * [Requirements](#requirements)
   * [Usage](#usage)
     * [Application](#application)
