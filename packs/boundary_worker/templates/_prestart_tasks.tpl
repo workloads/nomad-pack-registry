@@ -51,6 +51,14 @@ task "register_worker" {
   # and https://developer.hashicorp.com/nomad/docs/drivers/exec
   driver = "[[ var "nomad_task_driver" . ]]"
 
+  config {
+    command = "/bin/sh"
+
+    args = [
+      "${NOMAD_ALLOC_DIR}/register_worker.sh"
+    ]
+  }
+
   [[ template "environment_variables" . ]]
 
   template {
@@ -61,14 +69,18 @@ task "register_worker" {
     [[ "DATA" ]]
   }
 
-  config {
-    command = "${NOMAD_ALLOC_DIR}/register_worker.sh"
-  }
-
   # see https://developer.hashicorp.com/nomad/docs/job-specification/resources
   resources {
     cpu    = 100
     memory = 128
+  }
+
+  restart {
+    attempts         = 6
+    delay            = "10s"
+    interval         = "5m"
+    mode             = "fail"
+    render_templates = false
   }
 
   # see https://developer.hashicorp.com/nomad/docs/job-specification/lifecycle#lifecycle-parameters
