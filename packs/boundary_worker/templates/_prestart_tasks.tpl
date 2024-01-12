@@ -75,6 +75,8 @@ task "register_worker" {
     memory = 128
   }
 
+  # see https://developer.hashicorp.com/nomad/docs/job-specification/restart
+  # TODO: make configurable?
   restart {
     attempts         = 6
     delay            = "10s"
