@@ -115,13 +115,8 @@ job "[[ var "nomad_job_name" . ]]" {
         command = "boundary"
 
         args = [
-#          "127.0.0.1",
-          "workers",
-          "create",
-          "controller-led",
+          "server",
           "-config",
-
-          # TODO: change to `NOMAD_ALLOC_SECRETS_DIR` once available cross-task
           "${NOMAD_TASK_DIR}/config.hcl"
         ]
       }
