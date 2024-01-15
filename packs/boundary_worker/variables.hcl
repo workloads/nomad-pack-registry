@@ -44,15 +44,16 @@ variable "app_worker_tags" {
   type        = list(string)
   description = "Tags for the Boundary Worker."
 
+  # tags must be defined in lowercase
   default = [
     "nomad-managed-worker",
     "nomad-agent",
   ]
 }
 
-###############################
+################################
 ## Pack-specific Configuration #
-###############################
+################################
 
 variable "nomad_pack_verbose_output" {
   type        = bool

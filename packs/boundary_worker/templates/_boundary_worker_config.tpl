@@ -68,7 +68,8 @@ worker {
     nomad_os_version = "{{ env "attr.os.version" | toLower }}"
     nomad_region     = "{{ env "node.region" | toLower }}"
 
-    type   = [[ concat ( var "app_worker_tags" . ) | toJson ]]
+    # TODO: define missing tags
+    type   = [[ concat ( var "app_worker_tags" . ) | toJson | ]]
   }
 }
 [[- end ]]
