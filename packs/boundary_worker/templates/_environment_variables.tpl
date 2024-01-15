@@ -29,6 +29,7 @@ template {
     # Boundary Worker Registration requires unique names for each worker
     # see https://developer.hashicorp.com/boundary/docs/configuration/worker
     BOUNDARY_WORKER_NAME="[[ var "app_worker_name_prefix" . | replace "_" "-" | lower ]]-{{ env "NOMAD_SHORT_ALLOC_ID" }}-{{ env "NOMAD_ALLOC_INDEX" }}"
+    BOUNDARY_WORKER_DESCRIPTION="[[ var "app_worker_description" . ]]"
     {{ end }}
   DATA
 

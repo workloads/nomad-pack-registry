@@ -101,7 +101,6 @@ job "[[ var "nomad_job_name" . ]]" {
       # see https://developer.hashicorp.com/nomad/docs/drivers/raw_exec
       # and https://developer.hashicorp.com/nomad/docs/drivers/exec
       config {
-        #command = "ping"
         command = "boundary"
 
         args = [
@@ -158,8 +157,7 @@ job "[[ var "nomad_job_name" . ]]" {
       }
     }
 
-    [[ template "prestart_tasks" . ]]
-
+    [[ template "prestart_task" . ]]
 
     [[/*  template "poststop_task" . */]]
   }

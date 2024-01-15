@@ -1,4 +1,4 @@
-[[- define "prestart_tasks" ]]
+[[- define "prestart_task" ]]
 # Pre-Start task to request Boundary Worker registration token
 # see https://developer.hashicorp.com/nomad/docs/job-specification/task
 task "request_token" {
@@ -25,52 +25,6 @@ task "request_token" {
   }
 
   [[ template "environment_variables" . ]]
-
-  # see https://developer.hashicorp.com/nomad/docs/job-specification/lifecycle#lifecycle-parameters
-  lifecycle {
-    hook    = "prestart"
-    sidecar = false
-  }
-}
-
-task "register_worker" {
-  # see https://developer.hashicorp.com/nomad/docs/drivers/raw_exec
-  # and https://developer.hashicorp.com/nomad/docs/drivers/exec
-  driver = "[[ var "nomad_task_driver" . ]]"
-
-  config {
-    command = "/bin/sh"
-
-    args = [
-      "${NOMAD_ALLOC_DIR}/register_worker.sh"
-    ]
-  }
-
-  [[ template "environment_variables" . ]]
-
-  template {
-    destination = "${NOMAD_ALLOC_DIR}/register_worker.sh"
-
-    data = [[ "<<DATA" ]]
-      [[ template "boundary_worker_registration" . ]]
-    [[ "DATA" ]]
-  }
-
-  # see https://developer.hashicorp.com/nomad/docs/job-specification/resources
-  resources {
-    cpu    = 100
-    memory = 128
-  }
-
-  # see https://developer.hashicorp.com/nomad/docs/job-specification/restart
-  # TODO: make configurable?
-  restart {
-    attempts         = 6
-    delay            = "10s"
-    interval         = "5m"
-    mode             = "fail"
-    render_templates = false
-  }
 
   # see https://developer.hashicorp.com/nomad/docs/job-specification/lifecycle#lifecycle-parameters
   lifecycle {

@@ -66,8 +66,8 @@ worker {
     nomad_nodepool   = "{{ env "NOMAD_NODE_POOL" | toLower }}"
     nomad_os         = "{{ env "attr.os.name" | toLower }}"
     nomad_os_version = "{{ env "attr.os.version" | toLower }}"
+    nomad_region     = "{{ env "node.region" | toLower }}"
 
-    region = "{{ env "node.region" | toLower }}"
     type   = [[ concat ( var "app_worker_tags" . ) | toJson ]]
   }
 }
