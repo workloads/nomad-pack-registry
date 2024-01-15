@@ -112,7 +112,7 @@ job "[[ var "nomad_job_name" . ]]" {
           "-config",
 
           # TODO: change to `NOMAD_ALLOC_SECRETS_DIR` once available cross-task
-          "${NOMAD_ALLOC_DIR}/config.hcl"
+          "${NOMAD_TASK_DIR}/config.hcl"
         ]
       }
 
