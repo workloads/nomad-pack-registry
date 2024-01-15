@@ -3,7 +3,7 @@
 
 items {
   # general configuration
-  log_level="debug"
+  log_level="warn"
 
   # Boundary-specific configuration
   boundary_auth_method_id="ampw_..."

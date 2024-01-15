@@ -124,6 +124,18 @@ job "[[ var "nomad_job_name" . ]]" {
 
       [[ template "environment_variables" . ]]
 
+      # see https://developer.hashicorp.com/nomad/docs/job-specification/template
+      template {
+        change_mode = "restart"
+
+        data = [[ "<<DATA" ]]
+          [[ template "boundary_worker_config" . ]]
+        [[ "DATA" ]]
+
+        destination          = "${NOMAD_TASK_DIR}/config.hcl"
+        error_on_missing_key = true
+      }
+
       # see https://developer.hashicorp.com/nomad/docs/job-specification/volume_mount
       [[/* iterate over `var.volumes` to create Volume Mounts */]]
       [[- range $index, $mount := var "nomad_group_volumes" . ]]
@@ -148,7 +160,6 @@ job "[[ var "nomad_job_name" . ]]" {
 
     [[ template "prestart_tasks" . ]]
 
-    [[/* template "poststart_task" . */]]
 
     [[/*  template "poststop_task" . */]]
   }

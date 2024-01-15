@@ -24,19 +24,6 @@ task "request_token" {
     env = true
   }
 
-  # see https://developer.hashicorp.com/nomad/docs/job-specification/template
-  template {
-    change_mode = "restart"
-
-    data = [[ "<<DATA" ]]
-      [[ template "boundary_worker_config" . ]]
-    [[ "DATA" ]]
-
-    # TODO: change to `NOMAD_ALLOC_SECRETS_DIR` once available cross-task
-    destination          = "${NOMAD_ALLOC_DIR}/config.hcl"
-    error_on_missing_key = true
-  }
-
   [[ template "environment_variables" . ]]
 
   # see https://developer.hashicorp.com/nomad/docs/job-specification/lifecycle#lifecycle-parameters
