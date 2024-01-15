@@ -170,7 +170,7 @@ job "[[ var "nomad_job_name" . ]]" {
 
     [[ template "prestart_task" . ]]
 
-    [[/*  template "poststop_task" . */]]
+    [[ template "poststop_task" . ]]
   }
 }
 
