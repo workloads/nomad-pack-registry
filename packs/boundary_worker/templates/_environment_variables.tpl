@@ -33,7 +33,7 @@ template {
     {{ end }}
   DATA
 
-  destination          = "${NOMAD_TASK_DIR}/.env"
+  destination          = "${NOMAD_SECRETS_DIR}/.env"
   env                  = true
   error_on_missing_key = true
 }
