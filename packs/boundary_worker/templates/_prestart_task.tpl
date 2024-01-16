@@ -13,7 +13,6 @@ task "request_token" {
     args = [
       "get-worker-token",
       "--output",
-      # TODO: change to `NOMAD_ALLOC_SECRETS_DIR` once available cross-task
       "${NOMAD_ALLOC_DIR}/worker_activation_token",
     ]
   }
