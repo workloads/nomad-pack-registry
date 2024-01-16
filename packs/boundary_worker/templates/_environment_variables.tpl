@@ -10,7 +10,7 @@ env {
 template {
   change_mode = "restart"
 
-  data = <<DATA
+  data = <<-DATA
     {{- with nomadVar "nomad/jobs/[[ var "nomad_job_name" . ]]" -}}
     # general configuration
     LOG_LEVEL="debug"

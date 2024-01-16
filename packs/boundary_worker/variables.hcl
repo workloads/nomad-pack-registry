@@ -1,13 +1,35 @@
 variable "app_boundary_helper_path" {
   type        = string
-  description = "Path to the Boundary Helper Binary."
+  description = "Path to the Boundary Helper binary."
   default     = "/Users/ksatirli/Desktop/workloads/boundary-helper/dist/boundary-helper"
 }
 
 variable "app_boundary_helper_output_file_mode" {
   type        = string
-  description = "File Mode of the Output File created by the Boundary Helper Binary."
+  description = "File Mode of the Output File created by the Boundary Helper binary."
   default     = "0644"
+}
+
+variable "app_cors_enabled" {
+  type        = bool
+  description = "Toggle to enable CORS support for the Boundary Worker."
+  default     = true
+}
+
+variable "app_cors_allowed_origins" {
+  type        = list(string)
+  description = "Allowed CORS Origins for the Boundary Worker."
+
+  # tags must be defined in lowercase
+  default = [
+    "*",
+  ]
+}
+
+variable "app_disable_mlock" {
+  type        = bool
+  description = "Toggle to disable MLock for the Boundary Worker."
+  default     = true
 }
 
 variable "app_enable_hcp_boundary_support" {
@@ -38,6 +60,60 @@ variable "app_initial_upstreams" {
   type        = list(string)
   description = "Initial Upstreams for the Boundary Worker."
   default     = []
+}
+
+variable "app_tls_disable" {
+  type        = bool
+  description = "Toggle to disable TLS support for the Boundary Worker."
+  default     = true
+}
+
+variable "app_tls_cert_file" {
+  type        = string
+  description = "Specifies the path to the certificate for the Boundary Worker."
+  default     = ""
+}
+
+variable "app_tls_key_file" {
+  type        = string
+  description = "Specifies the path to the private key for the certificate for the Boundary Worker."
+  default     = ""
+}
+
+variable "app_tls_min_version" {
+  type        = string
+  description = "Specifies the minimum supported TLS version for the Boundary Worker."
+  default     = "tls12"
+}
+
+variable "app_tls_max_version" {
+  type        = string
+  description = "Specifies the maximum supported TLS version for the Boundary Worker."
+  default     = "tls13"
+}
+
+variable "app_tls_cipher_suites" {
+  type        = string
+  description = "Overridden List of supported ciphersuites for the Boundary Worker."
+  default     = ""
+}
+
+variable "app_tls_prefer_server_cipher_suites" {
+  type        = bool
+  description = "Toggle to enable preference for Cerver's ciphersuites over Client's ciphersuites for the Boundary Worker."
+  default     = false
+}
+
+variable "app_tls_require_and_verify_client_cert" {
+  type        = bool
+  description = "Toggle to enable client authentication for the listener for the Boundary Worker."
+  default     = false
+}
+
+variable "app_tls_client_ca_file" {
+  type        = string
+  description = "PEM-encoded Certificate Authority File used for checking the authenticity of tthe client for the Boundary Worker."
+  default     = ""
 }
 
 variable "app_worker_tags" {
@@ -172,18 +248,18 @@ variable "nomad_group_ports" {
       check_timeout  = "15s"
     },
 
-    #    # port for Ops
-    #    # see https://developer.hashicorp.com/boundary/docs/configuration/listener#ops
-    #    ops = {
-    #      name           = "boundary_worker_ops"
-    #      path           = "/health"
-    #      port           = 9203
-    #      protocol       = "http"
-    #      type           = "http"
-    #      host_network   = null
-    #      check_interval = "30s"
-    #      check_timeout  = "15s"
-    #    },
+    # port for Ops
+    # see https://developer.hashicorp.com/boundary/docs/configuration/listener#ops
+    ops = {
+      name           = "boundary_worker_ops"
+      path           = "/health"
+      port           = 9203
+      protocol       = "http"
+      type           = "http"
+      host_network   = null
+      check_interval = "30s"
+      check_timeout  = "15s"
+    },
   }
 }
 

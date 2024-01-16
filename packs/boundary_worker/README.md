@@ -51,15 +51,27 @@ nomad-pack run boundary_worker --registry=workloads
 
 This section describes Application-specific configuration.
 
-| Name                                   | Description                                                                                                        | Default |
-| -------------------------------------- | ------------------------------------------------------------------------------------------------------------------ | ------- |
-| app_boundary_helper_output_file_mode   | File Mode of the Output File created by the Boundary Helper Binary.                                                | `"0644"` |
-| app_boundary_helper_path               | Path to the Boundary Helper Binary.                                                                                | `"/Users/ksatirli/Desktop/workloads/boundary-helper/dist/boundary-helper"` |
-| app_enable_hcp_boundary_support        | Toggle to enable HCP Boundary Support (and forego self-hosted Boundary Enterprise Cluster registration workflows.  | `true` |
-| app_initial_upstreams                  | Initial Upstreams for the Boundary Worker.                                                                         | n/a |
-| app_worker_description                 | Description for the Boundary Worker.                                                                               | `"Nomad-managed Boundary Worker."` |
-| app_worker_name_prefix                 | Prefix for the Boundary Worker Name.                                                                               | `"nomad"` |
-| app_worker_tags                        | Tags for the Boundary Worker.                                                                                      | `["nomad-managed-worker","nomad-agent"]` |
+| Name                                     | Description                                                                                                        | Default |
+| ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------ | ------- |
+| app_boundary_helper_output_file_mode     | File Mode of the Output File created by the Boundary Helper binary.                                                | `"0644"` |
+| app_boundary_helper_path                 | Path to the Boundary Helper binary.                                                                                | `"/Users/ksatirli/Desktop/workloads/boundary-helper/dist/boundary-helper"` |
+| app_cors_allowed_origins                 | Allowed CORS Origins for the Boundary Worker.                                                                      | `["*"]` |
+| app_cors_enabled                         | Toggle to enable CORS support for the Boundary Worker.                                                             | `true` |
+| app_disable_mlock                        | Toggle to disable MLock for the Boundary Worker.                                                                   | `true` |
+| app_enable_hcp_boundary_support          | Toggle to enable HCP Boundary Support (and forego self-hosted Boundary Enterprise Cluster registration workflows.  | `true` |
+| app_initial_upstreams                    | Initial Upstreams for the Boundary Worker.                                                                         | n/a |
+| app_tls_cert_file                        | Specifies the path to the certificate for the Boundary Worker.                                                     | n/a |
+| app_tls_cipher_suites                    | Overridden List of supported ciphersuites for the Boundary Worker.                                                 | n/a |
+| app_tls_client_ca_file                   | PEM-encoded Certificate Authority File used for checking the authenticity of tthe client for the Boundary Worker.  | n/a |
+| app_tls_disable                          | Toggle to disable TLS support for the Boundary Worker.                                                             | `true` |
+| app_tls_key_file                         | Specifies the path to the private key for the certificate for the Boundary Worker.                                 | n/a |
+| app_tls_max_version                      | Specifies the maximum supported TLS version for the Boundary Worker.                                               | `"tls13"` |
+| app_tls_min_version                      | Specifies the minimum supported TLS version for the Boundary Worker.                                               | `"tls12"` |
+| app_tls_prefer_server_cipher_suites      | Toggle to enable preference for Cerver's ciphersuites over Client's ciphersuites for the Boundary Worker.          | `false` |
+| app_tls_require_and_verify_client_cert   | Toggle to enable client authentication for the listener for the Boundary Worker.                                   | `false` |
+| app_worker_description                   | Description for the Boundary Worker.                                                                               | `"Nomad-managed Boundary Worker."` |
+| app_worker_name_prefix                   | Prefix for the Boundary Worker Name.                                                                               | `"nomad"` |
+| app_worker_tags                          | Tags for the Boundary Worker.                                                                                      | `["nomad-managed-worker","nomad-agent"]` |
 
 ### Nomad
 
@@ -71,7 +83,7 @@ This section describes Nomad-specific configuration.
 | nomad_group_ephemeral_disk        | Ephemeral Disk Configuration for the Group.  | `{"migrate":true,"size":128,"sticky":true}` |
 | nomad_group_name                  | Name for the Group.                          | `"boundary_worker"` |
 | nomad_group_network_mode          | Network Mode for the Group.                  | `"host"` |
-| nomad_group_ports                 | Port Configuration for the Group.            | `{"proxy":{"check_interval":"30s","check_timeout":"15s","host_network":null,"name":"boundary_worker_proxy","path":null,"port":9202,"protocol":"tcp","type":"tcp"}}` |
+| nomad_group_ports                 | Port Configuration for the Group.            | `{"ops":{"check_interval":"30s","check_timeout":"15s","host_network":null,"name":"boundary_worker_ops","path":"/health","port":9203,"protocol":"http","type":"http"},"proxy":{"check_interval":"30s","check_timeout":"15s","host_network":null,"name":"boundary_worker_proxy","path":null,"port":9202,"protocol":"tcp","type":"tcp"}}` |
 | nomad_group_restart_logic         | Restart Logic for the Group.                 | `{"attempts":3,"delay":"30s","interval":"120s","mode":"fail"}` |
 | nomad_group_service_name_prefix   | Name of the Service for the Group.           | `"boundary_worker"` |
 | nomad_group_service_provider      | Provider of the Service for the Group.       | `"nomad"` |

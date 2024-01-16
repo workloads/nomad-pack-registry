@@ -10,6 +10,7 @@ items {
   boundary_password="..."
   boundary_scope_id="global"
   boundary_username="cluster-admin"
+  boundary_worker_cleanup_period="180h"
 
   # HCP Boundary-specific configuration
   hcp_boundary_cluster_id="..."
