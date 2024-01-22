@@ -37,14 +37,28 @@ listener "tcp" {
 
   # see https://developer.hashicorp.com/boundary/docs/configuration/listener/tcp#tls
   tls_disable                        = [[ var "app_tls_disable" . ]]
+
+  [[ if (ne (var "app_tls_client_ca_file" . ) "") -]]
+  tls_client_ca_file                 = "[[ var "app_tls_client_ca_file" . ]]"
+  [[ end -]]
+
+  [[ if (ne (var "app_tls_cert_file" . ) "") -]]
   tls_cert_file                      = "[[ var "app_tls_cert_file" . ]]"
+  [[ end -]]
+
+  [[ if (ne (var "app_tls_key_file" . ) "") -]]
   tls_key_file                       = "[[ var "app_tls_key_file" . ]]"
+  [[ end -]]
+
   tls_min_version                    = "[[ var "app_tls_min_version" . ]]"
   tls_max_version                    = "[[ var "app_tls_max_version" . ]]"
+
+  [[- if (ne (var "app_tls_cipher_suites" . ) "") -]]
   tls_cipher_suites                  = "[[ var "app_tls_cipher_suites" . ]]"
+  [[ end -]]
+
   tls_prefer_server_cipher_suites    = [[ var "app_tls_prefer_server_cipher_suites" . ]]
   tls_require_and_verify_client_cert = [[ var "app_tls_require_and_verify_client_cert" . ]]
-  tls_client_ca_file                 = "[[ var "app_tls_client_ca_file" . ]]"
 }
 [[ end ]]
 
@@ -63,11 +77,11 @@ worker {
   # see https://developer.hashicorp.com/boundary/docs/configuration/worker#tags
   # and https://developer.hashicorp.com/nomad/docs/runtime/interpolation#node-attributes
   tags {
+    [[- if (ne (env "attr.consul.datacenter") "") -]]
     # Consul-specific tags
-    [[ if "attr.consul.datacenter" -]]
     consul_datacenter = "{{ env "attr.consul.datacenter" | toLower }}"
     [[ end -]]
-    [[ if "attr.consul.version" -]]
+    [[ if (ne (env "attr.consul.version") "") -]]
     consul_version    = "{{ env "attr.consul.version" | toLower }}"
     [[ end ]]
 
@@ -78,12 +92,12 @@ worker {
     nomad_hostname          = "{{ env "attr.unique.hostname" | toLower }}"
     nomad_namespace         = "{{ env "NOMAD_NAMESPACE" | toLower }}"
 
-    [[- if "node.class" -]]
+    [[- if (ne (env "node.class") "") ]]
     nomad_node_class        = "{{ env "node.class" | toLower }}"
-    [[ end -]]
-    [[- if "node.pool" -]]
+    [[ end ]]
+    [[- if (ne (env "node.pool") "") ]]
     nomad_node_pool         = "{{ env "node.pool" | toLower }}"
-    [[ end -]]
+    [[ end ]]
 
     nomad_os                = "{{ env "attr.os.name" | toLower }}"
     nomad_os_version        = "{{ env "attr.os.version" | toLower }}"
@@ -91,13 +105,10 @@ worker {
     nomad_service_discovery = "{{ env "attr.nomad.service.discovery" | toLower }}"
     nomad_version           = "{{ env "attr.nomad.version" | toLower }}"
 
+    [[- if (ne (env "attr.vault.version") "") ]]
     # Vault-specific tags
-    [[ if "attr.vault.address" -]]
-    vault_address = "{{ env "attr.vault.address" | toLower }}"
-    [[ end -]]
-    [[ if "attr.vault.version" -]]
     vault_version = "{{ env "attr.vault.version" | toLower }}"
-    [[ end -]]
+    [[ end ]]
   }
 }
 [[- end ]]

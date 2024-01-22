@@ -20,7 +20,6 @@ variable "app_cors_allowed_origins" {
   type        = list(string)
   description = "Allowed CORS Origins for the Boundary Worker."
 
-  # tags must be defined in lowercase
   default = [
     "*",
   ]
@@ -38,7 +37,7 @@ variable "app_enable_hcp_boundary_support" {
   default     = true
 }
 
-# full worker name format is `<prefix>-<NOMAD_ALLOC_NAME>-<NOMAD_SHORT_ALLOC_ID>`
+# full worker name format is `<prefix>-<NOMAD_SHORT_ALLOC_ID>-<NOMAD_ALLOC_INDEX>`
 # value will be transformed to lowercase
 variable "app_worker_name_prefix" {
   type        = string
