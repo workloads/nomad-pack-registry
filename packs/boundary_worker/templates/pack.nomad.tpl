@@ -4,7 +4,7 @@
 job "[[ var "nomad_job_name" . ]]" {
   region      = "[[ var "nomad_job_region" . ]]"
   datacenters = [[ var "nomad_job_datacenters" . | toJson ]]
-  type        = "system"
+  type        = "service"
   namespace   = "[[ var "nomad_job_namespace" . ]]"
   priority    = [[ var "nomad_job_priority" . ]]
 
