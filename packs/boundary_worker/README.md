@@ -67,11 +67,10 @@ This section describes Application-specific configuration.
 | app_tls_key_file                         | Specifies the path to the private key for the certificate for the Boundary Worker.                                 | n/a |
 | app_tls_max_version                      | Specifies the maximum supported TLS version for the Boundary Worker.                                               | `"tls13"` |
 | app_tls_min_version                      | Specifies the minimum supported TLS version for the Boundary Worker.                                               | `"tls12"` |
-| app_tls_prefer_server_cipher_suites      | Toggle to enable preference for Cerver's ciphersuites over Client's ciphersuites for the Boundary Worker.          | `false` |
+| app_tls_prefer_server_cipher_suites      | Toggle to enable preference for Server's ciphersuites over Client's ciphersuites for the Boundary Worker.          | `false` |
 | app_tls_require_and_verify_client_cert   | Toggle to enable client authentication for the listener for the Boundary Worker.                                   | `false` |
 | app_worker_description                   | Description for the Boundary Worker.                                                                               | `"Nomad-managed Boundary Worker."` |
 | app_worker_name_prefix                   | Prefix for the Boundary Worker Name.                                                                               | `"nomad"` |
-| app_worker_tags                          | Tags for the Boundary Worker.                                                                                      | `["nomad-managed-worker","nomad-agent"]` |
 
 ### Nomad
 

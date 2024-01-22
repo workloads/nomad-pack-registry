@@ -100,7 +100,7 @@ variable "app_tls_cipher_suites" {
 
 variable "app_tls_prefer_server_cipher_suites" {
   type        = bool
-  description = "Toggle to enable preference for Cerver's ciphersuites over Client's ciphersuites for the Boundary Worker."
+  description = "Toggle to enable preference for Server's ciphersuites over Client's ciphersuites for the Boundary Worker."
   default     = false
 }
 
@@ -114,17 +114,6 @@ variable "app_tls_client_ca_file" {
   type        = string
   description = "PEM-encoded Certificate Authority File used for checking the authenticity of tthe client for the Boundary Worker."
   default     = ""
-}
-
-variable "app_worker_tags" {
-  type        = list(string)
-  description = "Tags for the Boundary Worker."
-
-  # tags must be defined in lowercase
-  default = [
-    "nomad-managed-worker",
-    "nomad-agent",
-  ]
 }
 
 ################################

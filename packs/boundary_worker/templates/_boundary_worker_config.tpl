@@ -61,19 +61,43 @@ worker {
   controller_generated_activation_token = "file:///{{ env "NOMAD_ALLOC_DIR" }}/worker_activation_token"
 
   # see https://developer.hashicorp.com/boundary/docs/configuration/worker#tags
+  # and https://developer.hashicorp.com/nomad/docs/runtime/interpolation#node-attributes
   tags {
-    # see https://developer.hashicorp.com/nomad/docs/runtime/interpolation#node-attributes
-    nomad_alloc_id   = "{{ env "NOMAD_ALLOC_ID" | toLower }}"
-    nomad_client     = "{{ env "node.unique.name" | toLower }}"
-    nomad_dc         = "{{ env "node.datacenter" | toLower }}"
-    nomad_hostname   = "{{ env "attr.unique.hostname" | toLower }}"
-    nomad_namespace  = "{{ env "NOMAD_NAMESPACE" | toLower }}"
-    nomad_nodepool   = "{{ env "NOMAD_NODE_POOL" | toLower }}"
-    nomad_os         = "{{ env "attr.os.name" | toLower }}"
-    nomad_os_version = "{{ env "attr.os.version" | toLower }}"
-    nomad_region     = "{{ env "node.region" | toLower }}"
+    # Consul-specific tags
+    [[ if "attr.consul.datacenter" -]]
+    consul_datacenter = "{{ env "attr.consul.datacenter" | toLower }}"
+    [[ end -]]
+    [[ if "attr.consul.version" -]]
+    consul_version    = "{{ env "attr.consul.version" | toLower }}"
+    [[ end ]]
 
-    type = [[ concat ( var "app_worker_tags" . ) | toJson ]]
+    # Nomad-specific tags
+    nomad_alloc_id          = "{{ env "NOMAD_ALLOC_ID" | toLower }}"
+    nomad_client            = "{{ env "node.unique.name" | toLower }}"
+    nomad_dc                = "{{ env "node.datacenter" | toLower }}"
+    nomad_hostname          = "{{ env "attr.unique.hostname" | toLower }}"
+    nomad_namespace         = "{{ env "NOMAD_NAMESPACE" | toLower }}"
+
+    [[- if "node.class" -]]
+    nomad_node_class        = "{{ env "node.class" | toLower }}"
+    [[ end -]]
+    [[- if "node.pool" -]]
+    nomad_node_pool         = "{{ env "node.pool" | toLower }}"
+    [[ end -]]
+
+    nomad_os                = "{{ env "attr.os.name" | toLower }}"
+    nomad_os_version        = "{{ env "attr.os.version" | toLower }}"
+    nomad_region            = "{{ env "node.region" | toLower }}"
+    nomad_service_discovery = "{{ env "attr.nomad.service.discovery" | toLower }}"
+    nomad_version           = "{{ env "attr.nomad.version" | toLower }}"
+
+    # Vault-specific tags
+    [[ if "attr.vault.address" -]]
+    vault_address = "{{ env "attr.vault.address" | toLower }}"
+    [[ end -]]
+    [[ if "attr.vault.version" -]]
+    vault_version = "{{ env "attr.vault.version" | toLower }}"
+    [[ end -]]
   }
 }
 [[- end ]]

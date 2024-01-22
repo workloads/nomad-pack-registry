@@ -2,7 +2,6 @@
 # see https://developer.hashicorp.com/nomad/docs/job-specification/env
 env {
   # see https://developer.hashicorp.com/nomad/docs/runtime/interpolation#node-attributes
-  NOMAD_NODE_POOL = "node.pool" # TODO: change to `${node.pool}`
   NOMAD_ADDR = "unix:///${NOMAD_SECRETS_DIR}/api.sock"
 }
 
