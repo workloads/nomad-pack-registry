@@ -55,7 +55,7 @@ listener "tcp" {
 
   [[- if (ne (var "app_tls_cipher_suites" . ) "") -]]
   tls_cipher_suites                  = "[[ var "app_tls_cipher_suites" . ]]"
-  [[ end -]]
+  [[ end ]]
 
   tls_prefer_server_cipher_suites    = [[ var "app_tls_prefer_server_cipher_suites" . ]]
   tls_require_and_verify_client_cert = [[ var "app_tls_require_and_verify_client_cert" . ]]
@@ -77,13 +77,13 @@ worker {
   # see https://developer.hashicorp.com/boundary/docs/configuration/worker#tags
   # and https://developer.hashicorp.com/nomad/docs/runtime/interpolation#node-attributes
   tags {
-    [[- if (ne (env "attr.consul.datacenter") "") -]]
+    [[ if (ne (env "attr.consul.datacenter") "") -]]
     # Consul-specific tags
     consul_datacenter = "{{ env "attr.consul.datacenter" | toLower }}"
     [[ end -]]
     [[ if (ne (env "attr.consul.version") "") -]]
     consul_version    = "{{ env "attr.consul.version" | toLower }}"
-    [[ end ]]
+    [[ end -]]
 
     # Nomad-specific tags
     nomad_alloc_id          = "{{ env "NOMAD_ALLOC_ID" | toLower }}"
