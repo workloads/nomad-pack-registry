@@ -82,7 +82,7 @@ variable "app_tls_key_file" {
 variable "app_tls_min_version" {
   type        = string
   description = "Specifies the minimum supported TLS version for the Boundary Worker."
-  default     = "tls12"
+  default     = "tls13"
 }
 
 variable "app_tls_max_version" {

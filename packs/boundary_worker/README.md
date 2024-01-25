@@ -23,7 +23,7 @@
 - HashiCorp Nomad `1.7.x` or [newer](https://developer.hashicorp.com/nomad/install)
 - HashiCorp Nomad Pack `0.1.0` or [newer](https://releases.hashicorp.com/nomad-pack/)
 - Nomad Task Driver(s) for [`raw_exec`](https://developer.hashicorp.com/nomad/docs/drivers/raw_exec)
-- HCP Boundary Cluster ID, see [Notes](#notes)
+- HCP Boundary Cluster ID _or_ HashiCorp Boundary Controller, see [Notes](#notes)
 
 ## Usage
 
@@ -66,7 +66,7 @@ This section describes Application-specific configuration.
 | app_tls_disable                          | Toggle to disable TLS support for the Boundary Worker.                                                             | `true` |
 | app_tls_key_file                         | Specifies the path to the private key for the certificate for the Boundary Worker.                                 | n/a |
 | app_tls_max_version                      | Specifies the maximum supported TLS version for the Boundary Worker.                                               | `"tls13"` |
-| app_tls_min_version                      | Specifies the minimum supported TLS version for the Boundary Worker.                                               | `"tls12"` |
+| app_tls_min_version                      | Specifies the minimum supported TLS version for the Boundary Worker.                                               | `"tls13"` |
 | app_tls_prefer_server_cipher_suites      | Toggle to enable preference for Server's ciphersuites over Client's ciphersuites for the Boundary Worker.          | `false` |
 | app_tls_require_and_verify_client_cert   | Toggle to enable client authentication for the listener for the Boundary Worker.                                   | `false` |
 | app_worker_description                   | Description for the Boundary Worker.                                                                               | `"Nomad-managed Boundary Worker."` |
