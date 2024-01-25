@@ -8,6 +8,8 @@
 * [Nomad Pack: (HCP) Boundary Worker](#nomad-pack-hcp-boundary-worker)
   * [Table of Contents](#table-of-contents)
   * [Requirements](#requirements)
+      * [Deployment within HCP Boundary](#deployment-within-hcp-boundary)
+      * [Deployment within self-managed Boundary](#deployment-within-self-managed-boundary)
   * [Usage](#usage)
     * [Application](#application)
     * [Nomad](#nomad)
@@ -23,7 +25,16 @@
 - HashiCorp Nomad `1.7.x` or [newer](https://developer.hashicorp.com/nomad/install)
 - HashiCorp Nomad Pack `0.1.0` or [newer](https://releases.hashicorp.com/nomad-pack/)
 - Nomad Task Driver(s) for [`raw_exec`](https://developer.hashicorp.com/nomad/docs/drivers/raw_exec)
-- HCP Boundary Cluster ID _or_ HashiCorp Boundary Controller, see [Notes](#notes)
+
+#### Deployment within HCP Boundary
+
+- HashiCorp Boundary Enterprise [binary](https://releases.hashicorp.com/boundary/)
+- HCP Boundary Cluster ID
+
+#### Deployment within self-managed Boundary
+
+- HashiCorp Boundary [binary](https://releases.hashicorp.com/boundary/)
+- HashiCorp Boundary Controller
 
 ## Usage
 

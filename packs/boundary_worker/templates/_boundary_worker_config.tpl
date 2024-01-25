@@ -38,6 +38,7 @@ listener "tcp" {
   # see https://developer.hashicorp.com/boundary/docs/configuration/listener/tcp#tls
   tls_disable                        = [[ var "app_tls_disable" . ]]
 
+  [[ if (var "app_tls_disable" .) -]]
   [[ if (ne (var "app_tls_client_ca_file" . ) "") -]]
   tls_client_ca_file                 = "[[ var "app_tls_client_ca_file" . ]]"
   [[ end -]]
@@ -48,6 +49,7 @@ listener "tcp" {
 
   [[ if (ne (var "app_tls_key_file" . ) "") -]]
   tls_key_file                       = "[[ var "app_tls_key_file" . ]]"
+  [[ end -]]
   [[ end -]]
 
   tls_min_version                    = "[[ var "app_tls_min_version" . ]]"
