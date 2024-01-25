@@ -54,7 +54,7 @@ This section describes Application-specific configuration.
 | Name                                     | Description                                                                                                        | Default |
 | ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------ | ------- |
 | app_boundary_helper_output_file_mode     | File Mode of the Output File created by the Boundary Helper binary.                                                | `"0644"` |
-| app_boundary_helper_path                 | Path to the Boundary Helper binary.                                                                                | `"/Users/ksatirli/Desktop/workloads/boundary-helper/dist/boundary-helper"` |
+| app_boundary_helper_path                 | Path to the Boundary Helper binary.                                                                                | `"boundary-helper"` |
 | app_cors_allowed_origins                 | Allowed CORS Origins for the Boundary Worker.                                                                      | `["*"]` |
 | app_cors_enabled                         | Toggle to enable CORS support for the Boundary Worker.                                                             | `true` |
 | app_disable_mlock                        | Toggle to disable MLock for the Boundary Worker.                                                                   | `true` |

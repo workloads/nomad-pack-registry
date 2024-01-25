@@ -1,7 +1,7 @@
 variable "app_boundary_helper_path" {
   type        = string
   description = "Path to the Boundary Helper binary."
-  default     = "/Users/ksatirli/Desktop/workloads/boundary-helper/dist/boundary-helper"
+  default     = "boundary-helper"
 }
 
 variable "app_boundary_helper_output_file_mode" {
