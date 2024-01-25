@@ -51,26 +51,26 @@ nomad-pack run boundary_worker --registry=workloads
 
 This section describes Application-specific configuration.
 
-| Name                                     | Description                                                                                                        | Default |
-| ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------ | ------- |
-| app_boundary_helper_output_file_mode     | File Mode of the Output File created by the Boundary Helper binary.                                                | `"0644"` |
-| app_boundary_helper_path                 | Path to the Boundary Helper binary.                                                                                | `"boundary-helper"` |
-| app_cors_allowed_origins                 | Allowed CORS Origins for the Boundary Worker.                                                                      | n/a |
-| app_cors_enabled                         | Toggle to enable CORS support for the Boundary Worker.                                                             | `false` |
-| app_disable_mlock                        | Toggle to disable MLock for the Boundary Worker.                                                                   | `false` |
-| app_enable_hcp_boundary_support          | Toggle to enable HCP Boundary Support (and forego self-hosted Boundary Enterprise Cluster registration workflows.  | `true` |
-| app_initial_upstreams                    | Initial Upstreams for the Boundary Worker.                                                                         | n/a |
-| app_tls_cert_file                        | Specifies the path to the certificate for the Boundary Worker.                                                     | n/a |
-| app_tls_cipher_suites                    | Overridden List of supported ciphersuites for the Boundary Worker.                                                 | n/a |
-| app_tls_client_ca_file                   | PEM-encoded Certificate Authority File used for checking the authenticity of tthe client for the Boundary Worker.  | n/a |
-| app_tls_disable                          | Toggle to disable TLS support for the Boundary Worker.                                                             | `true` |
-| app_tls_key_file                         | Specifies the path to the private key for the certificate for the Boundary Worker.                                 | n/a |
-| app_tls_max_version                      | Specifies the maximum supported TLS version for the Boundary Worker.                                               | `"tls13"` |
-| app_tls_min_version                      | Specifies the minimum supported TLS version for the Boundary Worker.                                               | `"tls13"` |
-| app_tls_prefer_server_cipher_suites      | Toggle to enable preference for Server's ciphersuites over Client's ciphersuites for the Boundary Worker.          | `false` |
-| app_tls_require_and_verify_client_cert   | Toggle to enable client authentication for the listener for the Boundary Worker.                                   | `false` |
-| app_worker_description                   | Description for the Boundary Worker.                                                                               | `"Nomad-managed Boundary Worker."` |
-| app_worker_name_prefix                   | Prefix for the Boundary Worker Name.                                                                               | `"nomad"` |
+| Name                                     | Description                                                                                                                            | Default |
+| ---------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| app_boundary_helper_output_file_mode     | File Mode of the Output File created by the Boundary Helper binary.                                                                    | `"0644"` |
+| app_boundary_helper_path                 | Path to the Boundary Helper binary.                                                                                                    | `"boundary-helper"` |
+| app_cors_allowed_origins                 | Allowed CORS Origins for the Boundary Worker.                                                                                          | n/a |
+| app_cors_enabled                         | Toggle to enable CORS support for the Boundary Worker.                                                                                 | `false` |
+| app_disable_mlock                        | Toggle to disable MLock for the Boundary Worker.                                                                                       | `false` |
+| app_enable_hcp_boundary_support          | Toggle to enable HCP Boundary Support (and forego self-hosted Boundary Enterprise Cluster registration workflows.                      | `true` |
+| app_initial_upstreams                    | Initial Upstreams for the Boundary Worker.                                                                                             | n/a |
+| app_tls_cert_file                        | Specifies the path to the certificate for the Boundary Worker.                                                                         | n/a |
+| app_tls_cipher_suites                    | Overridden List of supported ciphersuites for the Boundary Worker. Only relevant if `app_tls_max_version` is set to `tls12` or below.  | n/a |
+| app_tls_client_ca_file                   | PEM-encoded Certificate Authority File used for checking the authenticity of tthe client for the Boundary Worker.                      | n/a |
+| app_tls_disable                          | Toggle to disable TLS support for the Boundary Worker.                                                                                 | `true` |
+| app_tls_key_file                         | Specifies the path to the private key for the certificate for the Boundary Worker.                                                     | n/a |
+| app_tls_max_version                      | Specifies the maximum supported TLS version for the Boundary Worker.                                                                   | `"tls13"` |
+| app_tls_min_version                      | Specifies the minimum supported TLS version for the Boundary Worker.                                                                   | `"tls13"` |
+| app_tls_prefer_server_cipher_suites      | Toggle to enable preference for Server's ciphersuites over Client's ciphersuites for the Boundary Worker.                              | `false` |
+| app_tls_require_and_verify_client_cert   | Toggle to enable client authentication for the listener for the Boundary Worker.                                                       | `false` |
+| app_worker_description                   | Description for the Boundary Worker.                                                                                                   | `"Nomad-managed Boundary Worker."` |
+| app_worker_name_prefix                   | Prefix for the Boundary Worker Name.                                                                                                   | `"nomad"` |
 
 ### Nomad
 

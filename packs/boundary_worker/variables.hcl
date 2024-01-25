@@ -93,7 +93,7 @@ variable "app_tls_max_version" {
 
 variable "app_tls_cipher_suites" {
   type        = string
-  description = "Overridden List of supported ciphersuites for the Boundary Worker."
+  description = "Overridden List of supported ciphersuites for the Boundary Worker. Only relevant if `app_tls_max_version` is set to `tls12` or below."
   default     = ""
 }
 
