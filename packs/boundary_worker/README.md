@@ -57,7 +57,7 @@ This section describes Application-specific configuration.
 | app_boundary_helper_path                 | Path to the Boundary Helper binary.                                                                                | `"boundary-helper"` |
 | app_cors_allowed_origins                 | Allowed CORS Origins for the Boundary Worker.                                                                      | n/a |
 | app_cors_enabled                         | Toggle to enable CORS support for the Boundary Worker.                                                             | `false` |
-| app_disable_mlock                        | Toggle to disable MLock for the Boundary Worker.                                                                   | `true` |
+| app_disable_mlock                        | Toggle to disable MLock for the Boundary Worker.                                                                   | `false` |
 | app_enable_hcp_boundary_support          | Toggle to enable HCP Boundary Support (and forego self-hosted Boundary Enterprise Cluster registration workflows.  | `true` |
 | app_initial_upstreams                    | Initial Upstreams for the Boundary Worker.                                                                         | n/a |
 | app_tls_cert_file                        | Specifies the path to the certificate for the Boundary Worker.                                                     | n/a |

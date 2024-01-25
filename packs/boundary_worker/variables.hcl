@@ -28,7 +28,7 @@ variable "app_cors_allowed_origins" {
 variable "app_disable_mlock" {
   type        = bool
   description = "Toggle to disable MLock for the Boundary Worker."
-  default     = true
+  default     = false
 }
 
 variable "app_enable_hcp_boundary_support" {
