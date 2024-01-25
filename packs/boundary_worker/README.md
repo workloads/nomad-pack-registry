@@ -59,7 +59,7 @@ This section describes Application-specific configuration.
 | app_cors_enabled                         | Toggle to enable CORS support for the Boundary Worker.                                                                                 | `false` |
 | app_disable_mlock                        | Toggle to disable MLock for the Boundary Worker.                                                                                       | `false` |
 | app_enable_hcp_boundary_support          | Toggle to enable HCP Boundary Support (and forego self-hosted Boundary Enterprise Cluster registration workflows.                      | `true` |
-| app_initial_upstreams                    | Initial Upstreams for the Boundary Worker.                                                                                             | n/a |
+| app_initial_upstreams                    | List of hosts or IP addresses for reaching a Boundary Cluster.                                                                         | n/a |
 | app_tls_cert_file                        | Specifies the path to the certificate for the Boundary Worker.                                                                         | n/a |
 | app_tls_cipher_suites                    | Overridden List of supported ciphersuites for the Boundary Worker. Only relevant if `app_tls_max_version` is set to `tls12` or below.  | n/a |
 | app_tls_client_ca_file                   | PEM-encoded Certificate Authority File used for checking the authenticity of tthe client for the Boundary Worker.                      | n/a |

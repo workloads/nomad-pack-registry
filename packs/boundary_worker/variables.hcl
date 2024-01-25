@@ -57,7 +57,8 @@ variable "app_worker_description" {
 # only relevant in a non-HCP Boundary setting
 variable "app_initial_upstreams" {
   type        = list(string)
-  description = "Initial Upstreams for the Boundary Worker."
+  description = "List of hosts or IP addresses for reaching a Boundary Cluster."
+  
   default     = []
 }
 
