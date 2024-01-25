@@ -55,9 +55,9 @@ This section describes Application-specific configuration.
 | ---------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- | ------- |
 | app_boundary_helper_output_file_mode     | File Mode of the Output File created by the Boundary Helper binary.                                                                    | `"0644"` |
 | app_boundary_helper_path                 | Path to the Boundary Helper binary.                                                                                                    | `"boundary-helper"` |
-| app_cors_allowed_origins                 | Allowed CORS Origins for the Boundary Worker.                                                                                          | n/a |
+| app_cors_allowed_origins                 | Allowed CORS Origins for the Boundary Worker.                                                                                          | `["*"]` |
 | app_cors_enabled                         | Toggle to enable CORS support for the Boundary Worker.                                                                                 | `false` |
-| app_disable_mlock                        | Toggle to disable MLock for the Boundary Worker.                                                                                       | `false` |
+| app_disable_mlock                        | Toggle to disable mlock for the Boundary Worker. This setting may not be supported on all operating systems.                           | `true` |
 | app_enable_hcp_boundary_support          | Toggle to enable HCP Boundary Support (and forego self-hosted Boundary Enterprise Cluster registration workflows.                      | `true` |
 | app_initial_upstreams                    | List of hosts or IP addresses for reaching a Boundary Cluster.                                                                         | n/a |
 | app_tls_cert_file                        | Specifies the path to the certificate for the Boundary Worker.                                                                         | n/a |
@@ -76,27 +76,27 @@ This section describes Application-specific configuration.
 
 This section describes Nomad-specific configuration.
 
-| Name                              | Description                                  | Default |
-| --------------------------------- | -------------------------------------------- | ------- |
-| nomad_group_count                 | Count of Deployments for the Group.          | `1` |
-| nomad_group_ephemeral_disk        | Ephemeral Disk Configuration for the Group.  | `{"migrate":true,"size":128,"sticky":true}` |
-| nomad_group_name                  | Name for the Group.                          | `"boundary_worker"` |
-| nomad_group_network_mode          | Network Mode for the Group.                  | `"host"` |
-| nomad_group_ports                 | Port Configuration for the Group.            | `{"ops":{"check_interval":"30s","check_timeout":"15s","host_network":null,"name":"boundary_worker_ops","path":"/health","port":9203,"protocol":"http","type":"http"},"proxy":{"check_interval":"30s","check_timeout":"15s","host_network":null,"name":"boundary_worker_proxy","path":null,"port":9202,"protocol":"tcp","type":"tcp"}}` |
-| nomad_group_restart_logic         | Restart Logic for the Group.                 | `{"attempts":3,"delay":"30s","interval":"120s","mode":"fail"}` |
-| nomad_group_service_name_prefix   | Name of the Service for the Group.           | `"boundary_worker"` |
-| nomad_group_service_provider      | Provider of the Service for the Group.       | `"nomad"` |
-| nomad_group_tags                  | List of Tags for the Group.                  | `["boundary","boundary-workers"]` |
-| nomad_group_volumes               | Volumes for the Group.                       | `{}` |
-| nomad_job_datacenters             | Eligible Datacenters for the Job.            | `["*"]` |
-| nomad_job_name                    | Name for the Job.                            | `"boundary_worker"` |
-| nomad_job_namespace               | Namespace for the Job.                       | `"default"` |
-| nomad_job_priority                | Priority for the Job.                        | `10` |
-| nomad_job_region                  | Region for the Job.                          | `"global"` |
-| nomad_pack_verbose_output         | Toggle to enable verbose output.             | `true` |
-| nomad_task_driver                 | Driver to use for the Task.                  | `"raw_exec"` |
-| nomad_task_name                   | Name for the Task.                           | `"boundary_worker"` |
-| nomad_task_resources              | Resource Limits for the Task.                | `{"cores":null,"cpu":500,"memory":512,"memory_max":1024}` |
+| Name                              | Description                                        | Default |
+| --------------------------------- | -------------------------------------------------- | ------- |
+| nomad_group_count                 | Count of Deployments for the Group.                | `1` |
+| nomad_group_ephemeral_disk        | Ephemeral Disk Configuration for the Group.        | `{"migrate":true,"size":128,"sticky":true}` |
+| nomad_group_name                  | Name for the Group.                                | `"boundary_worker"` |
+| nomad_group_network_mode          | Network Mode for the Group.                        | `"host"` |
+| nomad_group_ports                 | Port and Healthcheck Configuration for the Group.  | `{"ops":{"check_interval":"30s","check_timeout":"15s","host_network":null,"name":"boundary_worker_ops","path":"/health","port":9203,"protocol":"http","type":"http"},"proxy":{"check_interval":"30s","check_timeout":"15s","host_network":null,"name":"boundary_worker_proxy","path":null,"port":9202,"protocol":"tcp","type":"tcp"}}` |
+| nomad_group_restart_logic         | Restart Logic for the Group.                       | `{"attempts":3,"delay":"30s","interval":"120s","mode":"fail"}` |
+| nomad_group_service_name_prefix   | Name of the Service for the Group.                 | `"boundary_worker"` |
+| nomad_group_service_provider      | Provider of the Service for the Group.             | `"nomad"` |
+| nomad_group_tags                  | List of Tags for the Group.                        | `["boundary","boundary-workers"]` |
+| nomad_group_volumes               | Volumes for the Group.                             | `{}` |
+| nomad_job_datacenters             | Eligible Datacenters for the Job.                  | `["*"]` |
+| nomad_job_name                    | Name for the Job.                                  | `"boundary_worker"` |
+| nomad_job_namespace               | Namespace for the Job.                             | `"default"` |
+| nomad_job_priority                | Priority for the Job.                              | `10` |
+| nomad_job_region                  | Region for the Job.                                | `"global"` |
+| nomad_pack_verbose_output         | Toggle to enable verbose output.                   | `true` |
+| nomad_task_driver                 | Driver to use for the Task.                        | `"raw_exec"` |
+| nomad_task_name                   | Name for the Task.                                 | `"boundary_worker"` |
+| nomad_task_resources              | Resource Limits for the Task.                      | `{"cores":null,"cpu":500,"memory":512,"memory_max":1024}` |
 <!-- END_PACK_DOCS -->
 
 ### Outputs

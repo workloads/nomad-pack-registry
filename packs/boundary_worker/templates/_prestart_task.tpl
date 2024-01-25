@@ -11,7 +11,8 @@ task "request_token" {
     command = "[[ var "app_boundary_helper_path" . ]]"
 
     args = [
-      "get-worker-token",
+      "worker",
+      "token",
       "--output",
       "${NOMAD_ALLOC_DIR}/worker_activation_token",
     ]

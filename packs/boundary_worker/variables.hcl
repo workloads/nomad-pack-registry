@@ -21,14 +21,16 @@ variable "app_cors_allowed_origins" {
   description = "Allowed CORS Origins for the Boundary Worker."
 
   default = [
-    # "*",
+    "*",
   ]
 }
 
 variable "app_disable_mlock" {
   type        = bool
-  description = "Toggle to disable MLock for the Boundary Worker."
-  default     = false
+  description = "Toggle to disable mlock for the Boundary Worker. This setting may not be supported on all operating systems."
+
+  # This syscall may not be supported on all operating systems.
+  default = true
 }
 
 variable "app_enable_hcp_boundary_support" {
@@ -58,7 +60,7 @@ variable "app_worker_description" {
 variable "app_initial_upstreams" {
   type        = list(string)
   description = "List of hosts or IP addresses for reaching a Boundary Cluster."
-  
+
   default     = []
 }
 
@@ -221,7 +223,7 @@ variable "nomad_group_ports" {
     check_timeout  = string
   }))
 
-  description = "Port Configuration for the Group."
+  description = "Port and Healthcheck Configuration for the Group."
 
   default = {
     # port for Worker

@@ -11,7 +11,8 @@ task "deregister_worker" {
     command = "[[ var "app_boundary_helper_path" . ]]"
 
     args = [
-      "deregister-worker",
+      "worker",
+      "deregister"
     ]
   }
 
