@@ -13,7 +13,7 @@ variable "app_boundary_helper_output_file_mode" {
 variable "app_cors_enabled" {
   type        = bool
   description = "Toggle to enable CORS support for the Boundary Worker."
-  default     = true
+  default     = false
 }
 
 variable "app_cors_allowed_origins" {
@@ -21,7 +21,7 @@ variable "app_cors_allowed_origins" {
   description = "Allowed CORS Origins for the Boundary Worker."
 
   default = [
-    "*",
+    # "*",
   ]
 }
 
