@@ -98,17 +98,6 @@ job "[[ var "nomad_job_name" . ]]" {
         ]
       }
 
-      # Action to clean up old workers based on "Last Seen" duration
-      # see https://developer.hashicorp.com/nomad/docs/job-specification/action
-      action "cleanup-workers" {
-        command = "[[ var "app_boundary_helper_path" . ]]"
-
-        # see https://github.com/workloads/boundary-helper/#environment-variables
-        args = [
-          "cleanup-workers"
-        ]
-      }
-
       # see https://developer.hashicorp.com/nomad/docs/drivers/raw_exec
       # and https://developer.hashicorp.com/nomad/docs/drivers/exec
       config {
