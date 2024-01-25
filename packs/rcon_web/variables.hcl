@@ -221,7 +221,7 @@ variable "nomad_group_ports" {
     check_timeout  = string
   }))
 
-  description = "Port Configuration for the Group."
+  description = "Port and Healthcheck Configuration for the Group."
 
   default = {
     # port for web UI

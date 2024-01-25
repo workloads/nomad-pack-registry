@@ -62,7 +62,7 @@ This section describes Nomad-specific configuration.
 | nomad_group_ephemeral_disk        | Ephemeral Disk Configuration for the Group.                   | `{"migrate":false,"size":128,"sticky":false}` |
 | nomad_group_name                  | Name for the Group.                                           | `"flagd"` |
 | nomad_group_network_mode          | Network Mode for the Group.                                   | `"host"` |
-| nomad_group_ports                 | Port Configuration for the Group.                             | `{"health":{"check_interval":"30s","check_timeout":"15s","host_network":null,"method":"GET","name":"health","omit_check":false,"path":"/healthz","port":8014,"type":"http"},"main":{"check_interval":"30s","check_timeout":"15s","host_network":null,"method":"POST","name":"main","omit_check":true,"path":"/","port":8013,"type":"http"}}` |
+| nomad_group_ports                 | Port and Healthcheck Configuration for the Group.             | `{"health":{"check_interval":"30s","check_timeout":"15s","host_network":null,"method":"GET","name":"health","omit_check":false,"path":"/healthz","port":8014,"type":"http"},"main":{"check_interval":"30s","check_timeout":"15s","host_network":null,"method":"POST","name":"main","omit_check":true,"path":"/","port":8013,"type":"http"}}` |
 | nomad_group_restart_logic         | Restart Logic for the Group.                                  | `{"attempts":3,"delay":"30s","interval":"120s","mode":"fail"}` |
 | nomad_group_service_name_prefix   | Name of the Service for the Group.                            | `"flagd"` |
 | nomad_group_service_provider      | Provider of the Service for the Group.                        | `"nomad"` |
