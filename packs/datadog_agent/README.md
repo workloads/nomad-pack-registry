@@ -245,27 +245,27 @@ This section describes Application-specific configuration.
 
 This section describes Nomad-specific configuration.
 
-| Name                              | Description                                  | Default |
-| --------------------------------- | -------------------------------------------- | ------- |
-| nomad_group_count                 | Count of Deployments for the Group.          | `1` |
-| nomad_group_ephemeral_disk        | Ephemeral Disk Configuration for the Group.  | `{"migrate":true,"size":128,"sticky":false}` |
-| nomad_group_name                  | Name for the Group.                          | `"datadog_agent"` |
-| nomad_group_network_mode          | Network Mode for the Group.                  | `"host"` |
-| nomad_group_ports                 | Port Configuration for the Group.            | `{"apm_expvar":{"check_interval":"30s","check_timeout":"15s","host_network":null,"method":null,"omit_check":false,"path":null,"port":5012,"protocol":"tcp","type":"tcp"},"apm_receiver":{"check_interval":"30s","check_timeout":"15s","host_network":null,"method":null,"omit_check":false,"path":null,"port":8126,"protocol":"tcp","type":"tcp"},"config":{"check_interval":"30s","check_timeout":"15s","host_network":null,"method":null,"omit_check":false,"path":null,"port":6162,"protocol":"tcp","type":"tcp"},"debug":{"check_interval":"30s","check_timeout":"15s","host_network":null,"method":null,"omit_check":false,"path":null,"port":6062,"protocol":"tcp","type":"tcp"},"dogstatsd":{"check_interval":"30s","check_timeout":"15s","host_network":null,"method":null,"omit_check":true,"path":null,"port":8125,"protocol":"tcp","type":"tcp"},"expvar":{"check_interval":"30s","check_timeout":"15s","host_network":null,"method":null,"omit_check":false,"path":null,"port":5000,"protocol":"tcp","type":"tcp"},"gui":{"check_interval":"30s","check_timeout":"15s","host_network":null,"method":null,"omit_check":true,"path":"/","port":5002,"protocol":"http","type":"http"},"healthcheck":{"check_interval":"30s","check_timeout":"15s","host_network":null,"method":null,"omit_check":false,"path":"/healthcheck","port":5555,"protocol":"http","type":"http"},"ipc":{"check_interval":"30s","check_timeout":"15s","host_network":null,"method":null,"omit_check":true,"path":"/agent/status","port":5001,"protocol":"https","type":"http"}}` |
-| nomad_group_restart_logic         | Restart Logic for the Group.                 | `{"attempts":3,"delay":"30s","interval":"120s","mode":"fail"}` |
-| nomad_group_service_name_prefix   | Name of the Service for the Group.           | `"datadog_agent"` |
-| nomad_group_service_provider      | Provider of the Service for the Group.       | `"nomad"` |
-| nomad_group_tags                  | List of Tags for the Group.                  | `["datadog","datadog-agent"]` |
-| nomad_group_volumes               | Volumes for the Group.                       | `{}` |
-| nomad_job_datacenters             | Eligible Datacenters for the Job.            | `["*"]` |
-| nomad_job_name                    | Name for the Job.                            | `"datadog_agent"` |
-| nomad_job_namespace               | Namespace for the Job.                       | `"default"` |
-| nomad_job_priority                | Priority for the Job.                        | `50` |
-| nomad_job_region                  | Region for the Job.                          | `"global"` |
-| nomad_pack_verbose_output         | Toggle to enable verbose output.             | `true` |
-| nomad_task_driver                 | Driver to use for the Task.                  | `"raw_exec"` |
-| nomad_task_name                   | Name for the Task.                           | `"datadog_agent"` |
-| nomad_task_resources              | Resource Limits for the Task.                | `{"cores":null,"cpu":500,"memory":512,"memory_max":1024}` |
+| Name                              | Description                                        | Default |
+| --------------------------------- | -------------------------------------------------- | ------- |
+| nomad_group_count                 | Count of Deployments for the Group.                | `1` |
+| nomad_group_ephemeral_disk        | Ephemeral Disk Configuration for the Group.        | `{"migrate":true,"size":128,"sticky":false}` |
+| nomad_group_name                  | Name for the Group.                                | `"datadog_agent"` |
+| nomad_group_network_mode          | Network Mode for the Group.                        | `"host"` |
+| nomad_group_ports                 | Port and Healthcheck Configuration for the Group.  | `{"apm_expvar":{"check_interval":"30s","check_timeout":"15s","host_network":null,"method":null,"omit_check":false,"path":null,"port":5012,"protocol":"tcp","type":"tcp"},"apm_receiver":{"check_interval":"30s","check_timeout":"15s","host_network":null,"method":null,"omit_check":false,"path":null,"port":8126,"protocol":"tcp","type":"tcp"},"config":{"check_interval":"30s","check_timeout":"15s","host_network":null,"method":null,"omit_check":false,"path":null,"port":6162,"protocol":"tcp","type":"tcp"},"debug":{"check_interval":"30s","check_timeout":"15s","host_network":null,"method":null,"omit_check":false,"path":null,"port":6062,"protocol":"tcp","type":"tcp"},"dogstatsd":{"check_interval":"30s","check_timeout":"15s","host_network":null,"method":null,"omit_check":true,"path":null,"port":8125,"protocol":"tcp","type":"tcp"},"expvar":{"check_interval":"30s","check_timeout":"15s","host_network":null,"method":null,"omit_check":false,"path":null,"port":5000,"protocol":"tcp","type":"tcp"},"gui":{"check_interval":"30s","check_timeout":"15s","host_network":null,"method":null,"omit_check":true,"path":"/","port":5002,"protocol":"http","type":"http"},"healthcheck":{"check_interval":"30s","check_timeout":"15s","host_network":null,"method":null,"omit_check":false,"path":"/healthcheck","port":5555,"protocol":"http","type":"http"},"ipc":{"check_interval":"30s","check_timeout":"15s","host_network":null,"method":null,"omit_check":true,"path":"/agent/status","port":5001,"protocol":"https","type":"http"}}` |
+| nomad_group_restart_logic         | Restart Logic for the Group.                       | `{"attempts":3,"delay":"30s","interval":"120s","mode":"fail"}` |
+| nomad_group_service_name_prefix   | Name of the Service for the Group.                 | `"datadog_agent"` |
+| nomad_group_service_provider      | Provider of the Service for the Group.             | `"nomad"` |
+| nomad_group_tags                  | List of Tags for the Group.                        | `["datadog","datadog-agent"]` |
+| nomad_group_volumes               | Volumes for the Group.                             | `{}` |
+| nomad_job_datacenters             | Eligible Datacenters for the Job.                  | `["*"]` |
+| nomad_job_name                    | Name for the Job.                                  | `"datadog_agent"` |
+| nomad_job_namespace               | Namespace for the Job.                             | `"default"` |
+| nomad_job_priority                | Priority for the Job.                              | `50` |
+| nomad_job_region                  | Region for the Job.                                | `"global"` |
+| nomad_pack_verbose_output         | Toggle to enable verbose output.                   | `true` |
+| nomad_task_driver                 | Driver to use for the Task.                        | `"raw_exec"` |
+| nomad_task_name                   | Name for the Task.                                 | `"datadog_agent"` |
+| nomad_task_resources              | Resource Limits for the Task.                      | `{"cores":null,"cpu":500,"memory":512,"memory_max":1024}` |
 <!-- END_PACK_DOCS -->
 
 ### Outputs

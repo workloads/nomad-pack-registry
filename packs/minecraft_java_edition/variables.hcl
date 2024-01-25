@@ -508,7 +508,7 @@ variable "nomad_group_ports" {
     type           = string
   }))
 
-  description = "Port Configuration for the Group."
+  description = "Port and Healthcheck Configuration for the Group."
 
   default = {
     # port for Minecraft server
