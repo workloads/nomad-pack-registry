@@ -1,5 +1,9 @@
-# ignored temporary Terraform files
-packs/**/*.temporary.tf
+# ignore Pack-specific Dependencies
+packs/**/deps/
+
+# ignore Pack overrides
 packs/**/overrides.hcl
+
+# ignore Pack-specific tests
 packs/**/tests/gitignored_config.mk
 packs/**/tests/gitignored_spec.nv.hcl
