@@ -216,3 +216,17 @@ variable "nomad_task_resources" {
     memory_max = 1024
   }
 }
+
+####################################
+## Utilities-specifc Configuration #
+####################################
+
+variable "utility_actions" {
+  type        = map(bool)
+  description = "Actions to enable via the Utilities Pack."
+
+  default = {
+    print_env       = false
+    print_nomad_env = true
+  }
+}
