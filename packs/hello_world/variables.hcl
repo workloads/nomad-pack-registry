@@ -50,6 +50,12 @@ variable "nomad_job_priority" {
   default     = 10
 }
 
+variable "nomad_job_type" {
+  type        = string
+  description = "Specifies the Nomad scheduler to use."
+  default     = "system"
+}
+
 variable "nomad_group_count" {
   type        = number
   description = "Count of Deployments for the Group."
@@ -172,7 +178,7 @@ variable "nomad_group_volumes" {
 variable "nomad_task_driver" {
   type        = string
   description = "Driver to use for the Task."
-  default     = "raw_exec"
+  default     = "exec"
 }
 
 variable "nomad_task_name" {
