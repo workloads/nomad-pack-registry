@@ -52,7 +52,7 @@ content: |-
 
   {{- end -}}
 
-  {{- $sections := dict "Application" "app_" "Nomad" "nomad_" -}}
+  {{- $sections := dict "Application" "app_" "Nomad" "nomad_" "Utilities" "utility_" -}}
   {{- $inputs := .Module.Inputs -}}
   {{- range $k, $v := $sections -}}
   {{- $configs := dict "title" $k "prefix" $v "variables" $inputs -}}
