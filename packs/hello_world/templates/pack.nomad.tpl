@@ -2,21 +2,11 @@
 
 # see https://developer.hashicorp.com/nomad/docs/job-specification/job
 job "[[ var "nomad_job_name" . ]]" {
-  region      = "[[ var "nomad_job_region" . ]]"
-  datacenters = [[ var "nomad_job_datacenters" . | toJson ]]
-  type        = "system"
-  namespace   = "[[ var "nomad_job_namespace" . ]]"
-  priority    = [[ var "nomad_job_priority" . ]]
+  [[ template "util_job_meta" . ]]
 
   # see https://developer.hashicorp.com/nomad/docs/job-specification/group
   group "[[ var "nomad_group_name" . ]]" {
-    # see https://developer.hashicorp.com/nomad/docs/job-specification/ephemeral_disk
-    ephemeral_disk {
-      [[- $ephemeral_disk := var "nomad_group_ephemeral_disk" . ]]
-      migrate = [[ $ephemeral_disk.migrate ]]
-      size    = [[ $ephemeral_disk.size ]]
-      sticky  = [[ $ephemeral_disk.sticky ]]
-    }
+    [[ template "util_job_group_ephemeral_disk" . ]]
 
     # see https://developer.hashicorp.com/nomad/docs/job-specification/network
     network {
@@ -63,41 +53,19 @@ job "[[ var "nomad_job_name" . ]]" {
     }
     [[ end ]]
 
-    # see https://developer.hashicorp.com/nomad/docs/job-specification/restart
-    restart {
-      [[- $restart_logic := var "nomad_group_restart_logic" . ]]
-      attempts = [[ $restart_logic.attempts ]]
-      interval = "[[ $restart_logic.interval ]]"
-      delay    = "[[ $restart_logic.delay ]]"
-      mode     = "[[ $restart_logic.mode ]]"
-    }
+    [[ template "util_job_group_task_restart" . ]]
 
-    # see https://developer.hashicorp.com/nomad/docs/job-specification/volume
-    [[/* iterate over `var.volumes` to create Volumes */]]
-    [[- range $index, $mount := var "nomad_group_volumes" . ]]
-    volume "[[ $mount.name ]]" {
-      source    = "[[ $mount.name ]]"
-      type      = "[[ $mount.type ]]"
-      read_only = [[ $mount.read_only ]]
-    }
-    [[ end ]]
+    [[ template "util_job_group_volume" . ]]
 
     # see https://developer.hashicorp.com/nomad/docs/job-specification/task
     task "[[ var "nomad_task_name" . ]]" {
       # see https://developer.hashicorp.com/nomad/docs/drivers
       driver = "[[ var "nomad_task_driver" . ]]"
 
-      # see https://developer.hashicorp.com/nomad/docs/job-specification/action
-      action "print-nomad-env" {
-        command = "/bin/sh"
+      [[ template "util_action_print_env" . ]]
 
-        args = [
-          "-c",
-          "env | sort | grep NOMAD_",
-        ]
-      }
+      [[ template "util_action_print_nomad_env" . ]]
 
-      # and https://developer.hashicorp.com/nomad/docs/drivers/exec
       config {
         command = "ping"
 
@@ -111,16 +79,7 @@ job "[[ var "nomad_job_name" . ]]" {
         [[- template "configuration" . ]]
       }
 
-      # see https://developer.hashicorp.com/nomad/docs/job-specification/resources
-      resources {
-        [[- $resources := var "nomad_task_resources" . ]]
-        cpu        = [[ $resources.cpu ]]
-        cores      = [[ $resources.cores | default "null" ]]
-        memory     = [[ $resources.memory ]]
-
-        # TODO: add support for memory oversubscription
-        # memory_max = [[ $resources.memory_max ]]
-      }
+      [[ template "util_job_group_task_resources" . ]]
     }
   }
 }

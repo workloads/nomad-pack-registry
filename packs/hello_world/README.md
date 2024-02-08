@@ -56,27 +56,37 @@ This section describes Application-specific configuration.
 
 This section describes Nomad-specific configuration.
 
-| Name                              | Description                                  | Default |
-| --------------------------------- | -------------------------------------------- | ------- |
-| nomad_group_count                 | Count of Deployments for the Group.          | `1` |
-| nomad_group_ephemeral_disk        | Ephemeral Disk Configuration for the Group.  | `{"migrate":true,"size":128,"sticky":false}` |
-| nomad_group_name                  | Name for the Group.                          | `"hello_world"` |
-| nomad_group_network_mode          | Network Mode for the Group.                  | `"host"` |
-| nomad_group_ports                 | Port Configuration for the Group.            | `{}` |
-| nomad_group_restart_logic         | Restart Logic for the Group.                 | `{"attempts":3,"delay":"30s","interval":"120s","mode":"fail"}` |
-| nomad_group_service_name_prefix   | Name of the Service for the Group.           | `"hello_world"` |
-| nomad_group_service_provider      | Provider of the Service for the Group.       | `"nomad"` |
-| nomad_group_tags                  | List of Tags for the Group.                  | `["hello_world"]` |
-| nomad_group_volumes               | Volumes for the Group.                       | `{}` |
-| nomad_job_datacenters             | Eligible Datacenters for the Job.            | `["*"]` |
-| nomad_job_name                    | Name for the Job.                            | `"hello_world"` |
-| nomad_job_namespace               | Namespace for the Job.                       | `"default"` |
-| nomad_job_priority                | Priority for the Job.                        | `10` |
-| nomad_job_region                  | Region for the Job.                          | `"global"` |
-| nomad_pack_verbose_output         | Toggle to enable verbose output.             | `true` |
-| nomad_task_driver                 | Driver to use for the Task.                  | `"raw_exec"` |
-| nomad_task_name                   | Name for the Task.                           | `"hello_world"` |
-| nomad_task_resources              | Resource Limits for the Task.                | `{"cores":null,"cpu":500,"memory":512,"memory_max":1024}` |
+| Name                              | Description                                                   | Default |
+| --------------------------------- | ------------------------------------------------------------- | ------- |
+| nomad_group_count                 | Count of Deployments for the Group.                           | `1` |
+| nomad_group_ephemeral_disk        | Ephemeral Disk Configuration for the Group.                   | `{"migrate":true,"size":128,"sticky":false}` |
+| nomad_group_name                  | Name for the Group.                                           | `"hello_world"` |
+| nomad_group_network_mode          | Network Mode for the Group.                                   | `"host"` |
+| nomad_group_ports                 | Port and Healthcheck Configuration for the Group.             | `{}` |
+| nomad_group_restart_logic         | Restart Logic for the Group.                                  | `{"attempts":3,"delay":"30s","interval":"120s","mode":"fail"}` |
+| nomad_group_service_name_prefix   | Name of the Service for the Group.                            | `"hello_world"` |
+| nomad_group_service_provider      | Provider of the Service for the Group.                        | `"nomad"` |
+| nomad_group_tags                  | List of Tags for the Group.                                   | `["hello_world"]` |
+| nomad_group_volumes               | Volumes for the Group.                                        | `{}` |
+| nomad_job_datacenters             | Eligible Datacenters for the Job.                             | `["*"]` |
+| nomad_job_name                    | Name for the Job.                                             | `"hello_world"` |
+| nomad_job_namespace               | Namespace for the Job.                                        | `"default"` |
+| nomad_job_priority                | Priority for the Job.                                         | `10` |
+| nomad_job_region                  | Region for the Job.                                           | `"global"` |
+| nomad_job_type                    | Specifies the Nomad scheduler to use.                         | `"system"` |
+| nomad_pack_verbose_output         | Toggle to enable verbose output.                              | `true` |
+| nomad_task_driver                 | Driver to use for the Task.                                   | `"exec"` |
+| nomad_task_image                  | Content Address to use for the Container Image for the Task.  | `{"digest":{"linux/amd64":"sha256:eea3b8c9f517e3e967854939a39f86b4231bde2b60b190d8aedef8da8c47cb96","linux/arm64":"sha256:a42641d479372b4e3a236a4105f5efaa8e470521f5693ec9b928b2bca2ef4633"},"image":"flagd","namespace":"open-feature","registry":"ghcr.io","tag":"v0.8.1"}` |
+| nomad_task_name                   | Name for the Task.                                            | `"hello_world"` |
+| nomad_task_resources              | Resource Limits for the Task.                                 | `{"cores":null,"cpu":500,"memory":512,"memory_max":1024}` |
+
+### Utilities
+
+This section describes Utilities-specific configuration.
+
+| Name              | Description                                | Default |
+| ----------------- | ------------------------------------------ | ------- |
+| utility_actions   | Actions to enable via the Utilities Pack.  | `{"print_env":false,"print_nomad_env":true}` |
 <!-- END_PACK_DOCS -->
 
 ### Outputs
