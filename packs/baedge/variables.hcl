@@ -119,7 +119,17 @@ variable "nomad_group_ports" {
   description = "Port and Healthcheck Configuration for the Group."
 
   default = {
-
+    # port for API server
+    main = {
+      check_interval = "30s"
+      check_timeout  = "15s"
+      host_network   = null
+      method         = null
+      omit_check     = false
+      path           = "/v1/status"
+      port           = 2343
+      type           = "tcp"
+    },
   }
 }
 
