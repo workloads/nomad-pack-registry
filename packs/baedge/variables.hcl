@@ -178,13 +178,23 @@ variable "nomad_group_volumes" {
 variable "nomad_task_driver" {
   type        = string
   description = "Driver to use for the Task."
-  default     = "exec"
+  default     = "raw_exec"
 }
 
 variable "nomad_task_name" {
   type        = string
   description = "Name for the Task."
   default     = "baedge"
+}
+
+variable "nomad_task_name_suffix" {
+  type        = map(string)
+  description = "Name Suffixes for the Tasks."
+
+  default = {
+    server           = "server"
+    client_heartbeat = "client-heartbeat"
+  }
 }
 
 # see https://developer.hashicorp.com/nomad/docs/job-specification/resources
