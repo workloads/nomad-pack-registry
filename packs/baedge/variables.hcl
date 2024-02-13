@@ -2,7 +2,45 @@
 ## Application-specific Configuration #
 #######################################
 
-# n/a
+variable "app_binary_git" {
+  type        = string
+  description = "Name (and optional Path) to the `git` binary to use."
+  default     = "git"
+}
+
+variable "app_binary_pip" {
+  type        = string
+  description = "Name (and optional Path) to the `pip` binary to use."
+  default     = "pip"
+}
+
+variable "app_binary_python" {
+  type        = string
+  description = "Name (and optional Path) to the Python binary to use."
+  default     = "python"
+}
+
+variable "app_application_directory" {
+  type        = string
+  description = "Location of the application directory."
+  default     = "/Users/ksatirli/Desktop/workloads/baedge-server"
+  #default     = "/opt/baedge"
+}
+
+variable "app_application_file" {
+  type        = string
+  description = "Name of the Application file."
+  default     = "server.py"
+}
+
+variable "app_examples_directory" {
+  type        = string
+  description = "Location of the examples directory."
+
+  # the examples directory is a shallow Git clone of Waveshare's e-Paper repository
+  # see https://github.com/waveshareteam/e-Paper for more information
+  default = "/opt/e-Paper/RaspberryPi_JetsonNano/python/examples"
+}
 
 ###############################
 ## Pack-specifc Configuration #
