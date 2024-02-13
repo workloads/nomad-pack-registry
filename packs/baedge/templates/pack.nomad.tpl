@@ -97,13 +97,14 @@ job "[[ var "nomad_job_name" . ]]" {
           BAEDGE_HARDWARE_MODEL = "{{ .baedge_hardware_model }}"
           BAEDGE_HARDWARE_REVISION = "{{ .baedge_hardware_revision }}"
 
-          # (human) wearer configuration
+          # (human) wearer-specific configuration
           BAEDGE_WEARER_NAME = "{{ .baedge_wearer_name }}"
           BAEDGE_WEARER_TITLE = "{{ .baedge_wearer_title }}"
           BAEDGE_WEARER_SOCIAL = "{{ .baedge_wearer_social }}"
           BAEDGE_WEARER_LINK = "{{ .baedge_wearer_link }}"
           {{ end }}
 
+          # Nomad-specific configuration
           NOMAD_VERSION = "{{ env "attr.nomad.version" }}"
         DATA
 
