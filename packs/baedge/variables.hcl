@@ -201,7 +201,7 @@ variable "nomad_task_resources" {
   default = {
     # Tasks can ask for `cpu` or `cores`, not both.
     # value in MHz
-    cpu = 500
+    cpu = 1000 # this represents 25% of all cores of the Pi Zero 2W
 
     # Tasks can ask for `cpu` or `cores`, not both.
     # see https://developer.hashicorp.com/nomad/docs/job-specification/resources#cores
@@ -209,7 +209,7 @@ variable "nomad_task_resources" {
     cores = null
 
     # value in MB
-    memory = 64
+    memory = 128
 
     # value in MB
     # see https://developer.hashicorp.com/nomad/docs/job-specification/resources#memory-oversubscription
@@ -226,7 +226,7 @@ variable "utility_actions" {
   description = "Actions to enable via the Utilities Pack."
 
   default = {
-    print_env       = false
+    print_env       = true
     print_nomad_env = true
   }
 }

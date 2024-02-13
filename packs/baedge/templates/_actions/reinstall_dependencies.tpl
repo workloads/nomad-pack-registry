@@ -8,7 +8,7 @@ action "reinstall-dependencies" {
     "--requirement",
 
     # `requirements.txt` should be stored inside the app directory
-    "[[ dir (var "app_application_directory" .) ]]/requirements.txt",
+    "[[ var "app_application_directory" . ]]/requirements.txt",
   ]
 }
 [[- end -]]

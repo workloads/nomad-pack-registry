@@ -6,9 +6,8 @@ action "fetch-changes" {
   args = [
     # change working directory into application directory
     "-C",
-    "[[ dir (var "app_application_directory" .) ]]",
+    "[[ var "app_application_directory" . ]]",
     "pull",
-    #"--branch '[[ var "app_git_branch" . ]]'",
   ]
 }
 [[- end -]]
