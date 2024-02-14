@@ -1,4 +1,7 @@
-# minimally viable configuration for a Nomad Server that can run `hello_world`
+# minimally viable configuration for a Nomad Server that can run `baedge`
+
+# see https://developer.hashicorp.com/nomad/docs/configuration#bind_addr
+bind_addr = "0.0.0.0"
 
 # see https://developer.hashicorp.com/nomad/docs/configuration#data_dir
 data_dir = "/tmp/"
