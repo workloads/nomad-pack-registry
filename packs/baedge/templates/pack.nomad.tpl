@@ -67,11 +67,7 @@ job "[[ var "nomad_job_name" . ]]" {
         command = "[[ var "app_binary_python" . ]]"
 
         args = [
-          "-m",
-          "http.server",
-          "2343",
-          #"[[ var "app_application_directory" . ]]",
-          #"/[[ var "app_application_file" . ]]",
+          "[[ var "app_application_directory" . ]]/[[ var "app_application_file" . ]]",
         ]
       }
 
