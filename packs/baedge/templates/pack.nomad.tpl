@@ -88,20 +88,20 @@ job "[[ var "nomad_job_name" . ]]" {
         data = <<-DATA
           {{- with nomadVar "nomad/jobs/[[ var "nomad_job_name" . ]]" -}}
           # general configuration
-          LOG_LEVEL = "{{ .log_level }}"
+          LOG_LEVEL="{{ .log_level }}"
 
           # Baedge-specific configuration
-          BAEDGE_SERVER_DEBUG = "{{ .baedge_server_debug }}"
+          BAEDGE_SERVER_DEBUG="{{ .baedge_server_debug }}"
           BAEDGE_SERVER_PORT = "[[ var "nomad_group_ports.main.port" . ]]"
-          BAEDGE_MEDIA_PATH = "{{ .baedge_media_path }}"
-          BAEDGE_HARDWARE_MODEL = "{{ .baedge_hardware_model }}"
-          BAEDGE_HARDWARE_REVISION = "{{ .baedge_hardware_revision }}"
+          BAEDGE_MEDIA_PATH="{{ .baedge_media_path }}"
+          BAEDGE_HARDWARE_MODEL="{{ .baedge_hardware_model }}"
+          BAEDGE_HARDWARE_REVISION="{{ .baedge_hardware_revision }}"
 
           # (human) wearer-specific configuration
-          BAEDGE_WEARER_NAME = "{{ .baedge_wearer_name }}"
-          BAEDGE_WEARER_TITLE = "{{ .baedge_wearer_title }}"
-          BAEDGE_WEARER_SOCIAL = "{{ .baedge_wearer_social }}"
-          BAEDGE_WEARER_LINK = "{{ .baedge_wearer_link }}"
+          BAEDGE_WEARER_NAME="{{ .baedge_wearer_name }}"
+          BAEDGE_WEARER_TITLE="{{ .baedge_wearer_title }}"
+          BAEDGE_WEARER_SOCIAL="{{ .baedge_wearer_social }}"
+          BAEDGE_WEARER_LINK="{{ .baedge_wearer_link }}"
           {{ end }}
 
           # Nomad-specific configuration
