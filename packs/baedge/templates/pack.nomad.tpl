@@ -87,11 +87,12 @@ job "[[ var "nomad_job_name" . ]]" {
           LOG_LEVEL="{{ .log_level }}"
 
           # Baedge-specific configuration
-          BAEDGE_SERVER_DEBUG="{{ .baedge_server_debug }}"
-          BAEDGE_SERVER_PORT = "[[ var "nomad_group_ports.main.port" . ]]"
-          BAEDGE_MEDIA_PATH="{{ .baedge_media_path }}"
+          BAEDGE_FONTS_PATH="{{ .baedge_fonts_path }}"
           BAEDGE_HARDWARE_MODEL="{{ .baedge_hardware_model }}"
           BAEDGE_HARDWARE_REVISION="{{ .baedge_hardware_revision }}"
+          BAEDGE_MEDIA_PATH="{{ .baedge_media_path }}"
+          BAEDGE_SERVER_DEBUG="{{ .baedge_server_debug }}"
+          BAEDGE_SERVER_PORT = "[[ var "nomad_group_ports.main.port" . ]]"
 
           # (human) wearer-specific configuration
           BAEDGE_WEARER_NAME="{{ .baedge_wearer_name }}"
@@ -109,16 +110,22 @@ job "[[ var "nomad_job_name" . ]]" {
         error_on_missing_key = true
       }
 
+      # iterate over allowed screens and render them as Actions
+      [[ range $index, $name := var "app_baedge_screens" . ]]
+      [[ template "action_baedge_write_screens" $name ]]
+      [[ end ]]
+
+      [[ template "action_baedge_clear_screen" . ]]
 
       # pull latest git changes for repository
-      [[ template "action_fetch_changes" . ]]
+      [[ template "action_baedge_fetch_changes" . ]]
 
       # reinstall pip dependencies
-      [[ template "action_reinstall_dependencies" . ]]
+      [[ template "action_baedge_reinstall_dependencies" . ]]
+
+      [[ template "action_baedge_print_env" . ]]
 
       [[ template "util_action_print_env" . ]]
-
-      [[ template "action_print_baedge_env" . ]]
 
       [[ template "util_action_print_nomad_env" . ]]
 
