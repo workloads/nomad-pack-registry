@@ -8,6 +8,18 @@ variable "app_binary_git" {
   default     = "git"
 }
 
+variable "app_baedge_screens" {
+  description = "List of Baedge screens to allow setting via Nomad Actions"
+  type        = list(string)
+
+  default = [
+    "baedge",
+    "hardware",
+    "nomad",
+    "wearer"
+  ]
+}
+
 variable "app_binary_pip" {
   type        = string
   description = "Name (and optional Path) to the `pip` binary to use."
