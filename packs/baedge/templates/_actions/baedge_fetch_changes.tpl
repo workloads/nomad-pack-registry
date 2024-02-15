@@ -1,6 +1,6 @@
-[[- define "action_fetch_changes" ]]
+[[- define "action_baedge_fetch_changes" ]]
 # see https://developer.hashicorp.com/nomad/docs/job-specification/action
-action "fetch-changes" {
+action "baedge-fetch-changes" {
   command = "[[ var "app_binary_git" . ]]"
 
   args = [
