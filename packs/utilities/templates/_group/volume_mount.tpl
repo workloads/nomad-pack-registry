@@ -8,5 +8,4 @@ volume_mount {
   read_only   = [[ $mount.read_only ]]
 }
 [[ end ]]
-[[ end ]]
 [[- end ]]
