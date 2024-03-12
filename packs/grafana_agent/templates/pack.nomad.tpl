@@ -20,7 +20,7 @@ job "[[ var "nomad_job_name" . ]]" {
       [[/* iterate over `$ports` to create Port Mappings */]]
       [[- range $name, $config := $ports ]]
       port "[[ $name ]]" {
-        static       = [[ $config.port ]]
+        [[/* static       = [[ $config.port ]]*/]]
         to           = [[ $config.port ]]
         [[- if $config.host_network ]]
         host_network = "[[ $config.host_network ]]"
@@ -28,8 +28,6 @@ job "[[ var "nomad_job_name" . ]]" {
       }
       [[ end ]]
     }
-
-    [[- $job_tags := var "nomad_group_tags" . -]]
     [[- $service_name := var "nomad_group_service_name_prefix" . -]]
     [[- $service_provider := var "nomad_group_service_provider" . -]]
     [[/* iterate over `$ports` to map Services */]]
@@ -37,7 +35,7 @@ job "[[ var "nomad_job_name" . ]]" {
     # see https://developer.hashicorp.com/nomad/docs/job-specification/service
     service {
       name     = "[[ $service_name | replace "_" "-" | trunc 20 ]]-[[ $name | replace "_" "-" | trunc 43 ]]"
-      tags     = [[ $job_tags | toJson ]]
+      tags     = [[ $port.tags | toJson ]]
       port     = "[[ $name ]]"
       provider = "[[ $service_provider ]]"
 

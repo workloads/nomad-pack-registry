@@ -92,11 +92,11 @@ variable "nomad_group_ports" {
     check_timeout  = string
     host_network   = string
     method         = string
-    name           = string
     omit_check     = bool
     path           = string
     port           = number
     type           = string
+    tags           = list(string)
   }))
 
   description = "Port Configuration for the Group."
@@ -107,11 +107,11 @@ variable "nomad_group_ports" {
       check_timeout  = "15s"
       host_network   = null
       method         = "GET"
-      name           = "ready"
       omit_check     = true
       path           = "/-/ready"
       port           = 12345
       type           = "http"
+      tags           = []
     } /*,
 
     health = {
@@ -240,7 +240,7 @@ variable "nomad_task_resources" {
     cores = null
 
     # value in MB
-    memory = 64
+    memory = 128
 
     # value in MB
     # see https://developer.hashicorp.com/nomad/docs/job-specification/resources#memory-oversubscription
