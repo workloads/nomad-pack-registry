@@ -5,7 +5,6 @@
 variable "grafana_agent_configuration" {
   type = string
   description = "Local path to the configuration file for the Grafana Agent."
-  default = "./packs/grafana_agent/config/grafana-agent.river"
 }
 ###############################
 ## Pack-specific Configuration #
