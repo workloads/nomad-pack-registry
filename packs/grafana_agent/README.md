@@ -25,12 +25,18 @@
 
 ## Usage
 
+This Pack deploys the [Grafana Agent](https://grafana.com/docs/agent/latest/) in [Flow mode](https://grafana.com/docs/agent/latest/flow/) which is the new, components-based OpenTelemetry distribution that is configured using a River configuration file.
+
+Variables (described in detail below) can be passed using the `-var` flag, or by using a `.hcl` file with the `-var-file` flag. The only mandatory variable is `grafana_agent_configuration`, which should point to the location of the Grafana Agent configuration file on your system. 
+
+Example Grafana Agent configuration files can be found in the [./config](./config) directory. 
+
 The `grafana_agent` Pack can be run with a local fileset (commonly used when developing the Pack), or via the [@workloads Nomad Pack Registry](https://github.com/workloads/nomad-pack-registry).
 
 A Pack available _locally_ may be run like so:
 
 ```shell
-nomad-pack run ./packs/grafana_agent
+nomad-pack run ./packs/grafana_agent -var grafana_agent_configuration="./grafana-agent-vars.river"
 ```
 
 A Pack available via the [@workloads Nomad Pack Registry](https://github.com/workloads/nomad-pack-registry) may be run like so:
@@ -40,8 +46,9 @@ A Pack available via the [@workloads Nomad Pack Registry](https://github.com/wor
 nomad-pack registry add workloads github.com/workloads/nomad-pack-registry
 
 # run the Pack
-nomad-pack run grafana_agent --registry=workloads
+nomad-pack run grafana_agent --registry=workloads -var-file="overrides.hcl" 
 ```
+
 
 <!-- BEGIN_PACK_DOCS -->
 
@@ -51,7 +58,7 @@ This section describes Application-specific configuration.
 
 | Name | Description | Default |
 | -- | - | ------- |
-| grafana_agent_configuration | The path, relative or absolute, of the Grafana Agent configuration file on your system | `./config/grafana-agent.river` |
+| grafana_agent_configuration | The path, relative or absolute, of the Grafana Agent configuration file on your system | No default, has to be specified. |
 
 ### Nomad
 
